@@ -164,20 +164,3 @@ class CompanyBankAccounts(models.Model):
 
     def __str__(self):
         return self.account_number
-
-
-class ExchangeRate(models.Model):
-    """ """
-    date = models.DateTimeField()
-    rate = models.FloatField()
-
-    def __str__(self):
-        return self.rate
-
-
-class PaymentMethod(models.Model):
-    """ """
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.name
