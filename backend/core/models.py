@@ -110,3 +110,74 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Deparment(models.Model):
+    """ """
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
+class CompanyPhones(models.Model):
+    """ """
+    phone_number = models.CharField(max_length=15)
+    description = models.CharField(max_length=255)
+    department = models.ForeignKey(Deparment,
+                                   default=1,
+                                   verbose_name="ID Departamento",
+                                   on_delete=models.SET_DEFAULT
+                                   )
+    is_Main = models.BooleanField(verbose_name="Flag de Telefono Principal")
+
+    def __str__(self):
+        return self.name
+
+
+class CompanyEmails(models.Model):
+    """ """
+    email = models.CharField(max_length=255)
+    description = models.CharField(max_length=255)
+    is_Main = models.BooleanField(verbose_name="Flag de Correo Pricipal")
+
+    def __str__(self):
+        return self.email
+
+
+class Bank(models.Model):
+    """ """
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
+class CompanyBankAccounts(models.Model):
+    """ """
+    account_number = models.CharField(max_length=50)
+    bank_type = models.ForeignKey('Bank', default=1,
+                                  verbose_name="ID Banco",
+                                  on_delete=models.SET_DEFAULT
+                                  )
+    description = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.account_number
+
+
+class ExchangeRate(models.Model):
+    """ """
+    date = models.DateTimeField()
+    rate = models.FloatField()
+
+    def __str__(self):
+        return self.rate
+
+
+class PaymentMethod(models.Model):
+    """ """
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
