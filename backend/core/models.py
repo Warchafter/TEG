@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
     PermissionsMixin
+from django.db.models.deletion import SET_DEFAULT, SET_NULL
 
 
 class BusinessType(models.Model):
@@ -45,3 +46,67 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+
+
+class Brand(models.Model):
+    """ """
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
+PRESENTATION_TYPE_OPT = (
+    ('P', 'paquete'),
+    ('C', 'caja'),
+    ('B', 'bulto'),
+    ('U', 'unitario')
+)
+
+
+class ProductFamily(models.Model):
+    """ """
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
+class ProductType(models.Model):
+    """ """
+    name = models.CharField(max_length=255)
+    product_family = models.ForeignKey(ProductFamily, default=1,
+                                       verbose_name="ID Familia de Producto",
+                                       on_delete=models.SET_DEFAULT
+                                       )
+
+    def __str__(self):
+        return self.name
+
+
+class PresentationType(models.Model):
+    """Model that defines the type of product presentation"""
+    name = models.CharField(choices=PRESENTATION_TYPE_OPT, max_length=1)
+
+    def __str__(self):
+        return self.name
+
+
+class Product(models.Model):
+    """Product object"""
+    name = models.CharField(max_length=255)
+    product_type = models.ForeignKey(ProductType, default=1,
+                                     verbose_name="ID Tipo de Producto",
+                                     on_delete=SET_NULL
+                                     )
+    presentation_type = models.ForeignKey(PresentationType, default=1,
+                                          verbose_name="ID Presentacion",
+                                          on_delete=models.SET_DEFAULT
+                                          )
+    brand = models.ForeignKey(Brand, default=1, verbose_name="Marca",
+                              on_delete=models.SET_NULL,
+                              )
+    description = models.CharField(max_length=1000)
+
+    def __str__(self):
+        return self.name
