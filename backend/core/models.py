@@ -33,7 +33,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     """Custom user model that supports using email instead of username"""
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
-    business_name = models.CharField("nombre de la empresa", max_length=255)
+    business_name = models.CharField(
+        "nombre de la empresa", max_length=255, default="")
     business_type_choices = (
         ('Personal', 'Personal'),
         ('Consultorio', 'Consultorio'),
