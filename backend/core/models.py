@@ -7,14 +7,6 @@ from django.db.models.deletion import SET_DEFAULT, SET_NULL
 from django.conf import settings
 
 
-class BusinessType(models.Model):
-    """Model that defines the type of business"""
-    nombre = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.name
-
-
 class UserManager(BaseUserManager):
 
     def create_user(self, email, password=None, **extra_fields):
@@ -42,7 +34,25 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
     business_name = models.CharField("nombre de la empresa", max_length=255)
-    business_type = models.ManyToManyField('BusinessType')
+    business_type_choices = (
+        ('Personal', 'Personal'),
+        ('Consultorio', 'Consultorio'),
+        ('Hospital', 'Hospital'),
+        ('Clínica', 'Clínica'),
+        ('Distribuidora', 'Distribuidora')
+    )
+    business_type = models.CharField(
+        max_length=255, choices=business_type_choices, default='Personal')
+    specialization_chocies = (
+        ('Alergología', 'Alergología'),
+        ('Anestesiología', 'Anestesiología'),
+        ('Cardiología', 'Cardiología'),
+        ('Endocrinología', 'Endocrinología'),
+        ('Gastroenterología', 'Gastroenterología'),
+        ('Medicina', 'Medicina')
+    )
+    specialization = models.CharField(
+        max_length=255, choices=specialization_chocies, default='Medicina')
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
@@ -100,14 +110,14 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     product_type = models.ForeignKey(ProductType, default=1,
                                      verbose_name="ID Tipo de Producto",
-                                     on_delete=SET_NULL
+                                     on_delete=SET_DEFAULT
                                      )
     presentation_type = models.ForeignKey(PresentationType, default=1,
                                           verbose_name="ID Presentacion",
                                           on_delete=models.SET_DEFAULT
                                           )
     brand = models.ForeignKey(Brand, default=1, verbose_name="Marca",
-                              on_delete=models.SET_NULL,
+                              on_delete=models.SET_DEFAULT,
                               )
     description = models.CharField(max_length=1000)
 
@@ -187,7 +197,8 @@ class Supplier(models.Model):
     name = models.CharField(max_length=255)
     rif = models.CharField(max_length=20)
     address = models.CharField(max_length=255)
-    bank_accounts = models.ForeignKey(SupplierBankAccounts)
+    bank_accounts = models.ForeignKey(
+        SupplierBankAccounts, default=1, on_delete=SET_DEFAULT)
 
     def __str__(self):
         return self.name
@@ -198,7 +209,7 @@ class SupplierEmployees(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     rif = models.CharField(max_length=20)
-    supplier = models.ForeignKey(Supplier)
+    supplier = models.ForeignKey(Supplier, default=1, on_delete=SET_DEFAULT)
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name
@@ -310,10 +321,10 @@ class PurchaseBill(models.Model):
                                        )
 
 
-class BillDetail(models.Model):
-    """ """
-    purchase_bill = models.ForeignKey(PurchaseBill, default=1,
-                                      verbose_name="Factura de la Compra",
-                                      on_delete=models.CASCADE
-                                      )
-    product = models.ForeignKey(Product,)
+# class BillDetail(models.Model):
+#     """ """
+#     purchase_bill = models.ForeignKey(PurchaseBill, default=1,
+#                                       verbose_name="Factura de la Compra",
+#                                       on_delete=models.CASCADE
+#                                       )
+#     product = models.ForeignKey(Product, on_delete=)
