@@ -1,7 +1,10 @@
+import uuid
+import os
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
     PermissionsMixin
 from django.db.models.deletion import SET_DEFAULT, SET_NULL
+from django.conf import settings
 
 
 class BusinessType(models.Model):
@@ -156,7 +159,7 @@ class Bank(models.Model):
 class CompanyBankAccounts(models.Model):
     """ """
     account_number = models.CharField(max_length=50)
-    bank_type = models.ForeignKey('Bank', default=1,
+    bank_type = models.ForeignKey(Bank, default=1,
                                   verbose_name="ID Banco",
                                   on_delete=models.SET_DEFAULT
                                   )
@@ -164,3 +167,153 @@ class CompanyBankAccounts(models.Model):
 
     def __str__(self):
         return self.account_number
+
+
+class SupplierBankAccounts(models.Model):
+    """ """
+    account_number = models.CharField(max_length=50)
+    bank_type = models.ForeignKey(Bank, default=1,
+                                  verbose_name="ID Banco",
+                                  on_delete=models.SET_DEFAULT
+                                  )
+    description = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.account_number
+
+
+class Supplier(models.Model):
+    """ """
+    name = models.CharField(max_length=255)
+    rif = models.CharField(max_length=20)
+    address = models.CharField(max_length=255)
+    bank_accounts = models.ForeignKey(SupplierBankAccounts)
+
+    def __str__(self):
+        return self.name
+
+
+class SupplierEmployees(models.Model):
+    """ """
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+    rif = models.CharField(max_length=20)
+    supplier = models.ForeignKey(Supplier)
+
+    def __str__(self):
+        return self.first_name + ' ' + self.last_name
+
+
+class SupplierPhones(models.Model):
+    """ """
+    phone_number = models.CharField(max_length=13)
+    description = models.CharField(max_length=255)
+    is_Main = models.BooleanField(
+        verbose_name="Flag de Telefono Pricipal del Proveedor")
+
+    def __str__(self):
+        return self.phone_number
+
+
+class SupplierEmails(models.Model):
+    """ """
+    email = models.CharField(max_length=255)
+    description = models.CharField(max_length=255)
+    is_Main = models.BooleanField(verbose_name="Flag de Correo Pricipal")
+
+    def __str__(self):
+        return self.email
+
+
+class SupplierProducts(models.Model):
+    """ """
+    product = models.ForeignKey(Product, verbose_name="ID Producto",
+                                on_delete=models.CASCADE
+                                )
+    supplier = models.ForeignKey(Supplier, verbose_name="ID Proveedor",
+                                 on_delete=models.CASCADE
+                                 )
+    price = models.FloatField(verbose_name="Precio del Producto")
+    stock = models.FloatField(
+        verbose_name="Cantidad de Productos en Existencia")
+
+    class Meta:
+        unique_together = ('product', 'supplier')
+
+
+class ExchangeRate(models.Model):
+    """ """
+    date = models.DateTimeField()
+    rate = models.FloatField()
+
+    def __str__(self):
+        return self.rate
+
+
+class PaymentMethod(models.Model):
+    """ """
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
+class Currency(models.Model):
+    """ """
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
+class PurchaseStatus(models.Model):
+    """ """
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
+class PaymentStatus(models.Model):
+    """ """
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
+class PurchaseBill(models.Model):
+    """ """
+    purchase_order_date = models.DateTimeField()
+    purchase_payment_date = models.DateTimeField()
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.DO_NOTHING
+    )
+    payment_method = models.ForeignKey(PaymentMethod, default=1,
+                                       verbose_name="Método de Pago",
+                                       on_delete=models.SET_DEFAULT
+                                       )
+    currency = models.ForeignKey(Currency, default=1, verbose_name="Moneda",
+                                 on_delete=models.SET_DEFAULT
+                                 )
+    bank = models.ForeignKey(Bank, default=1, verbose_name="Banco",
+                             on_delete=SET_DEFAULT
+                             )
+    purchase_status = models.ForeignKey(PurchaseStatus, default=1,
+                                        verbose_name="Estado de la Compra",
+                                        on_delete=models.SET_DEFAULT
+                                        )
+    payment_status = models.ForeignKey(PaymentStatus, default=1,
+                                       verbose_name="Estado del Pago",
+                                       on_delete=models.SET_DEFAULT
+                                       )
+
+
+class BillDetail(models.Model):
+    """ """
+    purchase_bill = models.ForeignKey(PurchaseBill, default=1,
+                                      verbose_name="Factura de la Compra",
+                                      on_delete=models.CASCADE
+                                      )
+    product = models.ForeignKey(Product,)
