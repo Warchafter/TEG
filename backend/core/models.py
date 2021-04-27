@@ -3,7 +3,7 @@ import os
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
     PermissionsMixin
-from django.db.models.deletion import SET_DEFAULT, SET_NULL
+from django.db.models.deletion import SET_DEFAULT
 from django.conf import settings
 
 
@@ -29,31 +29,35 @@ class UserManager(BaseUserManager):
         return user
 
 
+SPECIALIZATION_CHOICES = (
+    ('Alergología', 'Alergología'),
+    ('Anestesiología', 'Anestesiología'),
+    ('Cardiología', 'Cardiología'),
+    ('Endocrinología', 'Endocrinología'),
+    ('Gastroenterología', 'Gastroenterología'),
+    ('Medicina', 'Medicina')
+)
+
+BUSINESS_TYPE_CHOICES = (
+    ('Personal', 'Personal'),
+    ('Consultorio', 'Consultorio'),
+    ('Hospital', 'Hospital'),
+    ('Clínica', 'Clínica'),
+    ('Distribuidora', 'Distribuidora')
+)
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     """Custom user model that supports using email instead of username"""
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
     business_name = models.CharField(
         "nombre de la empresa", max_length=255, default="")
-    business_type_choices = (
-        ('Personal', 'Personal'),
-        ('Consultorio', 'Consultorio'),
-        ('Hospital', 'Hospital'),
-        ('Clínica', 'Clínica'),
-        ('Distribuidora', 'Distribuidora')
-    )
+
     business_type = models.CharField(
-        max_length=255, choices=business_type_choices, default='Personal')
-    specialization_chocies = (
-        ('Alergología', 'Alergología'),
-        ('Anestesiología', 'Anestesiología'),
-        ('Cardiología', 'Cardiología'),
-        ('Endocrinología', 'Endocrinología'),
-        ('Gastroenterología', 'Gastroenterología'),
-        ('Medicina', 'Medicina')
-    )
+        max_length=255, choices=BUSINESS_TYPE_CHOICES, default='Personal')
     specialization = models.CharField(
-        max_length=255, choices=specialization_chocies, default='Medicina')
+        max_length=255, choices=SPECIALIZATION_CHOICES, default='Medicina')
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
