@@ -1,5 +1,3 @@
-from unittest.mock import patch
-
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 
@@ -46,3 +44,38 @@ class ModelTests(TestCase):
 
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.is_staff)
+
+    def test_product_family_str(self):
+        """Test the product family string representation"""
+        prod_family = models.ProductFamily.objects.create(
+            user=sample_user(),
+            name='Descartable'
+        )
+
+        self.assertEqual(str(prod_family), prod_family.name)
+
+    def test_product_type_str(self):
+        """Test the product type string representation"""
+        user = sample_user()
+        prod_family = models.ProductFamily.objects.create(
+            user=user,
+            name='Descartable'
+        )
+
+        prod_type = models.ProductType.objects.create(
+            user=user,
+            name='Descartable',
+            product_family=prod_family
+        )
+
+        self.assertEqual(str(prod_type), prod_type.name)
+
+    def test_presentation_type(self):
+        """Test the presentation type string representation"""
+        user = sample_user()
+        pres_type = models.PresentationType.objects.create(
+            user=user,
+            name='P'
+        )
+
+        self.assertEqual(str(pres_type), pres_type.name)

@@ -4,8 +4,8 @@ LABEL MAINTAINER="Kevin Arriaga kevin.arriaga@gmail.com"
 ENV PYTHONUNBUFFERED 1
 
 COPY ./requirements.txt /requirements.txt
-RUN apk add --update --no-cache postgresql-client jpeg-dev libjpeg
-RUN apk add --update --no-cache --virtual .tmp-build-deps \
+RUN apk add --update postgresql-client jpeg-dev libjpeg
+RUN apk add --update --virtual .tmp-build-deps \
     gcc libc-dev linux-headers postgresql-dev musl-dev \
     zlib zlib-dev python3-dev libffi-dev openssl-dev cargo
 RUN pip install --upgrade pip

@@ -11,7 +11,8 @@ class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         (_('Personal Info'), {
-         'fields': ('name', 'business_name', 'business_type', 'specialization')}),
+         'fields': ('name', 'business_name', 'business_type',
+                    'specialization')}),
         (
             _('Permissions'),
             {'fields': ('is_active', 'is_staff', 'is_superuser')}
@@ -27,3 +28,5 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(models.User, UserAdmin)
+admin.site.register(models.ProductFamily)
+admin.site.register(models.ProductType)

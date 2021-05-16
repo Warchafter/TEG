@@ -1,19 +1,17 @@
-import uuid
-import os
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
     PermissionsMixin
-from django.db.models.deletion import SET_DEFAULT
 from django.conf import settings
 
 
 class UserManager(BaseUserManager):
 
-    def create_user(self, email, password=None, **extra_fields):
+    def create_user(self, email, name, password=None, **extra_fields):
         """Creates and saves a new user"""
         if not email:
-            raise ValueError('Users must have an email address')
-        user = self.model(email=self.normalize_email(email), **extra_fields)
+            raise ValueError('Usuarios deben tener un correo electrónico')
+        user = self.model(email=self.normalize_email(
+            email), name=name, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
 
@@ -51,19 +49,28 @@ class User(AbstractBaseUser, PermissionsMixin):
     """Custom user model that supports using email instead of username"""
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
-    business_name = models.CharField(
-        "nombre de la empresa", max_length=255, default="")
-
-    business_type = models.CharField(
-        max_length=255, choices=BUSINESS_TYPE_CHOICES, default='Personal')
-    specialization = models.CharField(
-        max_length=255, choices=SPECIALIZATION_CHOICES, default='Medicina')
+    # business_name = models.CharField(
+    #     "nombre de la empresa", max_length=255, default="")
+    # business_type = models.CharField(
+    #     max_length=255, choices=BUSINESS_TYPE_CHOICES, default='Personal')
+    # specialization = models.CharField(
+    #     max_length=255, choices=SPECIALIZATION_CHOICES, default='Medicina')
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['name', ]
+
+    def get_full_name(self):
+        return self.name
+
+    def get_short_name(self):
+        return self.name
+
+    def __str__(self):
+        return self.email
 
 
 class Brand(models.Model):
@@ -83,8 +90,12 @@ PRESENTATION_TYPE_OPT = (
 
 
 class ProductFamily(models.Model):
-    """ """
+    """Product family to be used for a product"""
     name = models.CharField(max_length=255)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
 
     def __str__(self):
         return self.name
@@ -93,18 +104,14 @@ class ProductFamily(models.Model):
 class ProductType(models.Model):
     """ """
     name = models.CharField(max_length=255)
-    product_family = models.ForeignKey(ProductFamily, default=1,
-                                       verbose_name="ID Familia de Producto",
-                                       on_delete=models.SET_DEFAULT
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    product_family = models.ForeignKey(ProductFamily,
+                                       verbose_name="ID Tipo de Producto",
+                                       on_delete=models.CASCADE
                                        )
-
-    def __str__(self):
-        return self.name
-
-
-class PresentationType(models.Model):
-    """Model that defines the type of product presentation"""
-    name = models.CharField(choices=PRESENTATION_TYPE_OPT, max_length=1)
 
     def __str__(self):
         return self.name
@@ -113,25 +120,23 @@ class PresentationType(models.Model):
 class Product(models.Model):
     """Product object"""
     name = models.CharField(max_length=255)
-    product_type = models.ForeignKey(ProductType, default=1,
+    product_type = models.ForeignKey(ProductType,
                                      verbose_name="ID Tipo de Producto",
-                                     on_delete=SET_DEFAULT
+                                     on_delete=models.CASCADE
                                      )
-    presentation_type = models.ForeignKey(PresentationType, default=1,
-                                          verbose_name="ID Presentacion",
-                                          on_delete=models.SET_DEFAULT
-                                          )
-    brand = models.ForeignKey(Brand, default=1, verbose_name="Marca",
-                              on_delete=models.SET_DEFAULT,
+    presentation_type = models.CharField(
+        max_length=255, choices=PRESENTATION_TYPE_OPT, default='paquete')
+    brand = models.ForeignKey(Brand, verbose_name="Marca",
+                              on_delete=models.CASCADE,
                               )
-    description = models.CharField(max_length=1000)
+    description = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
         return self.name
 
 
 class Deparment(models.Model):
-    """ """
+    """Department object"""
     name = models.CharField(max_length=255)
 
     def __str__(self):
@@ -143,9 +148,8 @@ class CompanyPhones(models.Model):
     phone_number = models.CharField(max_length=15)
     description = models.CharField(max_length=255)
     department = models.ForeignKey(Deparment,
-                                   default=1,
                                    verbose_name="ID Departamento",
-                                   on_delete=models.SET_DEFAULT
+                                   on_delete=models.CASCADE
                                    )
     is_Main = models.BooleanField(verbose_name="Flag de Telefono Principal")
 
@@ -174,9 +178,9 @@ class Bank(models.Model):
 class CompanyBankAccounts(models.Model):
     """ """
     account_number = models.CharField(max_length=50)
-    bank_type = models.ForeignKey(Bank, default=1,
+    bank_type = models.ForeignKey(Bank,
                                   verbose_name="ID Banco",
-                                  on_delete=models.SET_DEFAULT
+                                  on_delete=models.CASCADE
                                   )
     description = models.CharField(max_length=255)
 
@@ -187,9 +191,9 @@ class CompanyBankAccounts(models.Model):
 class SupplierBankAccounts(models.Model):
     """ """
     account_number = models.CharField(max_length=50)
-    bank_type = models.ForeignKey(Bank, default=1,
+    bank_type = models.ForeignKey(Bank,
                                   verbose_name="ID Banco",
-                                  on_delete=models.SET_DEFAULT
+                                  on_delete=models.CASCADE
                                   )
     description = models.CharField(max_length=255)
 
@@ -203,7 +207,7 @@ class Supplier(models.Model):
     rif = models.CharField(max_length=20)
     address = models.CharField(max_length=255)
     bank_accounts = models.ForeignKey(
-        SupplierBankAccounts, default=1, on_delete=SET_DEFAULT)
+        SupplierBankAccounts, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -214,7 +218,7 @@ class SupplierEmployees(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     rif = models.CharField(max_length=20)
-    supplier = models.ForeignKey(Supplier, default=1, on_delete=SET_DEFAULT)
+    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name
@@ -304,31 +308,31 @@ class PurchaseBill(models.Model):
     purchase_payment_date = models.DateTimeField()
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        on_delete=models.DO_NOTHING
+        on_delete=models.CASCADE
     )
-    payment_method = models.ForeignKey(PaymentMethod, default=1,
+    payment_method = models.ForeignKey(PaymentMethod,
                                        verbose_name="Método de Pago",
-                                       on_delete=models.SET_DEFAULT
+                                       on_delete=models.CASCADE
                                        )
-    currency = models.ForeignKey(Currency, default=1, verbose_name="Moneda",
-                                 on_delete=models.SET_DEFAULT
+    currency = models.ForeignKey(Currency, verbose_name="Moneda",
+                                 on_delete=models.CASCADE
                                  )
-    bank = models.ForeignKey(Bank, default=1, verbose_name="Banco",
-                             on_delete=SET_DEFAULT
+    bank = models.ForeignKey(Bank, verbose_name="Banco",
+                             on_delete=models.CASCADE
                              )
-    purchase_status = models.ForeignKey(PurchaseStatus, default=1,
+    purchase_status = models.ForeignKey(PurchaseStatus,
                                         verbose_name="Estado de la Compra",
-                                        on_delete=models.SET_DEFAULT
+                                        on_delete=models.CASCADE
                                         )
-    payment_status = models.ForeignKey(PaymentStatus, default=1,
+    payment_status = models.ForeignKey(PaymentStatus,
                                        verbose_name="Estado del Pago",
-                                       on_delete=models.SET_DEFAULT
+                                       on_delete=models.CASCADE
                                        )
 
 
 # class BillDetail(models.Model):
 #     """ """
-#     purchase_bill = models.ForeignKey(PurchaseBill, default=1,
+#     purchase_bill = models.ForeignKey(PurchaseBill,
 #                                       verbose_name="Factura de la Compra",
 #                                       on_delete=models.CASCADE
 #                                       )
