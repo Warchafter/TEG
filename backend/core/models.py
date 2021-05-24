@@ -1,7 +1,27 @@
+import uuid
+import os
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
     PermissionsMixin
+from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from django.conf import settings
+
+
+def user_rif_image_file_path(instance, filename):
+    """Generate file path for new users rif image"""
+    ext = filename.split('.')[-1]
+    filename = f'{uuid.uuid4()}.{ext}'
+
+    return os.path.join('uplaods/user_rif/', filename)
+
+
+def product_image_file_path(instance, filename):
+    """Generate file path for new product image"""
+    ext = filename.split('.')[-1]
+    filename = f'{uuid.uuid4()}.{ext}'
+
+    return os.path.join('uploads/product/', filename)
 
 
 class UserManager(BaseUserManager):
@@ -9,7 +29,8 @@ class UserManager(BaseUserManager):
     def create_user(self, email, name, password=None, **extra_fields):
         """Creates and saves a new user"""
         if not email:
-            raise ValueError('Usuarios deben tener un correo electrónico')
+            raise ValueError(_('Usuarios deben tener un correo electrónico'))
+
         user = self.model(email=self.normalize_email(
             email), name=name, **extra_fields)
         user.set_password(password)
@@ -55,6 +76,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     #     max_length=255, choices=BUSINESS_TYPE_CHOICES, default='Personal')
     # specialization = models.CharField(
     #     max_length=255, choices=SPECIALIZATION_CHOICES, default='Medicina')
+    rif = models.ImageField(null=True, upload_to=user_rif_image_file_path)
+    is_validated = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
@@ -108,10 +131,10 @@ class ProductType(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    product_family = models.ForeignKey(ProductFamily,
-                                       verbose_name="ID Tipo de Producto",
-                                       on_delete=models.CASCADE
-                                       )
+    product_family = models.ForeignKey(
+        ProductFamily,
+        verbose_name="ID Tipo de Producto",
+        on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -120,16 +143,18 @@ class ProductType(models.Model):
 class Product(models.Model):
     """Product object"""
     name = models.CharField(max_length=255)
-    product_type = models.ForeignKey(ProductType,
-                                     verbose_name="ID Tipo de Producto",
-                                     on_delete=models.CASCADE
-                                     )
+    product_type = models.ForeignKey(
+        ProductType,
+        verbose_name="ID Tipo de Producto",
+        on_delete=models.CASCADE)
     presentation_type = models.CharField(
         max_length=255, choices=PRESENTATION_TYPE_OPT, default='paquete')
-    brand = models.ForeignKey(Brand, verbose_name="Marca",
-                              on_delete=models.CASCADE,
-                              )
+    brand = models.ForeignKey(
+        Brand, verbose_name="Marca",
+        on_delete=models.CASCADE)
     description = models.CharField(max_length=255, blank=True)
+    product_image = models.ImageField(
+        null=True, upload_to=product_image_file_path)
 
     def __str__(self):
         return self.name

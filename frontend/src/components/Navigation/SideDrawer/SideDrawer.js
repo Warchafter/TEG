@@ -1,29 +1,31 @@
 import React from 'react';
+import Drawer from '@material-ui/core/Drawer';
+import { makeStyles } from '@material-ui/core/styles';
 
 import Logo from '../../Logo/Logo';
 import NavigationItems from '../NavigationItems/NavigationItems';
-import classes from './SideDrawer.module.css';
-import Backdrop from '../../UI/Backdrop/Backdrop';
-import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
 
-const sideDrawer = (props) => {
-    let attachedClasses = [classes.SideDrawer, classes.Close];
-    if (props.open) {
-        attachedClasses = [classes.SideDrawer, classes.Open];
+const useStyles = makeStyles(theme => ({
+    Logo: {
+        height: "11%",
+        marginBottom: "32px",
     }
+}));
+
+const SideDrawer = (props) => {
+    const classes = useStyles();
     return (
-        <Auxiliary>
-            <Backdrop show={props.open} clicked={props.closed} />
-            <div className={attachedClasses.join(' ')} onClick={props.closed}>
+        <React.Fragment>
+            <Drawer anchor="left" open={props.open} onClose={props.closed}>
                 <div className={classes.Logo}>
                     <Logo />
                 </div>
                 <nav>
                     <NavigationItems isAuthenticated={props.isAuth} />
                 </nav>
-            </div>
-        </Auxiliary>
-    );
-};
+            </Drawer>
+        </React.Fragment>
+    )
+}
 
-export default sideDrawer;
+export default SideDrawer;
