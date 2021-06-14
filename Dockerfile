@@ -7,6 +7,7 @@ ENV PYTHONUNBUFFERED 1
 
 # install system-wide dependencies
 COPY ./requirements.txt /requirements.txt
+COPY ./new_requirements.txt /new_requirements.txt
 RUN apk update
 RUN apk add postgresql-client jpeg-dev libjpeg
 RUN apk add --virtual .tmp-build-deps \

@@ -20,6 +20,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -200,9 +201,23 @@ EMAIL_USE_TLS = True
 
 # Corsheaders
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000'
-]
+
+ALLOWED_HOSTS = ['*']
+
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:3000',
+#     'http://127.0.0.1:8000',
+# ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Appends slash to url if not provided
 APPEND_SLASH = True
+
+
+#
+
+GRAPH_MODELS = {
+    'all_applications': True,
+    'group_models': True,
+}

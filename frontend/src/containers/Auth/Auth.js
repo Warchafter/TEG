@@ -18,7 +18,7 @@ import { connect } from 'react-redux';
 
 import * as actions from '../../store/actions/index';
 import { updateObject, checkValidity } from '../../shared/utility';
-import backgroundMovies from '../../assets/ih_insuhosp_act_background.jpg';
+import backgroundIH from '../../assets/ih_insuhosp_act_background.jpg';
 import Notifier from '../../components/Notifier/Notifier';
 
 const useStyles = makeStyles((theme) => ({
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
         height: '91vh',
     },
     image: {
-        backgroundImage: `url(${backgroundMovies})`,
+        backgroundImage: `url(${backgroundIH})`,
         backgroundRepeat: 'no-repeat',
         backgroundColor:
             theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],

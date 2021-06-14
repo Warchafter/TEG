@@ -3,11 +3,15 @@ from rest_framework.routers import DefaultRouter
 
 from product import views
 
+
 router = DefaultRouter()
-router.register('product_families', views.ProductFamiliyViewSet)
+router.register('products', views.ProductViewSet)
+router.register('brands', views.BrandViewSet)
+router.register('product-characteristics', views.ProductCharacteristicView)
+router.register('characteristic-types', views.CharacteristicTypeView)
 
 app_name = 'product'
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)),
 ]

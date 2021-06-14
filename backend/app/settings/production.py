@@ -13,7 +13,6 @@ SECRET_KEY = os.environ.get(
 
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-ALLOWED_HOSTS = ['*']
 
 if "DATABASE_URL" in env:
     DATABASES['default'] = dj_database_url.config(

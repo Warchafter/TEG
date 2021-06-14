@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model, authenticate
 from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import serializers
+from core.models import Specialization, User
 
 
 class UserCreateSerializer(UserCreateSerializer):
@@ -53,3 +54,33 @@ class AuthTokenSerializer(serializers.Serializer):
 
         attrs['user'] = user
         return attrs
+
+
+class CurrentUserSerializer(serializers.Serializer):
+    """ """
+
+    class Meta:
+        model = User
+        fields = (
+            'id', 'email', 'name', 'bussiness_name', 'business_type',
+            'specialization', 'rif', 'rif_address', 'rif_validated', 'is_active',
+            'is_staff', 'roles'
+        )
+        read_only_fields = ('id,', 'is_active', 'is_staff')
+
+
+class CurrentUserRIFImageSerializer(serializers.ModelSerializer):
+    """Serializer for uploading rif images to user"""
+
+    class Meta:
+        model = User
+        fields = ('id', 'image')
+        read_only_fields = ('id',)
+
+
+class SpecializationSerializer(serializers.ModelSerializer):
+    """ """
+    class Meta:
+        model = Specialization
+        fields = ('id', 'name')
+        read_only_fields = ('id',)

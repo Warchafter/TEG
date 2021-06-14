@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
@@ -13,6 +13,7 @@ const useStyles = makeStyles(theme => ({
 
 const Layout = props => {
     const [sideDrawerIsVisible, setSideDrawerIsvisible] = useState(false);
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
     const classes = useStyles();
 
@@ -27,10 +28,10 @@ const Layout = props => {
     return (
         <React.Fragment>
             <Toolbar
-                isAuth={props.isAuthenticated}
+                isAuth={isAuthenticated}
                 drawerToggleClicked={sideDrawerToggleHandler} />
             <SideDrawer
-                isAuth={props.isAuthenticated}
+                isAuth={isAuthenticated}
                 open={sideDrawerIsVisible}
                 closed={sideDrawerCloseHandler} />
             <main className={classes.Content} >{props.children}</main>
@@ -38,10 +39,6 @@ const Layout = props => {
     )
 }
 
-const mapStateToProps = state => {
-    return {
-        isAuthenticated: state.auth.isAuthenticated
-    };
-}
 
-export default connect(mapStateToProps)(Layout);
+
+export default Layout;

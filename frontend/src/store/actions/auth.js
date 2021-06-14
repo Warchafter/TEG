@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes';
 
-export const authStart = () => {
+export const authStart = (isCorpo) => {
     return {
         type: actionTypes.AUTH_START
     };

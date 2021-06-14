@@ -120,19 +120,21 @@ const ResetPasswordConfirm = props => {
     };
 
     let form = fromElementsArray.map(formElement => {
-        <TextField
-            key={formElement.id}
-            variant='outlined'
-            margin='normal'
-            required
-            fullWidth
-            name={formElement.id}
-            label={formElement.config.elementConfig.placeholder}
-            type={formElement.config.elementConfig.type}
-            id={formElement.id}
-            error={!formElement.config.valid && formElement.config.touched}
-            onChange={(event) => inputChangedHandler(event, formElement.id)}
-        />
+        return (
+            <TextField
+                key={formElement.id}
+                variant='outlined'
+                margin='normal'
+                required
+                fullWidth
+                name={formElement.id}
+                label={formElement.config.elementConfig.placeholder}
+                type={formElement.config.elementConfig.type}
+                id={formElement.id}
+                error={!formElement.config.valid && formElement.config.touched}
+                onChange={(event) => inputChangedHandler(event, formElement.id)}
+            />
+        )
     });
 
     return (

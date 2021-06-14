@@ -36,6 +36,10 @@ export const checkValidity = (value, rules) => {
     return isValid;
 }
 
+export const firstLetterHandler = user => {
+    return (user) ? user.charAt(0).toUpperCase() : null;
+}
+
 export const getSnackbarData = (message, variant) => {
     return {
         message: message,

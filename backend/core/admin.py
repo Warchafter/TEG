@@ -12,7 +12,7 @@ class UserAdmin(BaseUserAdmin):
         (None, {'fields': ('email', 'password')}),
         (_('Personal Info'), {
          'fields': ('name', 'business_name', 'business_type',
-                    'specialization')}),
+                    'specialization', 'roles')}),
         (
             _('Permissions'),
             {'fields': ('is_active', 'is_staff', 'is_superuser')}
@@ -28,5 +28,8 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(models.User, UserAdmin)
-admin.site.register(models.ProductFamily)
-admin.site.register(models.ProductType)
+admin.site.register(models.Specialization)
+admin.site.register(models.CharacteristicTypes)
+admin.site.register(models.Product)
+admin.site.register(models.ProductCharacteristics)
+admin.site.register(models.Brand)
