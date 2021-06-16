@@ -15,7 +15,8 @@ import snackbarReducer from './store/reducers/snackbar';
 import interfaceReducer from './store/reducers/interface';
 import corpoReducer from './store/reducers/corpo';
 import productReducer from './store/reducers/product';
-import { watchAuth, watchInterface, watchCorpo, watchProduct } from './store/sagas';
+import supplierReducer from './store/reducers/supplier';
+import { watchAuth, watchInterface, watchCorpo, watchProduct, watchSupplier } from './store/sagas';
 
 // const composeEnhancers = (process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null) || compose;
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   snackbar: snackbarReducer,
   product: productReducer,
+  supplier: supplierReducer,
   corpo: corpoReducer,
   interface: interfaceReducer,
 });
@@ -61,6 +63,7 @@ const theme = createMuiTheme({
 
 sagaMiddleWare.run(watchAuth);
 sagaMiddleWare.run(watchProduct);
+sagaMiddleWare.run(watchSupplier);
 sagaMiddleWare.run(watchCorpo);
 sagaMiddleWare.run(watchInterface);
 

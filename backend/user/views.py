@@ -81,6 +81,9 @@ class ManageUserView(generics.RetrieveUpdateAPIView):
 class UserDetailViewProtect(APIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
+    def get(self, request, format=None):
+        return self.request.user
+
     def post(self, request, format=None):
         token_user_email = request.user.email
         token_user_username = request.user.username

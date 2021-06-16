@@ -160,8 +160,7 @@ class Brand(models.Model):
     name = models.CharField(max_length=255)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        on_delete=models.DO_NOTHING,
-        default=1
+        on_delete=models.DO_NOTHING
     )
 
     class Meta:
@@ -247,7 +246,7 @@ class ProductCharacteristics(models.Model):
     value = models.TextField(blank=True)
 
     def __str__(self):
-        return self.name
+        return str(self.product) + ' - ' + str(self.characteristic_type) + ' - ' + str(self.name) + ' ' + str(self.value)
 
 
 # class Deparment(models.Model):
@@ -330,7 +329,7 @@ class Supplier(models.Model):
     """ """
     name = models.CharField(max_length=255)
     rif = models.CharField(max_length=20)
-    rif_image = models.ImageField(
+    image = models.ImageField(
         null=True, upload_to=supplier_rif_file_path)
     address = models.CharField(max_length=255)
     user = models.ForeignKey(
@@ -340,6 +339,49 @@ class Supplier(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class SupplierEmails(models.Model):
+    """ """
+    supplier = models.ForeignKey(
+        Supplier, verbose_name="ID Distribuidor",
+        on_delete=models.CASCADE
+    )
+    email = models.CharField(max_length=255)
+    description = models.CharField(max_length=255)
+    is_Main = models.BooleanField(verbose_name="Flag de Correo Pricipal")
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.DO_NOTHING,
+    )
+
+    def __str__(self):
+        return self.email
+
+
+class SupplierProducts(models.Model):
+    """ """
+    product = models.ForeignKey(
+        Product, verbose_name="ID Producto",
+        on_delete=models.DO_NOTHING
+    )
+    supplier = models.ForeignKey(
+        Supplier, verbose_name="ID Proveedor",
+        on_delete=models.DO_NOTHING
+    )
+    price = models.FloatField(verbose_name="Precio del Producto")
+    stock = models.FloatField(
+        verbose_name="Inventario del Producto del Proveedor")
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.DO_NOTHING,
+    )
+
+    class Meta:
+        unique_together = ('product', 'supplier')
+
+    def __str__(self):
+        return str(self.supplier) + ' - ' + str(self.product)
 
 
 # class SupplierEmployees(models.Model):
@@ -364,40 +406,6 @@ class Supplier(models.Model):
 #         return self.phone_number
 
 
-class SupplierEmails(models.Model):
-    """ """
-    email = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.DO_NOTHING,
-    )
-    is_Main = models.BooleanField(verbose_name="Flag de Correo Pricipal")
-
-    def __str__(self):
-        return self.email
-
-
-class SupplierProducts(models.Model):
-    """ """
-    product = models.ForeignKey(
-        Product, verbose_name="ID Producto",
-        on_delete=models.DO_NOTHING
-    )
-    supplier = models.ForeignKey(
-        Supplier, verbose_name="ID Proveedor",
-        on_delete=models.DO_NOTHING
-    )
-    price = models.FloatField(verbose_name="Precio del Producto")
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.DO_NOTHING,
-    )
-
-    class Meta:
-        unique_together = ('product', 'supplier')
-
-
 class ExchangeRate(models.Model):
     """ """
     date = models.DateTimeField()
@@ -410,6 +418,10 @@ class ExchangeRate(models.Model):
 class PaymentMethod(models.Model):
     """ """
     name = models.CharField(max_length=255)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.DO_NOTHING,
+    )
 
     def __str__(self):
         return self.name
@@ -418,6 +430,10 @@ class PaymentMethod(models.Model):
 class Currency(models.Model):
     """ """
     name = models.CharField(max_length=255)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.DO_NOTHING,
+    )
 
     def __str__(self):
         return self.name
@@ -426,6 +442,10 @@ class Currency(models.Model):
 class PurchaseStatus(models.Model):
     """ """
     name = models.CharField(max_length=255)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.DO_NOTHING,
+    )
 
     def __str__(self):
         return self.name
@@ -434,6 +454,10 @@ class PurchaseStatus(models.Model):
 class PaymentStatus(models.Model):
     """ """
     name = models.CharField(max_length=255)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.DO_NOTHING,
+    )
 
     def __str__(self):
         return self.name
@@ -442,7 +466,7 @@ class PaymentStatus(models.Model):
 class PurchaseBill(models.Model):
     """ """
     purchase_order_date = models.DateTimeField(default=timezone.now)
-    purchase_payment_date = models.DateTimeField()
+    purchase_payment_date = models.DateTimeField(blank=True, null=True)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.DO_NOTHING
@@ -450,15 +474,21 @@ class PurchaseBill(models.Model):
     payment_method = models.ForeignKey(
         PaymentMethod,
         verbose_name="Método de Pago",
-        on_delete=models.DO_NOTHING
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True
     )
     currency = models.ForeignKey(
         Currency, verbose_name="Moneda",
-        on_delete=models.DO_NOTHING
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True
     )
     bank = models.ForeignKey(
         Bank, verbose_name="Banco",
-        on_delete=models.DO_NOTHING
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True
     )
     purchase_status = models.ForeignKey(
         PurchaseStatus,
@@ -471,6 +501,9 @@ class PurchaseBill(models.Model):
         on_delete=models.DO_NOTHING
     )
 
+    def __str__(self):
+        return str(self.purchase_status) + ' - ' + str(self.user.name) + ' (Nº: ' + str(self.id) + ') Status Pago: ' + str(self.payment_status)
+
 
 class BillDetail(models.Model):
     """ """
@@ -482,6 +515,9 @@ class BillDetail(models.Model):
     product = models.ForeignKey(SupplierProducts, on_delete=models.DO_NOTHING)
     quantity = models.IntegerField()
 
+    def __str__(self):
+        return str(self.purchase_bill) + ' - ' + str(self.product) + '(' + str(self.quantity) + ')'
+
 # [BillDetail_ID] = 1;
 # [Product_ID] = 13;
 # [Quantity] = 30
@@ -489,13 +525,15 @@ class BillDetail(models.Model):
 
 class BillProductCharacteristics(models.Model):
     """ """
+    bill_detail = models.ForeignKey(
+        BillDetail, on_delete=models.DO_NOTHING)
     characteristic_sel = models.ManyToManyField(
-        CharacteristicTypes
-    )
-    bill_detail = models.ManyToManyField(
-        BillDetail
+        ProductCharacteristics
     )
 
+    def __str__(self):
+        return str(self.bill_detail.id) + ' - ' + str(self.bill_detail.product) + str(self.characteristic_sel.name)
+        # return self.characteristic_sel
 
 # [Characteristic_ID] = 14 // Especial - Con Talco - True
 # [BillDetail] = 1 // Guante de Nitrilo - Se compró 50 de ellos
@@ -521,3 +559,6 @@ class BillPaymentDetail(models.Model):
     payment_receipt_image = models.ImageField(
         null=False, upload_to=bill_payment_receipt_image_file_path
     )
+
+    def __str__(self):
+        return str(self.purchase_bill) + ' - ' + str(self.payment_receipt_number)

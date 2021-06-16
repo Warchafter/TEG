@@ -1,4 +1,4 @@
-import { put, select } from 'redux-saga/effects';
+import { put } from 'redux-saga/effects';
 import axios from '../../axios-db';
 
 import { getSnackbarData } from '../../shared/utility';
@@ -45,7 +45,7 @@ export function* fetchCharTypesSaga(action) {
         console.log(response.data);
         yield put(actions.fetchCharTypesSuccess(response.data));
     } catch (error) {
-        yield put(actions.fetchCharTypesSuccess(error));
+        yield put(actions.fetchCharTypesFail(error));
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer los tipos de características', 'error')));
     };
 };

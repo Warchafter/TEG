@@ -14,16 +14,31 @@ import {
 } from './auth';
 
 import {
+    createCharTypeSaga,
+    fetchBrandsSaga,
+    fetchCharTypesSaga
+} from './product';
+
+import {
+    createSupplierSaga,
+    fetchSupplierSaga,
+    fetchSupplierListSaga,
+    createSupplierEmailSaga,
+    fetchSupplierEmailListSaga,
+    createSupplierProductSaga,
+    modifySupplierProductSaga,
+    deleteSupplierProductSaga,
+    fetchSupplierProductSaga,
+    fetchSupplierProductListSaga,
+} from './supplier';
+
+import {
     toggleCorpoView
 } from './corpo';
 
 import {
     toggleSidebarSaga,
 } from './interface';
-
-import {
-    createCharTypeSaga, fetchBrandsSaga, fetchCharTypesSaga
-} from './product';
 
 export function* watchAuth() {
     yield all([
@@ -43,6 +58,21 @@ export function* watchProduct() {
         takeLatest(actionTypes.CREATE_CHAR_TYPE, createCharTypeSaga),
         takeEvery(actionTypes.FETCH_CHAR_TYPES, fetchCharTypesSaga),
         takeEvery(actionTypes.FETCH_BRANDS, fetchBrandsSaga),
+    ]);
+};
+
+export function* watchSupplier() {
+    yield all([
+        takeLatest(actionTypes.CREATE_SUPPLIER, createSupplierSaga),
+        takeEvery(actionTypes.FETCH_SUPPLIER, fetchSupplierSaga),
+        takeEvery(actionTypes.FETCH_SUPPLIER_LIST, fetchSupplierListSaga),
+        takeLatest(actionTypes.CREATE_SUPPLIER_EMAIL, createSupplierEmailSaga),
+        takeEvery(actionTypes.FETCH_SUPPLIER_EMAIL, fetchSupplierEmailListSaga),
+        takeLatest(actionTypes.CREATE_SUPPLIER_PRODUCT, createSupplierProductSaga),
+        takeEvery(actionTypes.MODIFY_SUPPLIER_PRODUCT, modifySupplierProductSaga),
+        takeLatest(actionTypes.DELETE_SUPPLIER_PRODUCT, deleteSupplierProductSaga),
+        takeEvery(actionTypes.FETCH_SUPPLIER_PRODUCT, fetchSupplierProductSaga),
+        takeEvery(actionTypes.FETCH_SUPPLIER_PRODUCT_LIST, fetchSupplierProductListSaga),
     ]);
 };
 

@@ -218,8 +218,10 @@ class ProductCharacteristicView(viewsets.ModelViewSet):
         if product and name:
             product_ids = self._params_to_ints(product)
             queryset = queryset.filter(product_id__in=product_ids)
+            queryset = queryset.filter(name__iexact=name)
         elif product:
             product_ids = self._params_to_ints(product)
+            queryset = queryset.filter(product_id__in=product_ids)
         elif name:
             queryset = queryset.filter(
                 name__iexact=name)
