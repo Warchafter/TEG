@@ -15,8 +15,9 @@ import snackbarReducer from './store/reducers/snackbar';
 import interfaceReducer from './store/reducers/interface';
 import corpoReducer from './store/reducers/corpo';
 import productReducer from './store/reducers/product';
+import billReducer from './store/reducers/bill';
 import supplierReducer from './store/reducers/supplier';
-import { watchAuth, watchInterface, watchCorpo, watchProduct, watchSupplier } from './store/sagas';
+import { watchAuth, watchInterface, watchCorpo, watchProduct, watchSupplier, watchBill } from './store/sagas';
 
 // const composeEnhancers = (process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null) || compose;
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   snackbar: snackbarReducer,
   product: productReducer,
+  bill: billReducer,
   supplier: supplierReducer,
   corpo: corpoReducer,
   interface: interfaceReducer,
@@ -41,15 +43,15 @@ const theme = createMuiTheme({
   palette: {
     primary: {
       // light: will be calculated from palette.primary.main,
-      main: '#536162',
+      main: '#0A1931',
       // dark: will be calculated from palette.primary.main,
       // contrastText: will be calculated to contrast with palette.primary.main
     },
     secondary: {
-      light: '#f3f4ed',
-      main: '#424642',
+      light: '#FFC947',
+      main: '#185ADB',
       // dark: will be calculated from palette.secondary.main,
-      contrastText: '#c06014',
+      contrastText: '#EFEFEF',
     },
     // Used by `getContrastText()` to maximize the contrast between
     // the background and the text.
@@ -64,6 +66,7 @@ const theme = createMuiTheme({
 sagaMiddleWare.run(watchAuth);
 sagaMiddleWare.run(watchProduct);
 sagaMiddleWare.run(watchSupplier);
+sagaMiddleWare.run(watchBill);
 sagaMiddleWare.run(watchCorpo);
 sagaMiddleWare.run(watchInterface);
 

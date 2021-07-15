@@ -1,8 +1,9 @@
 from rest_framework import serializers
 
 from core.models import Bank, BillDetail, BillPaymentDetail, BillProductCharacteristics, ProductCharacteristics, PaymentMethod, Currency, PurchaseBill, PurchaseStatus, PaymentStatus, SupplierProducts
-from product.serializers import ProductDetailSerializer, ProductCharacteristicSerializer
+from product.serializers import ProductDetailSerializer, ProductCharacteristicSerializer, ProductCharacteristicDetailSerializer
 from supplier.serializers import SupplierProductDetailSerializer, SupplierProductsSerializer
+from user.serializers import CurrentUserSerializer
 
 
 class BankSerializer(serializers.ModelSerializer):
@@ -53,12 +54,6 @@ class PaymentStatusSerializer(serializers.ModelSerializer):
 class PurchaseBillSerializer(serializers.ModelSerializer):
     """Serializer for purchase bill objects"""
 
-    payment_method = PaymentMethodSerializer
-    currency = CurrencySerializer
-    bank = BankSerializer
-    purchase_status = PurchaseStatusSerializer
-    payment_status = PaymentStatusSerializer
-
     class Meta:
         model = PurchaseBill
         fields = (
@@ -66,7 +61,17 @@ class PurchaseBillSerializer(serializers.ModelSerializer):
             'payment_method', 'currency', 'bank', 'purchase_status',
             'payment_status'
         )
-        read_only_fields = ('id', 'purchase_order_date')
+        read_only_fields = ('id',)
+        ordering = ('id',)
+
+
+class PurchaseBillListSerializer(PurchaseBillSerializer):
+    """Serializer for purchase bill list"""
+    payment_method = PaymentMethodSerializer(many=False, read_only=True)
+    currency = CurrencySerializer(many=False, read_only=True)
+    bank = BankSerializer(many=False, read_only=True)
+    purchase_status = PurchaseStatusSerializer(many=False, read_only=True)
+    payment_status = PaymentStatusSerializer(many=False, read_only=True)
 
 
 class PurchaseBillDetailSerializer(PurchaseBillSerializer):
@@ -82,13 +87,16 @@ class PurchaseBillDetailSerializer(PurchaseBillSerializer):
 class BillDetailSerializer(serializers.ModelSerializer):
     """Serializer for bill detail objects"""
 
-    purchase_bill = PurchaseBillSerializer
-    product = SupplierProductsSerializer
-
     class Meta:
         model = BillDetail
         fields = ('id', 'purchase_bill', 'product', 'quantity')
         read_only_fields = ('id',)
+
+
+class BillDetailListSerializer(BillDetailSerializer):
+
+    purchase_bill = PurchaseBillDetailSerializer(many=False, read_only=True)
+    product = SupplierProductDetailSerializer(many=False, read_only=True)
 
 
 class BillDetailDetailSerializer(BillDetailSerializer):
@@ -101,20 +109,25 @@ class BillDetailDetailSerializer(BillDetailSerializer):
 class BillProductCharacteristicsSerializer(serializers.ModelSerializer):
     """Serializer for bill product characteristics objects"""
 
-    characteristic_sel = ProductCharacteristicSerializer
-    bill_detail = BillDetailSerializer
-
     class Meta:
         model = BillProductCharacteristics
         fields = ('id', 'characteristic_sel', 'bill_detail')
         read_only_fields = ('id',)
 
 
+class BillProductCharacteristicsListSerializer(BillProductCharacteristicsSerializer):
+    """Serialzier for bill product characteristic list"""
+
+    characteristic_sel = ProductCharacteristicDetailSerializer(
+        many=True, read_only=True)
+    bill_detail = BillDetailDetailSerializer(many=False, read_only=True)
+
+
 class BillProductCharacteristicsDetailSerializer(BillProductCharacteristicsSerializer):
     """Serializer for bill product characteristics detail"""
 
     characteristic_sel = ProductCharacteristicSerializer(
-        many=False, read_only=True)
+        many=True, read_only=True)
     bill_detail = BillDetailDetailSerializer(many=False, read_only=True)
 
 
@@ -129,7 +142,14 @@ class BillPaymentDetailSerializer(serializers.ModelSerializer):
             'id', 'purchase_bill', 'payment_receipt_number',
             'payment_receipt_image'
         )
-        read_only_fields = ('id',)
+        read_only_fields = ('id', 'payment_receipt_image')
+        ordering = ('id',)
+
+
+class BillPaymentDetailListSerializer(BillPaymentDetailSerializer):
+    """Serializer for bill payment detail list"""
+
+    purchase_bill = PurchaseBillDetailSerializer(many=False, read_only=True)
 
 
 class BillPaymentDetailDetailSerializer(BillPaymentDetailSerializer):

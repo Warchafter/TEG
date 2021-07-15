@@ -36,7 +36,8 @@ class ProductSerializer(serializers.ModelSerializer):
             'id', 'title', 'brand',
             'description', 'product_image', 'status'
         )
-        read_only_field = ('id',)
+        read_only_field = ('id', 'product_image')
+        ordering = ('id',)
 
 
 class ProductDetailSerializer(ProductSerializer):
@@ -49,17 +50,14 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('id', 'image')
+        fields = ('id', 'product_image')
         read_only_fields = ('id',)
 
 
 class ProductCharacteristicSerializer(serializers.ModelSerializer):
     """Serialize a product characteristics"""
-    product = serializers.PrimaryKeyRelatedField(
-        many=False, read_only=True
-    )
-    # product = ProductSerializer()
-    characteristic_type = CharacteristicTypeSerializer()
+    product = ProductSerializer
+    characteristic_type = CharacteristicTypeSerializer
 
     class Meta:
         model = ProductCharacteristics
@@ -67,3 +65,11 @@ class ProductCharacteristicSerializer(serializers.ModelSerializer):
             'id', 'product', 'characteristic_type', 'name', 'value'
         )
         read_only_fields = ('id',)
+
+
+class ProductCharacteristicDetailSerializer(ProductCharacteristicSerializer):
+    """Serializer for the product characteristic list objects"""
+
+    product = ProductDetailSerializer(many=False, read_only=True)
+    characteristic_type = CharacteristicTypeSerializer(
+        many=False, read_only=True)

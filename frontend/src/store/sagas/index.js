@@ -33,10 +33,38 @@ import {
 } from './supplier';
 
 import {
+    fetchBankListSaga,
+    fetchPaymentMethodListSaga,
+    fetchCurrencyListSaga,
+    fetchPurchaseStatusListSaga,
+    fetchPaymentStatusListSaga,
+    createPurchaseBillSaga,
+    modifyPurchaseBillSaga,
+    fetchPurchaseBillSaga,
+    fetchPurchaseBillListSaga,
+    createBillDetailSaga,
+    modifyBillDetailSaga,
+    deleteBillDetailSaga,
+    fetchBillDetailSaga,
+    fetchBillDetailListSaga,
+    createBillProductCharacteristicSaga,
+    modifyBillProductCharacteristicSaga,
+    deleteBillProductCharacteristicSaga,
+    fetchBillProductCharacteristicSaga,
+    fetchBillProductCharacteristicListSaga,
+    createBillPaymentDetailSaga,
+    modifyBillPaymentDetailSaga,
+    deleteBillPaymentDetailSaga,
+    fetchBillPaymentDetailSaga,
+    fetchBillPaymentDetailListSaga
+} from './bill';
+
+import {
     toggleCorpoView
 } from './corpo';
 
 import {
+    setMainContentTestingSaga,
     toggleSidebarSaga,
 } from './interface';
 
@@ -76,14 +104,44 @@ export function* watchSupplier() {
     ]);
 };
 
+export function* watchBill() {
+    yield all([
+        takeEvery(actionTypes.FETCH_BANK_LIST, fetchBankListSaga),
+        takeEvery(actionTypes.FETCH_PAYMENT_METHOD_LIST, fetchPaymentMethodListSaga),
+        takeEvery(actionTypes.FETCH_CURRENCY_LIST, fetchCurrencyListSaga),
+        takeEvery(actionTypes.FETCH_PURCHASE_STATUS_LIST, fetchPurchaseStatusListSaga),
+        takeEvery(actionTypes.FETCH_PAYMENT_STATUS_LIST, fetchPaymentStatusListSaga),
+        takeLatest(actionTypes.CREATE_PURCHASE_BILL, createPurchaseBillSaga),
+        takeEvery(actionTypes.MODIFY_PURCHASE_BILL, modifyPurchaseBillSaga),
+        takeEvery(actionTypes.FETCH_PURCHASE_BILL, fetchPurchaseBillSaga),
+        takeEvery(actionTypes.FETCH_PURCHASE_BILL_LIST, fetchPurchaseBillListSaga),
+        takeLatest(actionTypes.CREATE_BILL_DETAIL, createBillDetailSaga),
+        takeEvery(actionTypes.MODIFY_BILL_DETAIL, modifyBillDetailSaga),
+        takeLatest(actionTypes.DELETE_BILL_DETAIL, deleteBillDetailSaga),
+        takeEvery(actionTypes.FETCH_BILL_DETAIL, fetchBillDetailSaga),
+        takeEvery(actionTypes.FETCH_BILL_DETAIL_LIST, fetchBillDetailListSaga),
+        takeLatest(actionTypes.CREATE_BILL_PRODUCT_CHARACTERISTIC, createBillProductCharacteristicSaga),
+        takeEvery(actionTypes.MODIFY_BILL_PRODUCT_CHARACTERISTIC, modifyBillProductCharacteristicSaga),
+        takeLatest(actionTypes.DELETE_BILL_PRODUCT_CHARACTERISTIC, deleteBillProductCharacteristicSaga),
+        takeEvery(actionTypes.FETCH_BILL_PRODUCT_CHARACTERISTIC, fetchBillProductCharacteristicSaga),
+        takeEvery(actionTypes.FETCH_BILL_PRODUCT_CHARACTERISTIC_LIST, fetchBillProductCharacteristicListSaga),
+        takeLatest(actionTypes.CREATE_BILL_PAYMENT_DETAIL, createBillPaymentDetailSaga),
+        takeEvery(actionTypes.MODIFY_BILL_PAYMENT_DETAIL, modifyBillPaymentDetailSaga),
+        takeEvery(actionTypes.DELETE_BILL_PAYMENT_DETAIL, deleteBillPaymentDetailSaga),
+        takeEvery(actionTypes.FETCH_BILL_PAYMENT_DETAIL, fetchBillPaymentDetailSaga),
+        takeEvery(actionTypes.FETCH_BILL_PAYMENT_DETAIL_LIST, fetchBillPaymentDetailListSaga),
+    ]);
+};
+
 export function* watchCorpo() {
     yield all([
         takeEvery(actionTypes.TOGGLE_CORPO_VIEW, toggleCorpoView),
-    ])
-}
+    ]);
+};
 
 export function* watchInterface() {
     yield all([
         takeEvery(actionTypes.TOGGLE_SIDEBAR, toggleSidebarSaga),
+        takeEvery(actionTypes.SET_MAIN_CONTENT_TESTING, setMainContentTestingSaga),
     ]);
 };

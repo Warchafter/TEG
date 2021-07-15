@@ -37,7 +37,7 @@ const Layout = props => {
             <main className={classes.Content} >{props.children}</main>
         </React.Fragment>
     )
-}
+};
 
 
 

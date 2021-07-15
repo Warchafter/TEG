@@ -1,16 +1,18 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Route } from 'react-router-dom';
-import { withStyles } from '@material-ui/core/styles';
+// import { useSelector } from 'react-redux';
 
 import Notifier from '../../components/Notifier/Notifier';
 import ProductsList from '../../components/Products/ProductsList/ProductsList';
 
 export const Products = props => {
-    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+
+    // const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
     return (
-        <ProductsList />
+        <React.Fragment>
+            <Notifier />
+            <ProductsList />
+        </React.Fragment>
     )
 }
 

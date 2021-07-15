@@ -6,3 +6,6 @@ export function* toggleSidebarSaga(action) {
     yield put(actions.toggleSidebar());
 };
 
+export function* setMainContentTestingSaga(action) {
+    yield put(actions.setMainContentTesting());
+};

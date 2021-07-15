@@ -192,8 +192,8 @@ class SupplierViewSet(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         """Return appropriate serializer class"""
-        if self.action == 'retrieve':
-            return serializers.SupplierDetailSerializer
+        if self.action == 'upload_image':
+            return serializers.SupplierDetailImageSerializer
 
         return self.serializer_class
 

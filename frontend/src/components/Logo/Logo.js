@@ -1,10 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-    Box,
-    Paper
-} from '@material-ui/core';
-import { flexbox } from '@material-ui/system';
 
 import ihLogo from '../../assets/logo.png';
 

@@ -12,7 +12,7 @@ const Logout = props => {
     }, [onLogout]);
 
     return <Redirect to="/" />;
-}
+};
 
 const mapDispatchToProps = dispatch => {
     return {

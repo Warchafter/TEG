@@ -1,9 +1,8 @@
 import * as actionTypes from './actionTypes';
 
-export const fetchBankList = (data) => {
+export const fetchBankList = () => {
     return {
-        type: actionTypes.FETCH_BANK_LIST,
-        data: data
+        type: actionTypes.FETCH_BANK_LIST
     };
 };
 
@@ -13,10 +12,10 @@ export const fetchBankListStart = () => {
     };
 };
 
-export const fetchBankListSuccess = (bankData) => {
+export const fetchBankListSuccess = (bankList) => {
     return {
         type: actionTypes.FETCH_BANK_LIST_SUCCESS,
-        bankData: bankData
+        bankList: bankList
     };
 };
 
@@ -27,10 +26,9 @@ export const fetchBankListFail = (error) => {
     };
 };
 
-export const fetchPaymentMethodList = (data) => {
+export const fetchPaymentMethodList = () => {
     return {
-        type: actionTypes.FETCH_PAYMENT_METHOD_LIST,
-        data: data
+        type: actionTypes.FETCH_PAYMENT_METHOD_LIST
     };
 };
 
@@ -40,10 +38,10 @@ export const fetchPaymentMethodListStart = () => {
     };
 };
 
-export const fetchPaymentMethodListSuccess = (paymentMethodData) => {
+export const fetchPaymentMethodListSuccess = (paymentMethodList) => {
     return {
         type: actionTypes.FETCH_PAYMENT_METHOD_LIST_SUCCESS,
-        paymentMethodData: paymentMethodData
+        paymentMethodList: paymentMethodList
     };
 };
 
@@ -54,37 +52,35 @@ export const fetchPaymentMethodListFail = (error) => {
     };
 };
 
-export const fetchCurrencyList = (data) => {
+export const fetchCurrencyList = () => {
     return {
-        type: actionTypes.FETCH_PAYMENT_METHOD_LIST,
-        data: data
+        type: actionTypes.FETCH_CURRENCY_LIST
     };
 };
 
 export const fetchCurrencyListStart = () => {
     return {
-        type: actionTypes.FETCH_PAYMENT_METHOD_LIST_START
+        type: actionTypes.FETCH_CURRENCY_LIST_START
     };
 };
 
-export const fetchCurrencyListSuccess = (currencyData) => {
+export const fetchCurrencyListSuccess = (currencyList) => {
     return {
-        type: actionTypes.FETCH_PAYMENT_METHOD_LIST_SUCCESS,
-        currencyData: currencyData
+        type: actionTypes.FETCH_CURRENCY_LIST_SUCCESS,
+        currencyList: currencyList
     };
 };
 
 export const fetchCurrencyListFail = (error) => {
     return {
-        type: actionTypes.FETCH_PAYMENT_METHOD_LIST_FAIL,
+        type: actionTypes.FETCH_CURRENCY_LIST_FAIL,
         error: error
     };
 };
 
-export const fetchPurchaseStatusList = (data) => {
+export const fetchPurchaseStatusList = () => {
     return {
-        type: actionTypes.FETCH_PURCHASE_STATUS_LIST,
-        data: data
+        type: actionTypes.FETCH_PURCHASE_STATUS_LIST
     };
 };
 
@@ -94,10 +90,10 @@ export const fetchPurchaseStatusListStart = () => {
     };
 };
 
-export const fetchPurchaseStatusListSuccess = (currencyData) => {
+export const fetchPurchaseStatusListSuccess = (purchaseStatusList) => {
     return {
         type: actionTypes.FETCH_PURCHASE_STATUS_LIST_SUCCESS,
-        currencyData: currencyData
+        purchaseStatusList: purchaseStatusList
     };
 };
 
@@ -108,10 +104,9 @@ export const fetchPurchaseStatusListFail = (error) => {
     };
 };
 
-export const fetchPaymentStatusList = (data) => {
+export const fetchPaymentStatusList = () => {
     return {
-        type: actionTypes.FETCH_PAYMENT_STATUS_LIST,
-        data: data
+        type: actionTypes.FETCH_PAYMENT_STATUS_LIST
     };
 };
 
@@ -121,10 +116,10 @@ export const fetchPaymentStatusListStart = () => {
     };
 };
 
-export const fetchPaymentStatusListSuccess = (paymentStatusData) => {
+export const fetchPaymentStatusListSuccess = (paymentStatusList) => {
     return {
         type: actionTypes.FETCH_PAYMENT_STATUS_LIST_SUCCESS,
-        paymentStatusData: paymentStatusData
+        paymentStatusList: paymentStatusList
     };
 };
 
@@ -170,11 +165,11 @@ export const modifyPurchaseBill = (data) => {
     };
 };
 
-export const modifyPurchaseBillStart = (purchaseBillSelected, purchaseBillData) => {
+export const modifyPurchaseBillStart = (purchaseBillData, purchaseBillSelected) => {
     return {
         type: actionTypes.MODIFY_PURCHASE_BILL_START,
-        purchaseBillSelected: purchaseBillSelected,
-        purchaseBillData: purchaseBillData
+        purchaseBillData: purchaseBillData,
+        purchaseBillSelected: purchaseBillSelected
     };
 };
 
@@ -220,10 +215,9 @@ export const fetchPurchaseBillFail = (error) => {
     };
 };
 
-export const fetchPurchaseBillList = (data) => {
+export const fetchPurchaseBillList = () => {
     return {
-        type: actionTypes.FETCH_PURCHASE_BILL_LIST,
-        data: data
+        type: actionTypes.FETCH_PURCHASE_BILL_LIST
     };
 };
 
@@ -233,10 +227,10 @@ export const fetchPurchaseBillListStart = () => {
     };
 };
 
-export const fetchPurchaseBillListSuccess = (purchaseBillsData) => {
+export const fetchPurchaseBillListSuccess = (purchaseBillList) => {
     return {
         type: actionTypes.FETCH_PURCHASE_BILL_LIST_SUCCESS,
-        purchaseBillsData: purchaseBillsData
+        purchaseBillList: purchaseBillList
     };
 };
 
@@ -261,10 +255,10 @@ export const createBillDetailStart = (billDetailData) => {
     };
 };
 
-export const createBillDetailSuccess = (billDetailIds) => {
+export const createBillDetailSuccess = (billDetailData) => {
     return {
         type: actionTypes.CREATE_BILL_DETAIL_SUCCESS,
-        billDetailIds: billDetailIds
+        billDetailData: billDetailData
     };
 };
 
@@ -282,11 +276,11 @@ export const modifyBillDetail = (data) => {
     };
 };
 
-export const modifyBillDetailStart = (billDetailSelected, billDetailData) => {
+export const modifyBillDetailStart = (billDetailData, billDetailSelected) => {
     return {
         type: actionTypes.MODIFY_BILL_DETAIL_START,
-        billDetailSelected: billDetailSelected,
-        billDetailData: billDetailData
+        billDetailData: billDetailData,
+        billDetailSelected: billDetailSelected
     };
 };
 
@@ -372,10 +366,10 @@ export const fetchBillDetailListStart = () => {
     };
 };
 
-export const fetchBillDetailListSuccess = (billsData) => {
+export const fetchBillDetailListSuccess = (billDetailList) => {
     return {
         type: actionTypes.FETCH_BILL_DETAIL_LIST_SUCCESS,
-        billsData: billsData
+        billDetailList: billDetailList
     };
 };
 
@@ -393,18 +387,16 @@ export const createBillProductCharacteristic = (data) => {
     };
 };
 
-export const createBillProductCharacteristicStart = (billProductCharacteristicIds, billDetailId) => {
+export const createBillProductCharacteristicStart = () => {
     return {
-        type: actionTypes.CREATE_BILL_PRODUCT_CHARACTERISTIC_START,
-        billProductCharacteristicIds: billProductCharacteristicIds,
-        billDetailId: billDetailId
+        type: actionTypes.CREATE_BILL_PRODUCT_CHARACTERISTIC_START
     };
 };
 
-export const createBillProductCharacteristicSuccess = (billDetailCreatedId) => {
+export const createBillProductCharacteristicSuccess = (billProductCharacteristicData) => {
     return {
         type: actionTypes.CREATE_BILL_PRODUCT_CHARACTERISTIC_SUCCESS,
-        billDetailCreatedId: billDetailCreatedId
+        billProductCharacteristicData: billProductCharacteristicData
     };
 };
 
@@ -422,12 +414,11 @@ export const modifyBillProductCharacteristic = (data) => {
     };
 };
 
-export const modifyBillProductCharacteristicStart = (billProductCharacteristicIds, billDetailId, billDetailSelectedId) => {
+export const modifyBillProductCharacteristicStart = (billProductCharacteristicData, billProductCharacteristicSelected) => {
     return {
         type: actionTypes.MODIFY_BILL_PRODUCT_CHARACTERISTIC_START,
-        billProductCharacteristicIds: billProductCharacteristicIds,
-        billDetailId: billDetailId,
-        billDetailSelectedId: billDetailSelectedId
+        billProductCharacteristicData: billProductCharacteristicData,
+        billProductCharacteristicSelected: billProductCharacteristicSelected
     };
 };
 
@@ -478,10 +469,10 @@ export const fetchBillProductCharacteristic = (data) => {
     };
 };
 
-export const fetchBillProductCharacteristicStart = (billProductCharacteristicId) => {
+export const fetchBillProductCharacteristicStart = (billProductCharacteristicSelected) => {
     return {
         type: actionTypes.FETCH_BILL_PRODUCT_CHARACTERISTIC_START,
-        billProductCharacteristicId: billProductCharacteristicId
+        billProductCharacteristicSelected: billProductCharacteristicSelected
     };
 };
 
@@ -512,10 +503,10 @@ export const fetchBillProductCharacteristicListStart = () => {
     };
 };
 
-export const fetchBillProductCharacteristicListSuccess = (billProductCharacteristicListData) => {
+export const fetchBillProductCharacteristicListSuccess = (billProductCharacteristicList) => {
     return {
         type: actionTypes.FETCH_BILL_PRODUCT_CHARACTERISTIC_LIST_SUCCESS,
-        billProductCharacteristicListData: billProductCharacteristicListData
+        billProductCharacteristicList: billProductCharacteristicList
     };
 };
 
@@ -526,113 +517,138 @@ export const fetchBillProductCharacteristicListFail = (error) => {
     };
 };
 
-export const createPaymentDetail = (data) => {
+export const createBillPaymentDetail = (data, formData) => {
     return {
-        type: actionTypes.CREATE_PAYMENT_DETAIL,
-        data: data
+        type: actionTypes.CREATE_BILL_PAYMENT_DETAIL,
+        data: data,
+        formData: formData
     };
 };
 
-export const createPaymentDetailStart = (paymentDetailData) => {
+export const createBillPaymentDetailStart = () => {
     return {
-        type: actionTypes.CREATE_PAYMENT_DETAIL_START,
-        paymentDetailData: paymentDetailData
+        type: actionTypes.CREATE_BILL_PAYMENT_DETAIL_START
     };
 };
 
-export const createPaymentDetailSuccess = (paymentDetailCreatedId) => {
+export const createBillPaymentDetailSuccess = (billPaymentDetailCreated) => {
     return {
-        type: actionTypes.CREATE_PAYMENT_DETAIL_SUCCESS,
-        paymentDetailCreatedId: paymentDetailCreatedId
+        type: actionTypes.CREATE_BILL_PAYMENT_DETAIL_SUCCESS,
+        billPaymentDetailCreated: billPaymentDetailCreated
     };
 };
 
-export const createPaymentDetailFail = (error) => {
+export const createBillPaymentDetailFail = (error) => {
     return {
-        type: actionTypes.CREATE_PAYMENT_DETAIL_FAIL,
+        type: actionTypes.CREATE_BILL_PAYMENT_DETAIL_FAIL,
         error: error
     };
 };
 
-export const modifyPaymentDetail = (data) => {
+export const modifyBillPaymentDetail = (data) => {
     return {
-        type: actionTypes.MODIFY_PAYMENT_DETAIL,
+        type: actionTypes.MODIFY_BILL_PAYMENT_DETAIL,
         data: data
     };
 };
 
-export const modifyPaymentDetailStart = (paymentDetailSelected, paymentDetailData) => {
+export const modifyBillPaymentDetailStart = (billPaymentDetailData, billPaymentDetailSelected) => {
     return {
-        type: actionTypes.MODIFY_PAYMENT_DETAIL_START,
-        paymentDetailSelected: paymentDetailSelected,
-        paymentDetailData: paymentDetailData
+        type: actionTypes.MODIFY_BILL_PAYMENT_DETAIL_START,
+        billPaymentDetailData: billPaymentDetailData,
+        billPaymentDetailSelected: billPaymentDetailSelected
     };
 };
 
-export const modifyPaymentDetailSuccess = () => {
+export const modifyBillPaymentDetailSuccess = () => {
     return {
-        type: actionTypes.MODIFY_PAYMENT_DETAIL_SUCCESS
+        type: actionTypes.MODIFY_BILL_PAYMENT_DETAIL_SUCCESS
     };
 };
 
-export const modifyPaymentDetailFail = (error) => {
+export const modifyBillPaymentDetailFail = (error) => {
     return {
-        type: actionTypes.MODIFY_PAYMENT_DETAIL_FAIL,
+        type: actionTypes.MODIFY_BILL_PAYMENT_DETAIL_FAIL,
         error: error
     };
 };
 
-export const fetchPaymentDetail = (data) => {
+export const deleteBillPaymentDetail = (data) => {
     return {
-        type: actionTypes.FETCH_PAYMENT_DETAIL,
+        type: actionTypes.DELETE_BILL_PAYMENT_DETAIL,
         data: data
     };
 };
 
-export const fetchPaymentDetailStart = (paymentDetailId) => {
+export const deleteBillPaymentDetailStart = () => {
     return {
-        type: actionTypes.FETCH_PAYMENT_DETAIL_START,
-        paymentDetailId: paymentDetailId
+        type: actionTypes.DELETE_BILL_PAYMENT_DETAIL_START
     };
 };
 
-export const fetchPaymentDetailSuccess = (paymentDetailData) => {
+export const deleteBillPaymentDetailSuccess = () => {
     return {
-        type: actionTypes.FETCH_PAYMENT_DETAIL_SUCCESS,
-        paymentDetailData: paymentDetailData
+        type: actionTypes.DELETE_BILL_PAYMENT_DETAIL_SUCCESS
     };
 };
 
-export const fetchPaymentDetailFail = (error) => {
+export const deleteBillPaymentDetailFail = () => {
     return {
-        type: actionTypes.FETCH_PAYMENT_DETAIL_FAIL,
+        type: actionTypes.DELETE_BILL_PAYMENT_DETAIL_FAIL
+    };
+};
+
+export const fetchBillPaymentDetail = (data) => {
+    return {
+        type: actionTypes.FETCH_BILL_PAYMENT_DETAIL,
+        data: data
+    };
+};
+
+export const fetchBillPaymentDetailStart = (billPaymentDetailSelected) => {
+    return {
+        type: actionTypes.FETCH_BILL_PAYMENT_DETAIL_START,
+        billPaymentDetailSelected: billPaymentDetailSelected
+    };
+};
+
+export const fetchBillPaymentDetailSuccess = (billPaymentDetailData) => {
+    return {
+        type: actionTypes.FETCH_BILL_PAYMENT_DETAIL_SUCCESS,
+        billPaymentDetailData: billPaymentDetailData
+    };
+};
+
+export const fetchBillPaymentDetailFail = (error) => {
+    return {
+        type: actionTypes.FETCH_BILL_PAYMENT_DETAIL_FAIL,
         error: error
     };
 };
 
-export const fetchPaymentDetailList = (data) => {
+export const fetchBillPaymentDetailList = (data) => {
     return {
-        type: actionTypes.FETCH_PAYMENT_DETAIL_LIST,
+        type: actionTypes.FETCH_BILL_PAYMENT_DETAIL_LIST,
         data: data
     };
 };
 
-export const fetchPaymentDetailListStart = () => {
+export const fetchBillPaymentDetailListStart = () => {
     return {
-        type: actionTypes.FETCH_PAYMENT_DETAIL_LIST_START
+        type: actionTypes.FETCH_BILL_PAYMENT_DETAIL_LIST_START
     };
 };
 
-export const fetchPaymentDetailListSuccess = (paymentDetailListData) => {
+export const fetchBillPaymentDetailListSuccess = (billPaymentDetailList) => {
     return {
-        type: actionTypes.FETCH_PAYMENT_DETAIL_LIST_SUCCESS,
-        paymentDetailListData: paymentDetailListData
+        type: actionTypes.FETCH_BILL_PAYMENT_DETAIL_LIST_SUCCESS,
+        billPaymentDetailList: billPaymentDetailList
     };
 };
 
-export const fetchPaymentDetailListFail = (error) => {
+export const fetchBillPaymentDetailListFail = (error) => {
     return {
-        type: actionTypes.FETCH_PAYMENT_DETAIL_LIST_FAIL,
+        type: actionTypes.FETCH_BILL_PAYMENT_DETAIL_LIST_FAIL,
         error: error
     };
 };

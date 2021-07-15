@@ -156,7 +156,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         """Return appropriate serializer class"""
         if self.action == 'retrieve':
             return serializers.ProductDetailSerializer
-        if self.action == 'upload_image':
+        elif self.action == 'upload_image':
             return serializers.ProductImageSerializer
 
         return self.serializer_class
@@ -167,7 +167,8 @@ class ProductViewSet(viewsets.ModelViewSet):
 
     @action(methods=['POST'], detail=True, url_path='upload-image')
     def upload_image(self, request, pk=None):
-        """Upload an image to a product"""
+        """Upload an image to a product
+        """
         product = self.get_object()
         serializer = self.get_serializer(
             product,
@@ -229,6 +230,18 @@ class ProductCharacteristicView(viewsets.ModelViewSet):
             queryset = queryset.filter(value__iexact=value)
 
         return queryset
+
+    def get_serializer_class(self):
+        """Return appropriate serializer class"""
+        if self.action == 'retrieve':
+            return serializers.ProductCharacteristicDetailSerializer
+
+        return self.serializer_class
+
+    def perform_create(self, serializer):
+        """Create a new product characteristic
+        """
+        serializer.save(user=self.request.user)
 
 
 # class ProductCharacteristicView(BaseProductAttrViewSet):

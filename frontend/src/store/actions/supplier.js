@@ -207,10 +207,9 @@ export const deleteSupplierProductStart = (supplierProductSelected) => {
     };
 };
 
-export const deleteSupplierProductSuccess = (supplierProductModifiedId) => {
+export const deleteSupplierProductSuccess = () => {
     return {
-        type: actionTypes.DELETE_SUPPLIER_PRODUCT_SUCCESS,
-        supplierProductModifiedId: supplierProductModifiedId
+        type: actionTypes.DELETE_SUPPLIER_PRODUCT_SUCCESS
     };
 };
 

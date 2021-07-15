@@ -51,8 +51,8 @@ export const fetchCharTypesFail = (error) => {
     return {
         type: actionTypes.FETCH_CHAR_TYPES_FAIL,
         error: error
-    }
-}
+    };
+};
 
 export const fetchBrands = () => {
     return {

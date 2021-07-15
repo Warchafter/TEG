@@ -67,7 +67,7 @@ const Activate = props => {
 
     if (verified) {
         return <Redirect to='/auth' />
-    }
+    };
 
     return (
         <React.Fragment>
@@ -98,7 +98,7 @@ const Activate = props => {
             </Grid>
         </React.Fragment>
     );
-}
+};
 
 const mapDispatchToProps = dispatch => {
     return {

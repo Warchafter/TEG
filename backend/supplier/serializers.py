@@ -40,11 +40,7 @@ class SupplierSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 
-class SupplierDetailSerializer(SupplierSerializer):
-    """Serializer a supplier detail"""
-
-
-class ProductImageSerializer(serializers.ModelSerializer):
+class SupplierDetailImageSerializer(SupplierSerializer):
     """Serializer for uploading rif images to suppliers"""
 
     class Meta:

@@ -1,15 +1,9 @@
 import React from 'react';
 import {
-    Typography,
-    Container,
     Box,
-    Grid,
-    Paper
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import backgroundHeroIH from '../../assets/cool-intertwined-background.jpg';
-import ihLogo from '../../assets/logo.png';
-import CharacteristicTypeBuilder from '../../components/Loaders/CharacteristicType/CharacteristicType';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -52,7 +46,6 @@ const Home = () => {
                     <Grid item xs={2}></Grid>
                 </Grid> */}
             </Box>
-            <CharacteristicTypeBuilder />
         </React.Fragment>
     )
 };

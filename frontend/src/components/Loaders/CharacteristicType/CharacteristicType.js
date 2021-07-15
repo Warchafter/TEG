@@ -1,21 +1,13 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { makeStyles } from '@material-ui/core/styles';
 import {
     Paper
 } from '@material-ui/core';
 import * as actions from '../../../store/actions/index';
 
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
-}))
-
 const CharacteristicTypeBuilder = () => {
-    const classes = useStyles();
 
     const { register, handleSubmit } = useForm();
 

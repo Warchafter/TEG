@@ -34,11 +34,23 @@ export const checkValidity = (value, rules) => {
     }
 
     return isValid;
-}
+};
+
+export const toFirstCharUppercase = name => {
+    return name.charAt(0).toUpperCase() + name.slice(1);
+};
 
 export const firstLetterHandler = user => {
     return (user) ? user.charAt(0).toUpperCase() : null;
-}
+};
+
+export const removeItemOnce = (arr, value) => {
+    var index = arr.indexOf(value);
+    if (index > -1) {
+        arr.splice(index, 1);
+    }
+    return arr;
+};
 
 export const getSnackbarData = (message, variant) => {
     return {

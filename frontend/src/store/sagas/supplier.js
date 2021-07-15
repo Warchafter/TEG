@@ -170,7 +170,7 @@ export function* modifySupplierProductSaga(action) {
         price: action.data.supplierProductData.price,
         stock: action.data.supplierProductData.stock
     });
-    const url = `/supplier/supplier-products/${action.data.supplierProductData.supplierProductId}`;
+    const url = `/supplier/supplier-products/${action.data.supplierProductSelected}`;
     try {
         let response = yield axios.put(url, body, config);
         yield put(actions.modifySupplierProductSuccess(response.data));
@@ -193,9 +193,9 @@ export function* deleteSupplierProductSaga(action) {
             'Accept': 'application/json'
         }
     };
-    const url = `/supplier/supplier-products/${action.data.supplierProductData.supplierProductId}`;
+    const url = `/supplier/supplier-products/${action.data.supplierProductSelected}`;
     try {
-        let response = yield axios.put(url, config);
+        let response = yield axios.delete(url, config);
         yield put(actions.deleteSupplierProductSuccess(response.data));
         yield put(actions.enqueueSnackbar(getSnackbarData('Eliminado el producto del proveedor')));
     } catch (error) {
@@ -214,7 +214,7 @@ export function* fetchSupplierProductSaga(action) {
             'Accept': 'application/json'
         }
     };
-    const url = '/supplier/supplier-products/' + action.data.supplierProductId + '/';
+    const url = `/supplier/supplier-products/${action.data.supplierProductSelected}/`;
     try {
         let response = yield axios.get(url, config);
         console.log(response.data);

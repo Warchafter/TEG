@@ -1,12 +1,11 @@
 import React, { useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { IconButton, Menu, MenuItem, Badge, Button } from '@material-ui/core';
+import { IconButton, Menu, MenuItem } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { withRouter } from 'react-router-dom';
 import { withStyles, makeStyles, fade } from '@material-ui/core/styles';
 
 import NavigationItem from './NavigationItem/NavigationItem';
-import { ShoppingCart } from '@material-ui/icons';
 import * as actions from '../../../store/actions/index';
 
 const StyledMenu = withStyles({
@@ -131,17 +130,18 @@ const NavigationItems = (props) => {
                 <React.Fragment>
                     <NavigationItem link="/" exact>Inicio</NavigationItem>
                     <NavigationItem link="/products" exact>Products</NavigationItem>
-                    <Button onClick={handleViewChange}>
+                    <NavigationItem link="/billtesting" exact>Bill Testing</NavigationItem>
+                    {/* <Button onClick={handleViewChange}>
                         <NavigationItem link="/" exact>Corpo View</NavigationItem>
-                    </Button>
+                    </Button> */}
                     <div className={classes.grow} />
-                    <div className={classes.button}>
+                    {/* <div className={classes.button}>
                         <IconButton aria-label="Mostrar items del carrito" color="inherit">
                             <Badge badgeContent={2} color="secondary">
                                 <ShoppingCart />
                             </Badge>
                         </IconButton>
-                    </div>
+                    </div> */}
                 </React.Fragment>
                 :
                 null

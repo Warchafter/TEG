@@ -115,7 +115,7 @@ export function* authLoadUserSaga(action) {
             yield put(actions.enqueueSnackbar(getSnackbarData(error.response.data.detail, 'error')));
             yield put(actions.authFail(error.response.data.detail));
         };
-    }
+    };
 };
 
 export function* authCheckStateSaga(action) {

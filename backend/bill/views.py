@@ -163,7 +163,8 @@ class PurchaseBillViewSet(viewsets.ModelViewSet):
                 purchase_status_id__in=purchase_status_ids)
         if payment_status:
             payment_status_ids = self._params_to_ints(payment_method)
-            queryset = queryset.filter(payment_status_id__in=payment_status)
+            queryset = queryset.filter(
+                payment_status_id__in=payment_status_ids)
 
         # only admin users can view all objects, available or not
         if is_staff:
@@ -181,6 +182,8 @@ class PurchaseBillViewSet(viewsets.ModelViewSet):
         """Return appropriate serializer class"""
         if self.action == 'retrieve':
             return serializers.PurchaseBillDetailSerializer
+        if self.action == 'list':
+            return serializers.PurchaseBillListSerializer
 
         return self.serializer_class
 
@@ -239,6 +242,8 @@ class BillDetailViewSet(viewsets.ModelViewSet):
         """Return appropriate serializer class"""
         if self.action == 'retrieve':
             return serializers.BillDetailDetailSerializer
+        if self.action == 'list':
+            return serializers.BillDetailListSerializer
 
         return self.serializer_class
 
@@ -298,6 +303,8 @@ class BillProductCharacteristicsViewSet(viewsets.ModelViewSet):
         """Return appropriate serializer class"""
         if self.action == 'retrieve':
             return serializers.BillProductCharacteristicsDetailSerializer
+        if self.action == 'list':
+            return serializers.BillProductCharacteristicsListSerializer
 
         return self.serializer_class
 
@@ -357,11 +364,38 @@ class BillPaymentDetailViewSet(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         """Return appropriate serializer class"""
-        if self.action == 'retrieve':
+        if self.action == 'upload_image':
+            return serializers.BillPaymentDetailImageSerializer
+        elif self.action == 'retrieve':
             return serializers.BillPaymentDetailDetailSerializer
+        elif self.action == 'list':
+            return serializers.BillPaymentDetailListSerializer
 
         return self.serializer_class
 
     def perform_create(self, serializer):
         """Create a new bill detail"""
         serializer.save(user=self.request.user)
+
+    @action(methods=['POST'], detail=True, url_path='upload-image')
+    def upload_image(self, request, pk=None):
+        """Upload an image to a bill payment detail
+        """
+        bill_payment_detail = self.get_object()
+        serializer = self.get_serializer(
+            bill_payment_detail,
+            data=request.data
+        )
+        print(request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data,
+                status=status.HTTP_200_OK
+            )
+
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
