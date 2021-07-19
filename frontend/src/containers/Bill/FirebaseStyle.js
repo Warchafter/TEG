@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 
 import KanbanCardDemo from '../../components/MUI-Components/kanbam-card';
 import ShowcaseCardDemo from '../../components/MUI-Components/firebase-style-card';
+import BlogCardDemo from '../../components/MUI-Components/BlogCardDemo';
 
 import cx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -119,9 +120,12 @@ const BillFirebaseStyleGrid = () => {
                 <Grid item xs={12}>
                     <ShowcaseCardDemo />
                 </Grid>
+                <Grid item xs={12}>
+                    <BlogCardDemo />
+                </Grid>
             </Grid>
         </React.Fragment>
-    )
-}
+    );
+};
 
 export default BillFirebaseStyleGrid;

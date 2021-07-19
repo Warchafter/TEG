@@ -13,7 +13,7 @@ const DefaultLayout = () => {
                 <AppFooter />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default DefaultLayout
+export default DefaultLayout;

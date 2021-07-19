@@ -1,4 +1,4 @@
-import { put, select } from 'redux-saga/effects';
+import { put } from 'redux-saga/effects';
 import axios from '../../axios-db';
 
 import { getSnackbarData } from '../../shared/utility';

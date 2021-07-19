@@ -68,8 +68,6 @@ const BillKanbanStyleGrid = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    console.log(purchaseBillList);
-
     return (
         <React.Fragment>
             <Grid
