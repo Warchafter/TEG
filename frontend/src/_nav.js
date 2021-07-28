@@ -43,6 +43,13 @@ const _nav = [
     icon: <ReceiptIcon fontSize="large" />,
   },
   {
+    _component: 'CNavItem',
+    as: NavLink,
+    anchor: 'Vertical Tabs Test',
+    to: '/vertical-tabs-testing',
+    icon: <ReceiptIcon fontSize="large" />,
+  },
+  {
     _component: 'CNavTitle',
     anchor: 'Demo',
   },

@@ -56,13 +56,13 @@ class AuthTokenSerializer(serializers.Serializer):
         return attrs
 
 
-class CurrentUserSerializer(serializers.Serializer):
+class CurrentUserSerializer(serializers.ModelSerializer):
     """ """
 
     class Meta:
         model = User
         fields = (
-            'id', 'email', 'name', 'bussiness_name', 'business_type',
+            'id', 'email', 'name', 'business_name', 'business_type',
             'specialization', 'rif', 'rif_address', 'rif_validated', 'is_active',
             'is_staff', 'roles'
         )
@@ -75,6 +75,15 @@ class CurrentUserRIFImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'image')
+        read_only_fields = ('id',)
+
+
+class VerifyUserRIFImageSerializer(serializers.ModelSerializer):
+    """Serializer for verifying the rif image of a user"""
+
+    class Meta:
+        model = User
+        fields = ('id', 'rif_validated')
         read_only_fields = ('id',)
 
 

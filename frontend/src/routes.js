@@ -36,6 +36,7 @@ const PurchaseStatusL = React.lazy(() => { return import('./containers/Extra/Loa
 const ElevatedHeaderCardDemo = React.lazy(() => { return import('./components/MUI-Components/miui-card') });
 const BillKanbanStyleGrid = React.lazy(() => { return import('./containers/Bill/kanban-style/Bill-Kanbam-Style-Grid') });
 const BillFirebaseStyleGrid = React.lazy(() => { return import('./containers/Bill/FirebaseStyle') });
+const VerticalTabs = React.lazy(() => { return import('./components/MUI-Components/vertical-tabs') });
 
 // examples
 
@@ -169,6 +170,13 @@ let routes = [
         layout: DefaultLayout,
         name: "Supplier Testing 1",
         component: SupplierTesting,
+        isPrivate: true
+    },
+    {
+        path: '/vertical-tabs-testing',
+        layout: DefaultLayout,
+        name: "Vertical Tabs Testing",
+        component: VerticalTabs,
         isPrivate: true
     },
     {

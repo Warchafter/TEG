@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'djoser',
     'core',
     'user',
-    'user_profiles',
     'product',
     'supplier',
     'bill',

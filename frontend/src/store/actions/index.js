@@ -27,6 +27,25 @@ export {
 } from './auth';
 
 export {
+    fetchUserProfileDetail,
+    fetchUserProfileDetailStart,
+    fetchUserProfileDetailSuccess,
+    fetchUserProfileDetailFail,
+    fetchUserProfileList,
+    fetchUserProfileListStart,
+    fetchUserProfileListSuccess,
+    fetchUserProfileListFail,
+    modifyUserProfileDetail,
+    modifyUserProfileDetailStart,
+    modifyUserProfileDetailSuccess,
+    modifyUserProfileDetailFail,
+    verifyUserProfileRif,
+    verifyUserProfileRifStart,
+    verifyUserProfileRifSuccess,
+    verifyUserProfileRifFail
+} from './userProfile';
+
+export {
     createCharType,
     createCharTypeStart,
     createCharTypeSuccess,

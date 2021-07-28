@@ -111,7 +111,7 @@ class BillProductCharacteristicsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BillProductCharacteristics
-        fields = ('id', 'characteristic_sel', 'bill_detail')
+        fields = ('id', 'characteristic_sel', 'bill_detail', 'user')
         read_only_fields = ('id',)
 
 
@@ -135,14 +135,15 @@ class BillPaymentDetailSerializer(serializers.ModelSerializer):
     """Serializer for bill payment detail objects"""
 
     purchase_bill = PurchaseBillSerializer
+    user = CurrentUserSerializer(many=False, read_only=True)
 
     class Meta:
         model = BillPaymentDetail
         fields = (
             'id', 'purchase_bill', 'payment_receipt_number',
-            'payment_receipt_image'
+            'payment_receipt_image', 'user'
         )
-        read_only_fields = ('id', 'payment_receipt_image')
+        read_only_fields = ('id', 'payment_receipt_image', 'user')
         ordering = ('id',)
 
 

@@ -30,6 +30,15 @@ class IsAdminOrReadOnly(BasePermission):
         return request.user.is_staff
 
 
+class IsStaffOrReadOnly(BasePermission):
+    """Object-level permission to only allow staff or above users to edit an object"""
+
+    def has_permission(self, request, view):
+        is_admin = super().has_permission(request, view)
+
+        return request.method in SAFE_METHODS or is_admin
+
+
 class JWTAuthenticationSafe(JWTAuthentication):
     def authenticate(self, request):
         try:
@@ -320,7 +329,7 @@ class BillPaymentDetailViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.SearchFilter,)
     queryset = BillPaymentDetail.objects.all()
     authentication_classes = (JWTAuthentication,)
-    permission_classes = (IsAdminOrReadOnly,)
+    # permission_classes = (IsStaffOrReadOnly,)
     pagination_class = StandardResultsSetPagination
 
     def _params_to_ints(self, qs):
@@ -333,6 +342,7 @@ class BillPaymentDetailViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """Retrieve the bill details for all users"""
+        id = self.request.query_params.get('id')
         purchase_bill = self.request.query_params.get('purchase_bill')
         payment_receipt_number = self.request.query_params.get(
             'payment_receipt_number')
@@ -340,6 +350,11 @@ class BillPaymentDetailViewSet(viewsets.ModelViewSet):
         queryset = self.queryset
         is_staff = self.request.user.is_staff
 
+        if id:
+            id_ids = self._params_to_ints(id)
+            queryset = queryset.filter(
+                id__in=id_ids
+            )
         if purchase_bill:
             purchase_bill_ids = self._params_to_ints(purchase_bill)
             queryset = queryset.filter(
@@ -348,7 +363,7 @@ class BillPaymentDetailViewSet(viewsets.ModelViewSet):
             payment_receipt_number_ids = self._params_to_ints(
                 payment_receipt_number)
             queryset = queryset.filter(
-                payment_receipt_number_id__in=payment_receipt_number_ids)
+                payment_receipt_number__in=payment_receipt_number_ids)
 
         # only admin users can view all objects, available or not
         if is_staff:
