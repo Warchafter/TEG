@@ -14,6 +14,13 @@ import {
 } from './auth';
 
 import {
+    fetchUserProfileDetailSaga,
+    fetchUserProfileListSaga,
+    modifyUserProfileDetailSaga,
+    // verifyUserProfileDetailSaga
+} from './userProfile';
+
+import {
     createCharTypeSaga,
     fetchBrandsSaga,
     fetchCharTypesSaga
@@ -78,6 +85,14 @@ export function* watchAuth() {
         takeEvery(actionTypes.AUTH_CHECK_STATE, authCheckStateSaga),
         takeEvery(actionTypes.AUTH_PASSWORD_RESET, authPasswordResetSaga),
         takeEvery(actionTypes.AUTH_PASSWORD_RESET_CONFIRM, authPasswordResetConfirmSaga),
+    ]);
+};
+
+export function* watchUserProfile() {
+    yield all([
+        takeLatest(actionTypes.FETCH_USER_PROFILE_DETAIL, fetchUserProfileDetailSaga),
+        takeLatest(actionTypes.FETCH_USER_PROFILE_LIST, fetchUserProfileListSaga),
+        takeLatest(actionTypes.MODIFY_USER_PROFILE_DETAIL, modifyUserProfileDetailSaga),
     ]);
 };
 

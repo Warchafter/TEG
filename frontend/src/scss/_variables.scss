@@ -1668,7 +1668,7 @@
 // $sidebar-nav-title-transition:             height .15s, margin .15s !default;
 
 // $sidebar-nav-link-padding-y:               .8445rem !default;
-// $sidebar-nav-link-padding-x:               1rem !default;
+$sidebar-nav-link-padding-x:               0.875rem !default;
 // $sidebar-nav-link-color:                   $medium-emphasis-inverse !default;
 // $sidebar-nav-link-bg:                      transparent !default;
 // $sidebar-nav-link-transition:              background .15s ease, color .15s ease !default;
@@ -1687,6 +1687,7 @@
 
 // $sidebar-nav-icon-width:                   4rem !default;
 // $sidebar-nav-icon-height:                  1.25rem !default;
+$sidebar-nav-icon-padding-x:               0.875rem !default;
 // $sidebar-nav-icon-font-size:               $sidebar-nav-icon-height !default;
 
 // $sidebar-nav-group-bg:                     rgba(0, 0, 0, .2) !default;

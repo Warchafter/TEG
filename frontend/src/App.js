@@ -50,6 +50,8 @@ const App = props => {
     const dispatch = useDispatch();
 
     const isLoading = useSelector(state => state.auth.loading);
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+    const isLoaded = useSelector(state => state.auth.isLoaded);
 
     const onTryAutoSignup = useCallback(() => dispatch(actions.authCheckState()), [dispatch])
 
@@ -60,7 +62,7 @@ const App = props => {
 
     return (
         <div>
-            {isLoading
+            {isLoading && !isLoaded
                 ?
                 null
                 :
@@ -73,6 +75,8 @@ const App = props => {
                                         key={index}
                                         path={route.path}
                                         exact={route.exact}
+                                        isAuth={isAuthenticated}
+                                        isLoad={isLoading}
                                         component={(props => {
                                             return (
                                                 <route.layout {...props}>

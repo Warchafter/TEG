@@ -19,8 +19,19 @@ const Logout = React.lazy(() => { return import('./containers/Auth/Logout/Logout
 
 const Loaders = React.lazy(() => { return import('./containers/Products/Loaders/Loaders') });
 const Bill = React.lazy(() => { return import('./containers/Bill/Bill') });
+
+
+// Supplier
+
 const Supplier = React.lazy(() => { return import('./containers/Supplier/Supplier') });
 const SupplierTesting = React.lazy(() => { return import('./components/Supplier/Testing/SupplierTesting') });
+const SupplierMain = React.lazy(() => { return import('./containers/Supplier/SupplierMain') });
+
+
+// user profile
+
+const UserProfile = React.lazy(() => { return import('./containers/UserProfile/UserProfile') });
+
 
 // extra
 
@@ -37,6 +48,7 @@ const ElevatedHeaderCardDemo = React.lazy(() => { return import('./components/MU
 const BillKanbanStyleGrid = React.lazy(() => { return import('./containers/Bill/kanban-style/Bill-Kanbam-Style-Grid') });
 const BillFirebaseStyleGrid = React.lazy(() => { return import('./containers/Bill/FirebaseStyle') });
 const VerticalTabs = React.lazy(() => { return import('./components/MUI-Components/vertical-tabs') });
+const NestedList = React.lazy(() => { return import('./components/MUI-Components/nested-list') });
 
 // examples
 
@@ -173,6 +185,13 @@ let routes = [
         isPrivate: true
     },
     {
+        path: '/suppliers',
+        layout: DefaultLayout,
+        name: "Suppliers",
+        component: SupplierMain,
+        isPrivate: true
+    },
+    {
         path: '/vertical-tabs-testing',
         layout: DefaultLayout,
         name: "Vertical Tabs Testing",
@@ -248,6 +267,20 @@ let routes = [
         layout: DefaultLayout,
         name: "Demo - Firebase Style Grid",
         component: BillFirebaseStyleGrid,
+        isPrivate: true
+    },
+    {
+        path: '/demo4',
+        layout: DefaultLayout,
+        name: "Demo - Nested List",
+        component: NestedList,
+        isPrivate: true
+    },
+    {
+        path: '/user-profile',
+        layout: DefaultLayout,
+        name: "User Profile",
+        component: UserProfile,
         isPrivate: true
     },
     { path: '/dashboard', name: 'Dashboard', component: Dashboard, layout: DefaultLayout },

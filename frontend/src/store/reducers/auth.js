@@ -9,7 +9,8 @@ const initialState = {
     rememberMe: false,
     error: null,
     loading: null,
-    authRedirectPath: '/'
+    authRedirectPath: '/',
+    isLoaded: false
 }
 
 const authStart = (state, action) => {
@@ -23,7 +24,8 @@ const authSuccess = (state, action) => {
         isAuthenticated: true,
         error: null,
         loading: false,
-        rememberMe: action.rememberMe
+        rememberMe: action.rememberMe,
+        isLoaded: true
     });
 };
 
@@ -34,7 +36,8 @@ const authFail = (state, action) => {
         error: action.error,
         loading: false,
         isAuthenticated: false,
-        user: null
+        user: null,
+        isLoaded: false
     });
 };
 
@@ -75,13 +78,16 @@ const authUserActivationFail = (state, action) => {
 
 const authUserLoadedSuccess = (state, action) => {
     return updateObject(state, {
-        user: action.payload
+        user: action.payload,
+        isAuthenticated: true,
+        isLoaded: true
     });
 };
 
 const authUserLoadedFail = (state, action) => {
     return updateObject(state, {
-        user: null
+        user: null,
+        isAuthenticated: false
     });
 };
 

@@ -62,7 +62,7 @@ const AppHeaderDropdown = () => {
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
         <CDropdownHeader className="bg-light fw-semibold py-2">Account</CDropdownHeader>
-        <CDropdownItem href="#">
+        <CDropdownItem href="/billtesting">
           <NotificationsIcon />
           Updates
           <CBadge color="info" className="ms-2">
@@ -91,7 +91,7 @@ const AppHeaderDropdown = () => {
           </CBadge>
         </CDropdownItem>
         <CDropdownHeader className="bg-light fw-semibold py-2">Settings</CDropdownHeader>
-        <CDropdownItem href="#">
+        <CDropdownItem href="/user-profile">
           <CIcon name="cil-user" className="me-2" />
           Profile
         </CDropdownItem>

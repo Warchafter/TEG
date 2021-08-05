@@ -155,22 +155,22 @@ const Dashboard = () => {
             <CCol md sm="12" className="mb-sm-2 mb-0">
               <div className="text-medium-emphasis">Unique</div>
               <strong>24.093 Users (20%)</strong>
-              <CProgress thin className="mt-2" precision={1} color="info" value={40} />
+              <CProgress thin className="mt-2" precision={1} color="info" value={20} />
             </CCol>
             <CCol md sm="12" className="mb-sm-2 mb-0">
               <div className="text-medium-emphasis">Pageviews</div>
               <strong>78.706 Views (60%)</strong>
-              <CProgress thin className="mt-2" precision={1} color="warning" value={40} />
+              <CProgress thin className="mt-2" precision={1} color="warning" value={60} />
             </CCol>
             <CCol md sm="12" className="mb-sm-2 mb-0">
               <div className="text-medium-emphasis">New Users</div>
               <strong>22.123 Users (80%)</strong>
-              <CProgress thin className="mt-2" precision={1} color="danger" value={40} />
+              <CProgress thin className="mt-2" precision={1} color="danger" value={80} />
             </CCol>
             <CCol md sm="12" className="mb-sm-2 mb-0">
               <div className="text-medium-emphasis">Bounce Rate</div>
               <strong>Average Rate (40.15%)</strong>
-              <CProgress thin className="mt-2" precision={1} value={40} />
+              <CProgress thin className="mt-2" precision={1} value={40.15} />
             </CCol>
           </CRow>
         </CCardFooter>

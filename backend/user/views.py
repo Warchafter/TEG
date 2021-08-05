@@ -187,14 +187,14 @@ class UserViewSet(viewsets.ModelViewSet):
         else:
             return queryset.all().order_by('name')
 
-    # def get_serializer_class(self):
-    #     """Return appropriate serializer class"""
-    #     if self.action == 'retrieve':
-    #         return serializers.CurrentUserSerializer
-    #     if self.action == 'list':
-    #         return serializers.CurrentUserSerializer
+    def get_serializer_class(self):
+        """Return appropriate serializer class"""
+        if self.action == 'retrieve':
+            return serializers.CurrentUserSerializer
+        if self.action == 'list':
+            return serializers.UserListSerializer
 
-    #     return self.serializer_class
+        return self.serializer_class
 
     def perform_create(self, serializer):
         """Create a new purchase bill"""
@@ -206,3 +206,45 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer = CurrentUserSerializer(data, many=True)
         print(request.data)
         return Response(serializer.data)
+
+    @action(methods=['POST'], detail=True, url_path='verify-user')
+    def verify_rif_image(self, request, pk=None):
+        """Verify user RIF image"""
+        user = self.get_object()
+        serializer = self.get_serializer(
+            user,
+            date=request.data
+        )
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data,
+                status=status.HTTP_200_OK
+            )
+
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    @action(methods=['POST'], detail=True, url_path='upload-image')
+    def upload_image(self, request, pk=None):
+        """Upload an image to a user"""
+        user = self.get_object()
+        serializer = self.get_serializer(
+            user,
+            date=request.data
+        )
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data,
+                status=status.HTTP_200_OK
+            )
+
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
