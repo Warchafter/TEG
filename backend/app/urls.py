@@ -27,7 +27,6 @@ urlpatterns = [
     path('api/product/', include('product.urls')),
     path('api/supplier/', include('supplier.urls')),
     path('api/bill/', include('bill.urls')),
-    path('api/movie/', include('movie.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += [re_path(r'^.*',

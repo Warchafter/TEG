@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'product',
     'supplier',
     'bill',
-    'movie',
 ]
 
 MIDDLEWARE = [

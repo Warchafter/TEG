@@ -1,10 +1,11 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
-import KanbanCardDemo from '../../../components/MUI-Components/payment-kanbam-card';
+import KanbanCardDemo from '../../../components/MUI-Components/PaymentKambamCard/payment-kanbam-card';
+import CurrencyValueCard from '../../../components/Cards/currencyValueCard';
 
 import cx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -12,7 +13,7 @@ import Card from '@material-ui/core/Card';
 import * as actions from '../../../store/actions/index';
 
 
-const useStyles = makeStyles(({ spacing, palette }) => {
+const useStyles = makeStyles(({ spacing, palette, theme }) => {
     const family =
         '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
     return {
@@ -60,16 +61,22 @@ const BillKanbanStyleGrid = () => {
 
     const purchaseBillList = useSelector(state => state.bill.purchaseBillList);
     const isLoading = useSelector(state => state.bill.loading);
+    const isLoadingExRate = useSelector(state => state.bill.loadingExRates);
+    const ExRateDataLoaded = useSelector(state => state.bill.ExRateDataLoaded);
+    const exchangeRates = useSelector(state => state.bill.exchangeRatesData);
 
+    const onFetchExchangeRates = useCallback(() => dispatch(actions.fetchExchangeRates()), [dispatch]);
     const onFetchPurchaseBillList = useCallback(() => dispatch(actions.fetchPurchaseBillList()), [dispatch]);
 
     useEffect(() => {
         onFetchPurchaseBillList();
+        onFetchExchangeRates();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
         <React.Fragment>
+            <CurrencyValueCard exchangeRates={exchangeRates} loading={isLoadingExRate} ExRateDataLoaded={ExRateDataLoaded} />
             <Grid
                 spacing={3}
                 direction="column"
@@ -81,7 +88,7 @@ const BillKanbanStyleGrid = () => {
                         <h2>This is a title that needs to be padded better</h2>
                     </Card>
                 </Grid>
-                {isLoading === false && purchaseBillList !== []
+                {/* {isLoading === false && purchaseBillList !== []
                     ?
                     <Grid item xs={12}>
                         <Grid container spacing={8} className={classes.root} >
@@ -149,7 +156,7 @@ const BillKanbanStyleGrid = () => {
                     </Grid>
                     :
                     null
-                }
+                } */}
             </Grid>
         </React.Fragment>
     );

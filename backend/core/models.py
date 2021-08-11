@@ -472,12 +472,50 @@ class PaymentStatus(models.Model):
         return self.name
 
 
+class DeliveryStatus(models.Model):
+    """ """
+    name = models.CharField(max_length=255)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.DO_NOTHING,
+    )
+
+    def __str__(self):
+        return self.name
+
+
+class BillClientSubmission(models.Model):
+    """ """
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.DO_NOTHING
+    )
+    bill_name_receiver = models.CharField(max_length=255, blank=False)
+    product_requirements = models.CharField(max_length=10000, blank=False)
+
+    def __str__(self):
+        return self.bill_name_receiver
+
+
 class PurchaseBill(models.Model):
     """ """
     purchase_order_date = models.DateTimeField(default=timezone.now)
     purchase_payment_date = models.DateTimeField(blank=True, null=True)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
+        on_delete=models.DO_NOTHING,
+        related_name='user_object_creator'
+    )
+    employee_in_charge = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.DO_NOTHING,
+        related_name='user_in_charge'
+    )
+    bill_client_submission = models.ForeignKey(
+        BillClientSubmission,
+        verbose_name="Solicitud del Cliente",
+        blank=False,
+        null=False,
         on_delete=models.DO_NOTHING
     )
     payment_method = models.ForeignKey(
@@ -507,6 +545,11 @@ class PurchaseBill(models.Model):
     payment_status = models.ForeignKey(
         PaymentStatus,
         verbose_name="Estado del Pago",
+        on_delete=models.DO_NOTHING
+    )
+    delivery_status = models.ForeignKey(
+        DeliveryStatus,
+        verbose_name="Estado del Despacho",
         on_delete=models.DO_NOTHING
     )
 
@@ -583,184 +626,3 @@ class BillPaymentDetail(models.Model):
 
     def __str__(self):
         return str(self.purchase_bill) + ' - ' + str(self.payment_receipt_number)
-
-
-class Genre(models.Model):
-    """Genre to be used for a movie
-    """
-    name = models.CharField(max_length=255)
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-    )
-
-    def __str__(self):
-        return self.name
-
-
-class Movie(models.Model):
-    """Movie object
-    """
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-    )
-    title = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
-    link = models.CharField(max_length=255, blank=True)
-    genre = models.ManyToManyField('Genre')
-    image = models.ImageField(
-        null=True, upload_to=movie_image_file_path)
-    stock = models.IntegerField()
-    rental_price = models.DecimalField(max_digits=5, decimal_places=2)
-    sale_price = models.DecimalField(max_digits=5, decimal_places=2)
-    availability = models.BooleanField(default=True)
-
-    @property
-    def likes(self):
-        """Returns the movies like count
-        """
-        return LikedMovie.objects.filter(movie_id=self.pk).count()
-
-    def save(self, *args, **kwargs):
-        if self.stock == 0:
-            self.availability = False
-        else:
-            self.availability = True
-        super(Movie, self).save(*args, **kwargs)
-
-    def __str__(self):
-        return self.title
-
-
-class Rental(models.Model):
-    """Rental movie object
-    """
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
-    )
-    movie = models.ForeignKey(
-        'Movie',
-        on_delete=models.CASCADE
-    )
-    date_out = models.DateTimeField(default=timezone.now, blank=True)
-    date_returned = models.DateTimeField(
-        auto_now=False, null=True)
-    daily_rental_fee = models.DecimalField(
-        max_digits=5, decimal_places=2, default=0)
-    rental_debt = models.DecimalField(
-        max_digits=5, decimal_places=2, default=0)
-
-    @property
-    def rental_debt(self):
-        """Returns the amount to pay for the rented movie
-        """
-        local_do = timezone.localtime(
-            self.date_out, timezone.get_fixed_timezone(60)
-        )
-        local_dr = timezone.localtime(
-            timezone.now(), timezone.get_fixed_timezone(60)
-        )
-        if self.date_returned:
-            local_dr = timezone.localtime(
-                self.date_returned, timezone.get_fixed_timezone(60)
-            )
-        days_in_debt = local_dr-local_do
-        debt_to_pay = days_in_debt.days * \
-            self.daily_rental_fee
-        # if rental debt == 0 set it to rental price
-        if debt_to_pay == 0:
-            debt_to_pay = self.movie.rental_price
-
-        return debt_to_pay
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=['user', 'movie', 'date_returned'],
-                name='unique movie returned'
-            )
-        ]
-
-    def save(self, *args, **kwargs):
-        # if rental fee == 0 set it to rental price
-        if float(self.daily_rental_fee) == 0:
-            self.daily_rental_fee = self.movie.rental_price
-        # if movie returned, calculate the debt
-        if self.date_returned:
-            # Increment stock count from movie
-            Movie.objects.filter(pk=self.movie_id).update(
-                stock=F('stock')+1)
-        elif not self.pk:
-            # Decrement stock count from movie
-            Movie.objects.filter(pk=self.movie_id).update(stock=F('stock')-1)
-        super(Rental, self).save(*args, **kwargs)
-
-    def __str__(self):
-        return f'{self.user.email}-{self.movie.title}-{self.date_out}'
-
-
-class Purchase(models.Model):
-    """Purchase movie object
-    """
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
-    )
-    movie = models.ForeignKey(
-        'Movie',
-        on_delete=models.CASCADE
-    )
-    date_bought = models.DateTimeField(default=timezone.now, blank=True)
-    purchase_price = models.DecimalField(
-        max_digits=5, decimal_places=2, default=0)
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=['user', 'movie', 'date_bought'],
-                name='unique movie bought'
-            )
-        ]
-
-    def save(self, *args, **kwargs):
-        # if purchase price == 0 set it to rental price
-        if float(self.purchase_price) == 0:
-            self.purchase_price = self.movie.sale_price
-        if not self.pk:
-            # Decrement stock count from movie
-            Movie.objects.filter(pk=self.movie_id).update(stock=F('stock')-1)
-        super(Purchase, self).save(*args, **kwargs)
-
-    def __str__(self):
-        return f'{self.user.email}-{self.movie.title}-{self.date_bought}'
-
-
-class LikedMovie(models.Model):
-    """Liked movie object
-    """
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
-    )
-    movie = models.ForeignKey(
-        'Movie',
-        on_delete=models.CASCADE
-    )
-
-    def save(self, *args, **kwargs):
-        # if purchase price == 0 set it to rental price
-        try:
-            super(LikedMovie, self).save(*args, **kwargs)
-        except IntegrityError:
-            raise IntegrityError("You already liked this movie.")
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=['user', 'movie'], name='unique movie liked')
-        ]
-
-    def __str__(self):
-        return f'{self.user.email}-{self.movie.title}'

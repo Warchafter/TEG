@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import * as actions from '../../../store/actions/index';
 import { useSelector } from 'react-redux';
 import {
   CBadge,
@@ -49,6 +51,10 @@ const AppHeaderDropdown = () => {
   const classes = useStyles();
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const user = useSelector(state => state.auth.user);
+
+  const dispatch = useDispatch();
+
+  const onLogout = useCallback(() => dispatch(actions.logout()), [dispatch]);
 
   return (
     <CDropdown variant="nav-item">
@@ -117,7 +123,7 @@ const AppHeaderDropdown = () => {
           ?
           <React.Fragment>
             <CDropdownDivider />
-            <CDropdownItem href="/logout">
+            <CDropdownItem href="/logout" onClick={onLogout}>
               <CIcon name="cil-lock-locked" className="me-2" />
               Log Out
             </CDropdownItem>

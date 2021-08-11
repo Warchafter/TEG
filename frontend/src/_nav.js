@@ -43,6 +43,22 @@ const _nav = [
     anchor: 'Facturas',
   },
   {
+    _component: 'CNavGroup',
+    as: NavLink,
+    anchor: 'Facturas',
+    to: '/to',
+    icon: <ReceiptIcon fontSize="large" />,
+    items: [
+      {
+        _component: 'CNavItem',
+        as: NavLink,
+        anchor: 'Pagos Facturas',
+        to: '/bill-payments',
+        icon: <ReceiptIcon fontSize="large" />,
+      },
+    ],
+  },
+  {
     _component: 'CNavItem',
     as: NavLink,
     anchor: 'Pruebas Facturas',

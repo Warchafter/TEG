@@ -20,6 +20,8 @@ import { useSizedIconButtonStyles } from '@mui-treasury/styles/iconButton/sized'
 
 import { Redirect } from 'react-router-dom';
 
+import { stringLongDateHandler } from '../../../shared/utility';
+
 const StyledTooltip = withStyles({
     tooltip: {
         marginTop: '0.2rem',
@@ -84,7 +86,7 @@ const useStyles = makeStyles(({ spacing, palette }) => {
     };
 });
 
-const useSliderStyles = makeStyles(() => ({
+const useSliderStyles = makeStyles((theme) => ({
     root: {
         height: 4,
     },
@@ -101,7 +103,17 @@ const useSliderStyles = makeStyles(() => ({
     thumb: {
         display: 'none',
     },
-
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    modalPaper: {
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+    },
 }));
 
 export const KanbanCardDemo = React.memo(function KanbanCard(props) {
@@ -136,6 +148,17 @@ export const KanbanCardDemo = React.memo(function KanbanCard(props) {
         return <Redirect to={url} />
     }
 
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+
     return (
         <Card className={cx(styles.card)} elevation={0}>
             <Box alignItems="center">
@@ -164,18 +187,18 @@ export const KanbanCardDemo = React.memo(function KanbanCard(props) {
                 </Grid>
             </Box>
             <Box>
-                <h3 className={styles.heading}>Sarah Onella</h3>
+                <h3 className={styles.heading}>John Onella</h3>
                 <p className={styles.subheader}>{props.payment_method.name}</p>
-                <p className={styles.subheader}>Fecha pago:{props.payment_method.purchase_payment_date}</p>
+                <p className={styles.subheader}>Fecha pago:{stringLongDateHandler(props.purchase_payment_date)}</p>
                 <Box display={'flex'} alignItems={'center'}>
                     <Slider classes={sliderStyles} defaultValue={0} value={sliderState} />
                     <span className={styles.value}>{props.payment_status.id}/3</span>
                 </Box>
             </Box>
-            <Item position={'right'} mr={-0.5}>
+            <Item position={'right'} mr={-0.5} onClick={() => console.log(typeof props.purchase_payment_date)} >
                 <StyledTooltip title={'See details'}>
                     <IconButton classes={iconBtnStyles}>
-                        <CallMade onClick={() => console.log("clicked")} />
+                        <CallMade />
                     </IconButton>
                 </StyledTooltip>
             </Item>

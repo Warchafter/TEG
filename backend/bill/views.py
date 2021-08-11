@@ -13,7 +13,7 @@ from rest_framework.permissions import IsAuthenticated, SAFE_METHODS, IsAdminUse
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import filters
 
-from core.models import Bank, BillDetail, BillPaymentDetail, BillProductCharacteristics, CharacteristicTypes, PaymentMethod, Currency, PurchaseBill, PurchaseStatus, PaymentStatus
+from core.models import Bank, BillClientSubmission, BillDetail, BillPaymentDetail, BillProductCharacteristics, CharacteristicTypes, DeliveryStatus, PaymentMethod, Currency, PurchaseBill, PurchaseStatus, PaymentStatus
 from bill import serializers
 
 
@@ -117,6 +117,59 @@ class PaymentStatusViewSet(BaseProductAttrViewSet):
     serializer_class = serializers.PaymentStatusSerializer
 
 
+class DeliveryStatusViewSet(BaseProductAttrViewSet):
+    """Manage delivery status in the database"""
+    queryset = DeliveryStatus.objects.all()
+    serializer_class = serializers.DeliveryStatusSerializer
+
+
+class BillClientSubmissionViewSet(viewsets.ModelViewSet):
+    """Manage client bill submissions in the database"""
+    serializer_class = serializers.BillClientSubmissionSerializer
+    search_fields = ['purchase_order_date', ]
+    filter_backends = (filters.SearchFilter,)
+    queryset = BillClientSubmission.objects.all()
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAdminOrReadOnly,)
+    pagination_class = StandardResultsSetPagination
+
+    def _params_to_ints(self, qs):
+        """Convert a list of string IDs to a list of integers
+
+        Args:
+            qs (list): Query String
+        """
+        return [int(str_id) for str_id in qs.split(',')]
+
+    def get_queryset(self):
+        """Retrieve the client bill submissions for all users"""
+        bill_name_receiver = self.request.query_params.get(
+            'bill_name_receiver')
+        order_by = self.request.query_params.get('order_by')
+        queryset = self.queryset
+        is_staff = self.request.user.is_staff
+
+        if bill_name_receiver:
+            queryset = queryset.filter(
+                bill_name_receiver__iexact=bill_name_receiver).order_by('id')
+
+        # only admin users can view all objects, available or not
+        if is_staff:
+            if order_by:
+                return queryset.all().order_by(order_by)
+            else:
+                return queryset.all().order_by('id')
+        else:
+            if order_by:
+                return queryset.all().order_by(order_by)
+            else:
+                return queryset.all().order_by('id')
+
+    def perform_create(self, serializer):
+        """Create a new client bill submission"""
+        serializer.save(user=self.request.user)
+
+
 class PurchaseBillViewSet(viewsets.ModelViewSet):
     """Manage purchase bills in the database"""
     serializer_class = serializers.PurchaseBillSerializer
@@ -141,6 +194,9 @@ class PurchaseBillViewSet(viewsets.ModelViewSet):
             'purchase_order_date')
         purchase_payment_date = self.request.query_params.get(
             'purchase_payment_date')
+        bill_client_submission = self.request.query_params.get(
+            'bill_client_submission'
+        )
         payment_method = self.request.query_params.get('payment_method')
         currency = self.request.query_params.get('currency')
         bank = self.request.query_params.get('bank')
@@ -156,6 +212,11 @@ class PurchaseBillViewSet(viewsets.ModelViewSet):
         if purchase_payment_date:
             queryset = queryset.filter(
                 purchase_payment_date__iexact=purchase_payment_date).order_by('id')
+        if bill_client_submission:
+            bill_client_submission_ids = self._params_to_ints(
+                bill_client_submission)
+            queryset = queryset.filter(
+                bill_client_submission_id__in=bill_client_submission_ids)
         if payment_method:
             payment_method_ids = self._params_to_ints(payment_method)
             queryset = queryset.filter(

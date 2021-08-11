@@ -36,6 +36,15 @@ export const checkValidity = (value, rules) => {
     return isValid;
 };
 
+export const stringLongDateHandler = date => {
+    if (date == null) {
+        return null
+    } else {
+        const newDate = date.substr(0, 9);
+        return newDate;
+    }
+};
+
 export const toFirstCharUppercase = name => {
     return name.charAt(0).toUpperCase() + name.slice(1);
 };

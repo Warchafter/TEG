@@ -13,7 +13,7 @@ const Logout = props => {
         onLogout();
     }, [onLogout]);
 
-    return <Redirect to="/" />;
+    return <Redirect to="/auth" />;
 };
 
 

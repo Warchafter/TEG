@@ -35,8 +35,11 @@ const initialState = {
     billPaymentDetailListCount: [],
     billPaymentDetailListPag: [],
     billPaymentDetailList: [],
+    exchangeRatesData: [],
     error: null,
-    loading: false
+    loading: false,
+    loadingExRates: false,
+    ExRateDataLoaded: false
 };
 
 const fetchBankListStart = (state, action) => {
@@ -466,6 +469,24 @@ const fetchBillPaymentDetailListFail = (state, action) => {
     return updateObject(state, { error: action.error, loading: false });
 };
 
+const fetchExchangeRatesStart = (state, action) => {
+    return updateObject(state, { error: null, loadingExRates: true, ExRateDataLoaded: false });
+};
+
+const fetchExchangeRatesSuccess = (state, action) => {
+    const updatedState = {
+        exchangeRatesData: action.exchangeRatesData,
+        error: null,
+        loadingExRates: false,
+        ExRateDataLoaded: true
+    };
+    return updateObject(state, updatedState);
+};
+
+const fetchExchangeRatesFail = (state, action) => {
+    return updateObject(state, { error: action.error, loadingExRates: false, ExRateDataLoaded: false });
+};
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_BANK_LIST_START: return fetchBankListStart(state, action);
@@ -540,6 +561,9 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_BILL_PAYMENT_DETAIL_LIST_START: return fetchBillPaymentDetailListStart(state, action);
         case actionTypes.FETCH_BILL_PAYMENT_DETAIL_LIST_SUCCESS: return fetchBillPaymentDetailListSuccess(state, action);
         case actionTypes.FETCH_BILL_PAYMENT_DETAIL_LIST_FAIL: return fetchBillPaymentDetailListFail(state, action);
+        case actionTypes.FETCH_EXCHANGE_RATES_START: return fetchExchangeRatesStart(state, action);
+        case actionTypes.FETCH_EXCHANGE_RATES_SUCCESS: return fetchExchangeRatesSuccess(state, action);
+        case actionTypes.FETCH_EXCHANGE_RATES_FAIL: return fetchExchangeRatesFail(state, action);
         default: return state;
     };
 };

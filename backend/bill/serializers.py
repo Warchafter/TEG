@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.models import Bank, BillDetail, BillPaymentDetail, BillProductCharacteristics, ProductCharacteristics, PaymentMethod, Currency, PurchaseBill, PurchaseStatus, PaymentStatus, SupplierProducts
+from core.models import Bank, BillClientSubmission, BillDetail, BillPaymentDetail, BillProductCharacteristics, ProductCharacteristics, PaymentMethod, Currency, PurchaseBill, PurchaseStatus, PaymentStatus, SupplierProducts
 from product.serializers import ProductDetailSerializer, ProductCharacteristicSerializer, ProductCharacteristicDetailSerializer
 from supplier.serializers import SupplierProductDetailSerializer, SupplierProductsSerializer
 from user.serializers import CurrentUserSerializer
@@ -51,15 +51,33 @@ class PaymentStatusSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 
+class DeliveryStatusSerializer(serializers.ModelSerializer):
+    """Serializer for status of delivery option objects"""
+
+    class Meta:
+        model = PaymentStatus
+        fields = ('id', 'name')
+        read_only_fields = ('id',)
+
+
+class BillClientSubmissionSerializer(serializers.ModelSerializer):
+    """Serializer for the client bill submission objetcs"""
+
+    class Meta:
+        model = BillClientSubmission
+        fields = ('id', 'bill_name_receiver', 'product_requirements')
+        read_only_fields = ('id',)
+
+
 class PurchaseBillSerializer(serializers.ModelSerializer):
     """Serializer for purchase bill objects"""
 
     class Meta:
         model = PurchaseBill
         fields = (
-            'id', 'purchase_order_date', 'purchase_payment_date',
-            'payment_method', 'currency', 'bank', 'purchase_status',
-            'payment_status'
+            'id', 'purchase_order_date', 'purchase_payment_date', 'employee_in_charge', 'bill_client_submission',
+            'payment_method', 'currency', 'bank',
+            'purchase_status', 'payment_status', 'delivery_status'
         )
         read_only_fields = ('id',)
         ordering = ('id',)
@@ -72,6 +90,10 @@ class PurchaseBillListSerializer(PurchaseBillSerializer):
     bank = BankSerializer(many=False, read_only=True)
     purchase_status = PurchaseStatusSerializer(many=False, read_only=True)
     payment_status = PaymentStatusSerializer(many=False, read_only=True)
+    delivery_status = DeliveryStatusSerializer(many=False, read_only=True)
+    employee_in_charge = CurrentUserSerializer(many=False, read_only=True)
+    bill_client_submission = BillClientSubmissionSerializer(
+        many=False, read_only=True)
 
 
 class PurchaseBillDetailSerializer(PurchaseBillSerializer):
@@ -82,6 +104,10 @@ class PurchaseBillDetailSerializer(PurchaseBillSerializer):
     bank = BankSerializer(many=False, read_only=True)
     purchase_status = PurchaseStatusSerializer(many=False, read_only=True)
     payment_status = PaymentStatusSerializer(many=False, read_only=True)
+    delivery_status = DeliveryStatusSerializer(many=False, read_only=True)
+    employee_in_charge = CurrentUserSerializer(many=False, read_only=True)
+    bill_client_submission = BillClientSubmissionSerializer(
+        many=False, read_only=True)
 
 
 class BillDetailSerializer(serializers.ModelSerializer):

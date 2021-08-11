@@ -56,7 +56,7 @@ export function* authUserSignUpSaga(action) {
     try {
         let response = yield axios.post(url, body, config);
         yield put(actions.authSignUpSuccess(response.data));
-        yield put(actions.enqueueSnackbar(getSnackbarData('Check your email to activate your account!', 'success')));
+        yield put(actions.enqueueSnackbar(getSnackbarData('¡Revise su correo para activar tu cuenta!', 'success')));
     } catch (error) {
         yield put(actions.logout());
         if (error.response.data.email) {
@@ -85,7 +85,7 @@ export function* authUserActivationSaga(action) {
     try {
         yield axios.post(url, body, config);
         yield put(actions.authUserActivationSuccess());
-        yield put(actions.enqueueSnackbar(getSnackbarData('Account activated!', 'success')));
+        yield put(actions.enqueueSnackbar(getSnackbarData('¡Cuenta activada!', 'success')));
     } catch (error) {
         yield put(actions.enqueueSnackbar(getSnackbarData(error.response.data.detail, 'error')));
         yield put(actions.authUserActivationFail(error.response.data.detail));
@@ -170,7 +170,7 @@ export function* authPasswordResetSaga(action) {
 
     try {
         yield axios.post('/auth/users/reset_password/', body, config);
-        yield put(actions.enqueueSnackbar(getSnackbarData('Check your email to confirm password reset!', 'success')));
+        yield put(actions.enqueueSnackbar(getSnackbarData('¡Revisa tu correo para confirmar el reinicio de contraseña!', 'success')));
         yield put(actions.authPasswordResetSuccess());
     } catch (error) {
         yield put(actions.authPasswordResetFail());
@@ -194,7 +194,7 @@ export function* authPasswordResetConfirmSaga(action) {
     try {
         yield axios.post('/auth/users/reset_password_confirm/', body, config);
         yield put(actions.authPasswordResetConfirmSuccess());
-        yield put(actions.enqueueSnackbar(getSnackbarData('Password reset successful!', 'success')));
+        yield put(actions.enqueueSnackbar(getSnackbarData('¡Contraseña reiniciada exitosamente!', 'success')));
     } catch (error) {
         yield put(actions.authPasswordResetConfirmFail());
         yield put(actions.enqueueSnackbar(getSnackbarData(error.response.data.detail, 'error')));

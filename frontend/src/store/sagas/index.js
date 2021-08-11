@@ -63,7 +63,8 @@ import {
     modifyBillPaymentDetailSaga,
     deleteBillPaymentDetailSaga,
     fetchBillPaymentDetailSaga,
-    fetchBillPaymentDetailListSaga
+    fetchBillPaymentDetailListSaga,
+    fetchExchangeRatesSaga
 } from './bill';
 
 import {
@@ -145,6 +146,7 @@ export function* watchBill() {
         takeEvery(actionTypes.DELETE_BILL_PAYMENT_DETAIL, deleteBillPaymentDetailSaga),
         takeEvery(actionTypes.FETCH_BILL_PAYMENT_DETAIL, fetchBillPaymentDetailSaga),
         takeEvery(actionTypes.FETCH_BILL_PAYMENT_DETAIL_LIST, fetchBillPaymentDetailListSaga),
+        takeLatest(actionTypes.FETCH_EXCHANGE_RATES, fetchExchangeRatesSaga),
     ]);
 };
 

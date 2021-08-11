@@ -19,7 +19,7 @@ export function* fetchBankListSaga(action) {
     const url = '/bill/banks/';
     try {
         let response = yield axios.get(url, config);
-        console.log(response.data);
+
         yield put(actions.fetchBankListSuccess(response.data));
     } catch (error) {
         yield put(actions.fetchBankListFail(error));
@@ -40,7 +40,6 @@ export function* fetchPaymentMethodListSaga(action) {
     const url = '/bill/payment-methods/';
     try {
         let response = yield axios.get(url, config);
-        console.log(response.data);
         yield put(actions.fetchPaymentMethodListSuccess(response.data));
     } catch (error) {
         yield put(actions.fetchPaymentMethodListFail(error));
@@ -61,7 +60,6 @@ export function* fetchCurrencyListSaga(action) {
     const url = '/bill/currencies/';
     try {
         let response = yield axios.get(url, config);
-        console.log(response.data);
         yield put(actions.fetchCurrencyListSuccess(response.data));
     } catch (error) {
         yield put(actions.fetchCurrencyListFail(error));
@@ -82,7 +80,6 @@ export function* fetchPurchaseStatusListSaga(action) {
     const url = '/bill/purchase-status/';
     try {
         let response = yield axios.get(url, config);
-        console.log(response.data);
         yield put(actions.fetchPurchaseStatusListSuccess(response.data));
     } catch (error) {
         yield put(actions.fetchPurchaseStatusListFail(error));
@@ -103,7 +100,6 @@ export function* fetchPaymentStatusListSaga(action) {
     const url = '/bill/payment-status/';
     try {
         let response = yield axios.get(url, config);
-        console.log(response.data);
         yield put(actions.fetchPaymentStatusListSuccess(response.data));
     } catch (error) {
         yield put(actions.fetchPaymentStatusListFail(error));
@@ -179,7 +175,6 @@ export function* fetchPurchaseBillSaga(action) {
     const url = `/bill/purchase-bills/${action.data.purchaseBillSelected}`;
     try {
         let response = yield axios.get(url, config);
-        console.log(response.data);
         yield put(actions.fetchPurchaseBillSuccess(response.data));
     } catch (error) {
         yield put(actions.fetchPurchaseBillFail(error));
@@ -199,11 +194,8 @@ export function* fetchPurchaseBillListSaga(action) {
     };
     const url = '/bill/purchase-bills/';
     try {
-        console.log("before get");
         let response = yield axios.get(url, config);
-        console.log("before put success");
         yield put(actions.fetchPurchaseBillListSuccess(response.data));
-        console.log("after put success");
     } catch (error) {
         yield put(actions.fetchPurchaseBillListFail(error));
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer las facturas', 'error')));
@@ -300,7 +292,6 @@ export function* fetchBillDetailSaga(action) {
     const url = `/bill/bill-details/${action.data.billDetailSelected}`;
     try {
         let response = yield axios.get(url, config);
-        console.log(response.data);
         yield put(actions.fetchBillDetailSuccess(response.data));
     } catch (error) {
         yield put(actions.fetchBillDetailFail(error));
@@ -321,7 +312,6 @@ export function* fetchBillDetailListSaga(action) {
     const url = '/bill/bill-details/';
     try {
         let response = yield axios.get(url, config);
-        console.log(response.data);
         yield put(actions.fetchBillDetailListSuccess(response.data));
     } catch (error) {
         yield put(actions.fetchBillDetailListFail(error));
@@ -420,7 +410,6 @@ export function* fetchBillProductCharacteristicSaga(action) {
     const url = `/bill/bill-product-characteristics/${action.data.billProductCharacteristicSelected}`;
     try {
         let response = yield axios.get(url, config);
-        console.log(response.data);
         yield put(actions.fetchBillProductCharacteristicSuccess(response.data));
     } catch (error) {
         yield put(actions.fetchBillProductCharacteristicFail(error));
@@ -441,7 +430,6 @@ export function* fetchBillProductCharacteristicListSaga(action) {
     const url = '/bill/bill-product-characteristics/';
     try {
         let response = yield axios.get(url, config);
-        console.log(response.data);
         yield put(actions.fetchBillProductCharacteristicListSuccess(response.data));
     } catch (error) {
         yield put(actions.fetchBillProductCharacteristicListFail(error));
@@ -459,8 +447,6 @@ export function* createBillPaymentDetailSaga(action) {
             'Accept': 'application/json'
         }
     };
-    console.log("This is the action.data");
-    console.log(action.data);
     let body = JSON.stringify({
         purchase_bill: action.data.purchase_bill,
         payment_receipt_number: action.data.payment_receipt_number
@@ -477,9 +463,7 @@ export function* createBillPaymentDetailSaga(action) {
         url = `/bill/bill-payment-details/${response.data.id}/upload-image/`;
         try {
             let responseFile = yield axios.post(url, action.formData, config);
-            console.log(responseFile.data);
         } catch (error) {
-            console.log(error);
             yield put(actions.createBillPaymentDetailFail(error));
             yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo cargar la imagen del recibo del pago', 'error')));
         }
@@ -553,7 +537,6 @@ export function* fetchBillPaymentDetailSaga(action) {
     const url = `/bill/bill-payment-details/${action.data.billPaymentDetailSelected}`;
     try {
         let response = yield axios.get(url, config);
-        console.log(response.data);
         yield put(actions.fetchBillPaymentDetailSuccess(response.data));
     } catch (error) {
         yield put(actions.fetchBillPaymentDetailFail(error));
@@ -574,10 +557,21 @@ export function* fetchBillPaymentDetailListSaga(action) {
     const url = '/bill/bill-payment-details/';
     try {
         let response = yield axios.get(url, config);
-        console.log(response.data);
         yield put(actions.fetchBillPaymentDetailListSuccess(response.data));
     } catch (error) {
         yield put(actions.fetchBillPaymentDetailListFail(error));
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer los detalles de pago de las facturas', 'error')));
+    };
+};
+
+export function* fetchExchangeRatesSaga(action) {
+    yield put(actions.fetchExchangeRatesStart());
+    const url = 'https://s3.amazonaws.com/dolartoday/data.json'
+    try {
+        let response = yield axios.get(url);
+        yield put(actions.fetchExchangeRatesSuccess(response.data));
+    } catch (error) {
+        yield put(actions.fetchExchangeRatesFail(error));
+        yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer las tasas del día', 'error')));
     };
 };

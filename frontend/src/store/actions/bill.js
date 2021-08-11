@@ -652,3 +652,30 @@ export const fetchBillPaymentDetailListFail = (error) => {
         error: error
     };
 };
+
+export const fetchExchangeRates = (data) => {
+    return {
+        type: actionTypes.FETCH_EXCHANGE_RATES,
+        data: data
+    };
+};
+
+export const fetchExchangeRatesStart = () => {
+    return {
+        type: actionTypes.FETCH_EXCHANGE_RATES_START,
+    };
+};
+
+export const fetchExchangeRatesSuccess = (exchangeRatesData) => {
+    return {
+        type: actionTypes.FETCH_EXCHANGE_RATES_SUCCESS,
+        exchangeRatesData: exchangeRatesData
+    };
+};
+
+export const fetchExchangeRatesFail = (error) => {
+    return {
+        type: actionTypes.FETCH_EXCHANGE_RATES_FAIL,
+        error: error
+    };
+};

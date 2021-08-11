@@ -164,6 +164,13 @@ let routes = [
         isPrivate: true
     },
     {
+        path: '/bill-payments',
+        layout: DefaultLayout,
+        name: "Pagos Facturas",
+        component: BillKanbanStyleGrid,
+        isPrivate: true
+    },
+    {
         path: '/billtesting',
         layout: DefaultLayout,
         name: "Bill Testing",

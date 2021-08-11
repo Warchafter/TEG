@@ -10,6 +10,8 @@ router.register('payment-methods', views.PaymentMethodViewSet)
 router.register('currencies', views.CurrencyViewSet)
 router.register('purchase-status', views.PurchaseStatusViewSet)
 router.register('payment-status', views.PaymentStatusViewSet)
+router.register('delivery-status', views.DeliveryStatusViewSet)
+router.register('bill-client-submission', views.BillClientSubmissionViewSet)
 router.register('purchase-bills', views.PurchaseBillViewSet)
 router.register('bill-details', views.BillDetailViewSet)
 router.register('bill-product-characteristics',

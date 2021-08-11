@@ -200,6 +200,10 @@ export {
     fetchBillPaymentDetailListStart,
     fetchBillPaymentDetailListSuccess,
     fetchBillPaymentDetailListFail,
+    fetchExchangeRates,
+    fetchExchangeRatesStart,
+    fetchExchangeRatesSuccess,
+    fetchExchangeRatesFail
 } from './bill';
 
 export {
