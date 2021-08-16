@@ -30,6 +30,16 @@ class IsAdminOrReadOnly(BasePermission):
         return request.user.is_staff
 
 
+class IsClientOrReadOnly(BasePermission):
+    """Object-level permission to only allow clients or above users to edit an object"""
+
+    def has_permission(self, request, view):
+        if request.method in SAFE_METHODS:
+            return True
+
+        return request.user.roles == 'user'
+
+
 class IsStaffOrReadOnly(BasePermission):
     """Object-level permission to only allow staff or above users to edit an object"""
 
@@ -130,7 +140,7 @@ class BillClientSubmissionViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.SearchFilter,)
     queryset = BillClientSubmission.objects.all()
     authentication_classes = (JWTAuthentication,)
-    permission_classes = (IsAdminOrReadOnly,)
+    permission_classes = (IsClientOrReadOnly,)
     pagination_class = StandardResultsSetPagination
 
     def _params_to_ints(self, qs):
@@ -148,6 +158,9 @@ class BillClientSubmissionViewSet(viewsets.ModelViewSet):
         order_by = self.request.query_params.get('order_by')
         queryset = self.queryset
         is_staff = self.request.user.is_staff
+        roles = self.request.user.roles
+
+        print(roles)
 
         if bill_name_receiver:
             queryset = queryset.filter(

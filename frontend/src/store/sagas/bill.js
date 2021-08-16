@@ -107,6 +107,70 @@ export function* fetchPaymentStatusListSaga(action) {
     };
 };
 
+export function* createBillClientSubmissionSaga(action) {
+    yield put(actions.createBillClientSubmissionStart());
+    const access = yield localStorage.getItem('access');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `JWT ${access}`,
+            'Accept': 'application/json'
+        }
+    };
+    const body = JSON.stringify(action.formData);
+    const url = '/bill/bill-client-submissions/';
+    try {
+        let response = yield axios.post(url, body, config);
+        console.log(response);
+        yield put(actions.createBillClientSubmissionSuccess(response.data));
+        yield put(actions.enqueueSnackbar(getSnackbarData('La Solicitud fue enviada exitosamente!')));
+    } catch (error) {
+        yield put(actions.createBillClientSubmissionFail(error));
+        yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo enviar la solicitud', 'error')));
+    };
+};
+
+export function* fetchBillClientSubmissionDetailSaga(action) {
+    yield put(actions.fetchBillClientSubmissionDetailStart());
+    const access = yield localStorage.getItem('access');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': access ? `JWT ${access}` : null,
+            'Accept': 'application/json'
+        }
+    };
+    const url = `/bill/bill-client-submissions/${action.data.billClientSubmissionSelected}`;
+    try {
+        let response = yield axios.get(url, config);
+        yield put(actions.fetchBillClientSubmissionDetailSuccess(response.data));
+    } catch (error) {
+        yield put(actions.fetchBillClientSubmissionDetailFail(error));
+        yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer el detalle de la solicitud', 'error')));
+    };
+};
+
+export function* fetchBillClientSubmissionListSaga(action) {
+    yield put(actions.fetchBillClientSubmissionListStart());
+    const access = yield localStorage.getItem('access');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': access ? `JWT ${access}` : null,
+            'Accept': 'application/json'
+        }
+    };
+    const url = '/bill/bill-client-submissions/';
+    try {
+        let response = yield axios.get(url, config);
+        console.log(response.data);
+        yield put(actions.fetchBillClientSubmissionListSuccess(response.data));
+    } catch (error) {
+        yield put(actions.fetchBillClientSubmissionListFail(error));
+        yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer las solicitudes', 'error')));
+    };
+};
+
 export function* createPurchaseBillSaga(action) {
     yield put(actions.createPurchaseBillStart());
     const access = yield localStorage.getItem('access');

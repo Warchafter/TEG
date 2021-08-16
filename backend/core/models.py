@@ -491,7 +491,7 @@ class BillClientSubmission(models.Model):
         on_delete=models.DO_NOTHING
     )
     bill_name_receiver = models.CharField(max_length=255, blank=False)
-    product_requirements = models.CharField(max_length=10000, blank=False)
+    product_requirements = models.TextField(blank=False)
 
     def __str__(self):
         return self.bill_name_receiver

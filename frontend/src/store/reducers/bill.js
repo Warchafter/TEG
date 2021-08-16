@@ -7,6 +7,13 @@ const initialState = {
     currencyList: [],
     purchaseStatusList: [],
     paymentStatusList: [],
+    billClientSubmissionCreated: [],
+    billClientSubmissionDetail: [],
+    billClientSubmissionListCount: [],
+    billClientSubmissionListPag: [],
+    billClientSubmissionList: [],
+    billClientSubmissionSelected: [],
+    isBillClientSubmissionSelected: false,
     purchaseBillListCount: [],
     purchaseBillListPag: [],
     purchaseBillList: [],
@@ -38,6 +45,7 @@ const initialState = {
     exchangeRatesData: [],
     error: null,
     loading: false,
+    loadingBillClientSubmissionHistoryList: false,
     loadingExRates: false,
     ExRateDataLoaded: false
 };
@@ -122,6 +130,68 @@ const fetchPaymentStatusListSuccess = (state, action) => {
 const fetchPaymentStatusListFail = (state, action) => {
     return updateObject(state, { error: action.error, loading: false });
 };
+
+const createBillClientSubmissionStart = (state, action) => {
+    return updateObject(state, { error: null, loading: true });
+};
+
+const createBillClientSubmissionSuccess = (state, action) => {
+    const updatedBill = state.puchaseBillList.concat(action.puchseBillCreatedId);
+    const updatedState = {
+        puchaseBillList: updatedBill,
+        error: null,
+        loading: false
+    };
+    return updateObject(state, updatedState);
+};
+
+const createBillClientSubmissionFail = (state, action) => {
+    return updateObject(state, { error: action.error, loading: false });
+};
+
+const fetchBillClientSubmissionDetailStart = (state, action) => {
+    return updateObject(state, { error: null, loading: true });
+}
+
+const fetchBillClientSubmissionDetailSuccess = (state, action) => {
+    const updatedState = {
+        BillClientSubmissionDetail: action.BillClientSubmissionDetail,
+        error: null,
+        loading: false
+    };
+    return updateObject(state, updatedState);
+};
+
+const fetchBillClientSubmissionDetailFail = (state, action) => {
+    return updateObject(state, { error: action.error, loading: false });
+};
+
+const fetchBillClientSubmissionListStart = (state, action) => {
+    return updateObject(state, { error: null, loadingBillClientSubmissionHistoryList: true });
+};
+
+const fetchBillClientSubmissionListSuccess = (state, action) => {
+    const updatedState = {
+        billClientSubmissionListCount: action.billClientSubmissionListData.count,
+        billClientSubmissionListPag: action.billClientSubmissionListData.links,
+        billClientSubmissionList: action.billClientSubmissionListData.results,
+        error: null,
+        loadingBillClientSubmissionHistoryList: false
+    };
+    return updateObject(state, updatedState);
+};
+
+const fetchBillClientSubmissionListFail = (state, action) => {
+    return updateObject(state, { error: action.error, loadingBillClientSubmissionHistoryList: false });
+};
+
+const setSelectedBillClientSubmission = (state, action) => {
+    console.log(action)
+    return updateObject(state, {
+        billClientSubmissionSelected: action.data,
+        isBillClientSubmissionSelected: true
+    })
+}
 
 const createPurchaseBillStart = (state, action) => {
     return updateObject(state, { error: null, loading: true });
@@ -504,6 +574,16 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_PAYMENT_STATUS_LIST_START: return fetchPaymentStatusListStart(state, action);
         case actionTypes.FETCH_PAYMENT_STATUS_LIST_SUCCESS: return fetchPaymentStatusListSuccess(state, action);
         case actionTypes.FETCH_PAYMENT_STATUS_LIST_FAIL: return fetchPaymentStatusListFail(state, action);
+        case actionTypes.CREATE_BILL_CLIENT_SUBMISSION_START: return createBillClientSubmissionStart(state, action);
+        case actionTypes.CREATE_BILL_CLIENT_SUBMISSION_SUCCESS: return createBillClientSubmissionSuccess(state, action);
+        case actionTypes.CREATE_BILL_CLIENT_SUBMISSION_FAIL: return createBillClientSubmissionFail(state, action);
+        case actionTypes.FETCH_BILL_CLIENT_SUBMISSION_DETAIL_START: return fetchBillClientSubmissionDetailStart(state, action);
+        case actionTypes.FETCH_BILL_CLIENT_SUBMISSION_DETAIL_SUCCESS: return fetchBillClientSubmissionDetailSuccess(state, action);
+        case actionTypes.FETCH_BILL_CLIENT_SUBMISSION_DETAIL_FAIL: return fetchBillClientSubmissionDetailFail(state, action);
+        case actionTypes.FETCH_BILL_CLIENT_SUBMISSION_LIST_START: return fetchBillClientSubmissionListStart(state, action);
+        case actionTypes.FETCH_BILL_CLIENT_SUBMISSION_LIST_SUCCESS: return fetchBillClientSubmissionListSuccess(state, action);
+        case actionTypes.FETCH_BILL_CLIENT_SUBMISSION_LIST_FAIL: return fetchBillClientSubmissionListFail(state, action);
+        case actionTypes.SET_SELECTED_BILL_CLIENT_SUBMISSION: return setSelectedBillClientSubmission(state, action);
         case actionTypes.CREATE_PURCHASE_BILL_START: return createPurchaseBillStart(state, action);
         case actionTypes.CREATE_PURCHASE_BILL_SUCCESS: return createPurchaseBillSuccess(state, action);
         case actionTypes.CREATE_PURCHASE_BILL_FAIL: return createPurchaseBillFail(state, action);

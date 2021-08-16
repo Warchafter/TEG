@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 
+
 export const fetchBankList = () => {
     return {
         type: actionTypes.FETCH_BANK_LIST
@@ -127,6 +128,93 @@ export const fetchPaymentStatusListFail = (error) => {
     return {
         type: actionTypes.FETCH_PAYMENT_STATUS_LIST_FAIL,
         error: error
+    };
+};
+
+export const createBillClientSubmission = (formData) => {
+    return {
+        type: actionTypes.CREATE_BILL_CLIENT_SUBMISSION,
+        formData: formData
+    };
+};
+
+export const createBillClientSubmissionStart = () => {
+    return {
+        type: actionTypes.CREATE_BILL_CLIENT_SUBMISSION_START
+    };
+};
+
+export const createBillClientSubmissionSuccess = (billClientSubmissionCreated) => {
+    return {
+        type: actionTypes.CREATE_BILL_CLIENT_SUBMISSION_SUCCESS,
+        billClientSubmissionCreated: billClientSubmissionCreated
+    };
+};
+
+export const createBillClientSubmissionFail = (error) => {
+    return {
+        type: actionTypes.CREATE_BILL_CLIENT_SUBMISSION_FAIL,
+        error: error
+    };
+};
+
+export const fetchBillClientSubmissionDetail = (id) => {
+    return {
+        type: actionTypes.FETCH_BILL_CLIENT_SUBMISSION_DETAIL,
+        id: id
+    };
+};
+
+export const fetchBillClientSubmissionDetailStart = () => {
+    return {
+        type: actionTypes.FETCH_BILL_CLIENT_SUBMISSION_DETAIL_START
+    };
+};
+
+export const fetchBillClientSubmissionDetailSuccess = (billClientSubmissionDetail) => {
+    return {
+        type: actionTypes.FETCH_BILL_CLIENT_SUBMISSION_DETAIL_SUCCESS,
+        billClientSubmissionDetail: billClientSubmissionDetail
+    };
+};
+
+export const fetchBillClientSubmissionDetailFail = (error) => {
+    return {
+        type: actionTypes.FETCH_BILL_CLIENT_SUBMISSION_DETAIL_FAIL,
+        error: error
+    };
+};
+
+export const fetchBillClientSubmissionList = () => {
+    return {
+        type: actionTypes.FETCH_BILL_CLIENT_SUBMISSION_LIST
+    };
+};
+
+export const fetchBillClientSubmissionListStart = () => {
+    return {
+        type: actionTypes.FETCH_BILL_CLIENT_SUBMISSION_LIST_START
+    };
+};
+
+export const fetchBillClientSubmissionListSuccess = (billClientSubmissionListData) => {
+    return {
+        type: actionTypes.FETCH_BILL_CLIENT_SUBMISSION_LIST_SUCCESS,
+        billClientSubmissionListData: billClientSubmissionListData
+    };
+};
+
+export const fetchBillClientSubmissionListFail = (error) => {
+    return {
+        type: actionTypes.FETCH_BILL_CLIENT_SUBMISSION_LIST_FAIL,
+        error: error
+    };
+};
+
+export const setSelectedBillClientSubmission = (data) => {
+    return {
+        type: actionTypes.SET_SELECTED_BILL_CLIENT_SUBMISSION,
+        data: data
     };
 };
 

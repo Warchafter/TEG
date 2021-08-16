@@ -23,21 +23,21 @@ export const _nav2 = [
   },
   {
     _component: 'CNavTitle',
-    anchor: 'Proveedores',
+    anchor: 'Facturas',
   },
   {
     _component: 'CNavItem',
     as: NavLink,
-    anchor: 'Pruebas Proveedores',
-    to: '/suppliertesting',
-    icon: <CIcon content={freeSet.cilTruck} customClasses="nav-icon"/>,
+    anchor: 'Solicitud de Facturación',
+    to: '/bill-client-submission',
+    icon: <CIcon content={freeSet.cilCart} customClasses="nav-icon"/>,
   },
   {
     _component: 'CNavItem',
     as: NavLink,
-    anchor: 'Proveedores',
-    to: '/suppliers',
-    icon: <CIcon content={freeSet.cilTruck} customClasses="nav-icon"/>,
+    anchor: 'Mis Facturas',
+    to: '/bill-client-submission-history',
+    icon: <CIcon content={freeSet.cilListRich} customClasses="nav-icon"/>,
   },
 ];
 

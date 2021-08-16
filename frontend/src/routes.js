@@ -17,9 +17,13 @@ const ResetPassword = React.lazy(() => { return import('./containers/Auth/ResetP
 const ResetPasswordConfirm = React.lazy(() => { return import('./containers/Auth/ResetPasswordConfirm/ResetPasswordConfirm') });
 const Logout = React.lazy(() => { return import('./containers/Auth/Logout/Logout') });
 
+
+// Bills
+
 const Loaders = React.lazy(() => { return import('./containers/Products/Loaders/Loaders') });
 const Bill = React.lazy(() => { return import('./containers/Bill/Bill') });
-
+const BillClientSubmission = React.lazy(() => { return import('./containers/Bill/BillClientSubmission/BillClientSubmission') });
+const BillClientSubmissionHistory = React.lazy(() => { return import('./containers/Bill/BillClientSubmission/BillClientSubmissionHistory') });
 
 // Supplier
 
@@ -296,6 +300,20 @@ let routes = [
         layout: DefaultLayout,
         name: "User Profile",
         component: UserProfile,
+        isPrivate: true
+    },
+    {
+        path: '/bill-client-submission',
+        layout: DefaultLayout,
+        name: "Solicitud de Facturación",
+        component: BillClientSubmission,
+        isPrivate: true
+    },
+    {
+        path: '/bill-client-submission-history',
+        layout: DefaultLayout,
+        name: "Historial de Solicitudes de Facturación",
+        component: BillClientSubmissionHistory,
         isPrivate: true
     },
     { path: '/dashboard', name: 'Dashboard', component: Dashboard, layout: DefaultLayout },

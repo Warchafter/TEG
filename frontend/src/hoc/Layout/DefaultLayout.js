@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { AppContent, AppSidebar, AppHeader } from '../../components/index';
+import { AppContent, AppSidebar, AppFooter, AppHeader } from '../../components/index';
 
 const DefaultLayout = (props) => {
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
@@ -13,6 +13,7 @@ const DefaultLayout = (props) => {
                 <div className="body flex-grow-1 px-3">
                     <AppContent {...props} />
                 </div>
+                <AppFooter />
             </div>
         </div>
     );
