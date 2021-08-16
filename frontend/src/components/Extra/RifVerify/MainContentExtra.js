@@ -8,10 +8,10 @@ import {
 } from '@material-ui/core';
 
 import * as actions from '../../../store/actions/index';
-import UserProfileClient from './MainContent/UserProfileClient';
-import UserProfileClientModify from './MainContent/UserProfileClientModify';
-import UserProfileStaff from './MainContent/UserProfileStaff';
-import UserProfileUploadRIF from './MainContent/UserProfileUploadRIF';
+import UserProfileClient from './MainContentExtra/UserProfileClient';
+import UserProfileClientModify from './MainContentExtra/UserProfileClientModify';
+import UserProfileStaff from './MainContentExtra/UserProfileStaff';
+import UserProfileUploadRIF from './MainContentExtra/UserProfileUploadRIF';
 
 const useStyles = makeStyles(({ spacing, palette }) => {
     const family =
