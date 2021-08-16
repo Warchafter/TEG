@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { applyMiddleware, createStore, compose, combineReducers } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { SnackbarProvider } from 'notistack';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import App from './App';
@@ -41,7 +41,7 @@ const store = createStore(rootReducer, composeEnhancers(
   applyMiddleware(sagaMiddleWare)
 ));
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
       // light: will be calculated from palette.primary.main,

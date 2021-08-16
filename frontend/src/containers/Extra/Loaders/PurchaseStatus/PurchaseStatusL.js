@@ -35,6 +35,7 @@ const PurchaseStatusL = () => {
     // with the options to render the different requests.
 
 
+    // eslint-disable-next-line no-unused-vars
     const [mainOption, setMainOption] = useState(purchaseStatusButtonOptions);
     const [mainContent, setMainContent] = useState(null);
     const classes = useStyles();

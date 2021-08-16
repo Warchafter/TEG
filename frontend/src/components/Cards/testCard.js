@@ -34,14 +34,14 @@ export const testCard = React.memo(function TestCard() {
 
     return (
         <div className={styles.card} class="card l-bg-green">
-            <div class="card-statistic-3">
-                <div class="card-icon card-icon-large">
-                    <i class="fa fa-award"></i>
+            <div className="card-statistic-3">
+                <div className="card-icon card-icon-large">
+                    <i className="fa fa-award"></i>
                 </div>
-                <div class="card-content">
-                    <h4 class="card-title">Certificados</h4>
-                    <Typography class="mb-0 text-sm">
-                        <div class="text-nowrap"><br>Podrás visualizar los certificados</br>
+                <div className="card-content">
+                    <h4 className="card-title">Certificados</h4>
+                    <Typography className="mb-0 text-sm">
+                        <div className="text-nowrap"><br>Podrás visualizar los certificados</br>
                             obtenidos en los cursos que has<br> realizado.
                             </br>
                         </div>

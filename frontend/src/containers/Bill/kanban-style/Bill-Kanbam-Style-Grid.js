@@ -1,11 +1,17 @@
+/* eslint-disable array-callback-return */
 import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
+import NiceHeaderCard from '../../../components/Cards/niceHeaderCard';
 import KanbanCardDemo from '../../../components/MUI-Components/PaymentKambamCard/payment-kanbam-card';
 import CurrencyValueCard from '../../../components/Cards/currencyValueCard';
+
+
+// import CIcon from '@coreui/icons-react'
+// import { freeSet } from '@coreui/icons'
 
 import cx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -51,6 +57,27 @@ const useStyles = makeStyles(({ spacing, palette, theme }) => {
             fontSize: 14,
             color: palette.grey[500],
         },
+        scrollMenu: {
+            overflow: 'auto',
+            whiteSpace: 'nowrap',
+            maxHeight: '100%',
+            overflowY: 'hidden',
+        },
+        alertLight: {
+            backgroundColor: '#e3eaef',
+            color: '#69787d',
+            display: 'flex',
+            border: 'none',
+            paddind: '15px 20px',
+            position: 'relative',
+            marginBottom: '1rem',
+            borderRadius: '.25rem',
+            boxSizing: 'border-box',
+            fontSize: '14px',
+            fontWeight: '400',
+            lineHeight: '1.5',
+            textAlign: 'left'
+        },
     };
 });
 
@@ -58,6 +85,10 @@ const BillKanbanStyleGrid = () => {
 
     const classes = useStyles();
     const dispatch = useDispatch();
+
+    // const [paymentBillCounter1, setPaymentBillCounter1] = React.useState(0);
+    // const [paymentBillCounter2, setPaymentBillCounter2] = React.useState(0);
+    // const [paymentBillCounter3, setPaymentBillCounter3] = React.useState(0);
 
     const purchaseBillList = useSelector(state => state.bill.purchaseBillList);
     const isLoading = useSelector(state => state.bill.loading);
@@ -74,6 +105,38 @@ const BillKanbanStyleGrid = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    // const onPaymentBillCounterHandler = (billPaymentType) => {
+    //     if (billPaymentType === 1) {
+    //         setPaymentBillCounter1(paymentBillCounter1 + 1);
+    //     } else if (billPaymentType === 2) {
+    //         setPaymentBillCounter2(paymentBillCounter2 + 1);
+    //     } else {
+    //         setPaymentBillCounter3(paymentBillCounter3 + 1);
+    //     }
+    // };
+
+    const paymentCard = (type) => {
+        if (type === 1) {
+            purchaseBillList.map(index => {
+                if (index.payment_status.id === 1) {
+                    return <Grid item xs={12}><KanbanCardDemo key={index.id} {...index} /></Grid>
+                }
+            });
+        } else if (type === 2) {
+            purchaseBillList.map(index => {
+                if (index.payment_status.id === 2) {
+                    return <Grid item xs={12}><KanbanCardDemo key={index.id} {...index} /></Grid>
+                }
+        });
+        } else if (type === 3) {
+            purchaseBillList.map(index => {
+                if (index.payment_status.id === 3) {
+                    return <Grid item xs={12}><KanbanCardDemo key={index.id} {...index} /></Grid>
+                }
+            });
+        }
+    }
+
     return (
         <React.Fragment>
             <CurrencyValueCard exchangeRates={exchangeRates} loading={isLoadingExRate} ExRateDataLoaded={ExRateDataLoaded} />
@@ -84,71 +147,57 @@ const BillKanbanStyleGrid = () => {
                 container
             >
                 <Grid item xs={12}>
+                    <div className={classes.alertLight}>
+                        <div className={classes.alertTitle}>Test Title
+                        </div>
+                        " Test description to understand the padding a little bit better. "
+                    </div>
+                </Grid>
+                <Grid item xs={12}>
                     <Card className={cx(classes.card)} elevation={0}>
                         <h2>This is a title that needs to be padded better</h2>
                     </Card>
                 </Grid>
-                {/* {isLoading === false && purchaseBillList !== []
+                {isLoading === false && purchaseBillList !== []
                     ?
-                    <Grid item xs={12}>
+                    <Grid item xs={12} className={classes.scrollMenu}>
                         <Grid container spacing={8} className={classes.root} >
-                            <Grid item xs={4}>
+                            <Grid item xs={4} md={4}>
                                 <Grid
                                     spacing={3}
                                     direction="column"
                                     className={classes.root}
                                     container
                                 >
-                                    <Card className={cx(classes.card)} elevation={0}>
-                                        <h4>Por Pagar</h4>
-                                    </Card>
+                                    <NiceHeaderCard title={"Por Pagar"} type={"Por Pagar"}/>
                                     {
-                                        purchaseBillList.map(index => (
-                                            index.payment_status.id !== 1
-                                                ?
-                                                null
-                                                : <Grid item xs={12}><KanbanCardDemo key={index.id} {...index} /></Grid>
-                                        ))
+                                        paymentCard(1)
                                     }
                                 </Grid>
                             </Grid>
-                            <Grid item xs={4}>
+                            <Grid item xs={4} md={4}>
                                 <Grid
                                     spacing={3}
                                     direction="column"
                                     className={classes.root}
                                     container
                                 >
-                                    <Card className={cx(classes.card)} elevation={0}>
-                                        <h4>Pago Parcial</h4>
-                                    </Card>
+                                    <NiceHeaderCard title={"Pago Parcial"} type={"Pago Parcial"}/>
                                     {
-                                        purchaseBillList.map(index => (
-                                            index.payment_status.id !== 2
-                                                ?
-                                                null
-                                                : <Grid item xs={12}><KanbanCardDemo key={index.id} {...index} /></Grid>
-                                        ))
+                                        paymentCard(2)
                                     }
                                 </Grid>
                             </Grid>
-                            <Grid item xs={4}>
+                            <Grid item xs={4} md={4}>
                                 <Grid
                                     spacing={3}
                                     direction="column"
                                     className={classes.root}
                                     container
                                 >
-                                    <Card className={cx(classes.card)} elevation={0}>
-                                        <h4>Pago Completo</h4>
-                                    </Card>
+                                    <NiceHeaderCard title={"Pago Completo"} type={"Pago Completo"}/>
                                     {
-                                        purchaseBillList.map(index => (
-                                            index.payment_status.id !== 3
-                                                ?
-                                                null
-                                                : <Grid item xs={12}><KanbanCardDemo key={index.id} {...index} /></Grid>
-                                        ))
+                                        paymentCard(3)
                                     }
                                 </Grid>
                             </Grid>
@@ -156,7 +205,7 @@ const BillKanbanStyleGrid = () => {
                     </Grid>
                     :
                     null
-                } */}
+                }
             </Grid>
         </React.Fragment>
     );

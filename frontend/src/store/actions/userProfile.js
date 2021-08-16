@@ -1,9 +1,8 @@
 import * as actionTypes from './actionTypes';
 
-export const fetchUserProfileDetail = (userId) => {
+export const fetchUserProfileDetail = () => {
     return {
-        type: actionTypes.FETCH_USER_PROFILE_DETAIL,
-        userId: userId
+        type: actionTypes.FETCH_USER_PROFILE_DETAIL
     };
 };
 
@@ -23,6 +22,33 @@ export const fetchUserProfileDetailSuccess = (userProfileDetail) => {
 export const fetchUserProfileDetailFail = (error) => {
     return {
         type: actionTypes.FETCH_USER_PROFILE_DETAIL_FAIL,
+        error: error
+    };
+};
+
+export const fetchSelectedUserProfileDetail = (selectedUserId) => {
+    return {
+        type: actionTypes.FETCH_SELECTED_USER_PROFILE_DETAIL,
+        selectedUserId: selectedUserId
+    };
+};
+
+export const fetchSelectedUserProfileDetailStart = () => {
+    return {
+        type: actionTypes.FETCH_SELECTED_USER_PROFILE_DETAIL_START
+    };
+};
+
+export const fetchSelectedUserProfileDetailSuccess = (userProfileDetail) => {
+    return {
+        type: actionTypes.FETCH_SELECTED_USER_PROFILE_DETAIL_SUCCESS,
+        userProfileDetail: userProfileDetail
+    };
+};
+
+export const fetchSelectedUserProfileDetailFail = (error) => {
+    return {
+        type: actionTypes.FETCH_SELECTED_USER_PROFILE_DETAIL_FAIL,
         error: error
     };
 };
@@ -80,6 +106,33 @@ export const modifyUserProfileDetailFail = (error) => {
     };
 };
 
+export const uploadUserProfileRif = (formData) => {
+    return {
+        type: actionTypes.UPLOAD_USER_PROFILE_RIF,
+        formData: formData
+    };
+};
+
+export const uploadUserProfileRifStart = () => {
+    return {
+        type: actionTypes.UPLOAD_USER_PROFILE_RIF_START
+    };
+};
+
+export const uploadUserProfileRifSuccess = (userProfileRIFImage) => {
+    return {
+        type: actionTypes.UPLOAD_USER_PROFILE_RIF_SUCCESS,
+        userProfileRIFImage: userProfileRIFImage
+    };
+};
+
+export const uploadUserProfileRifFail = (error) => {
+    return {
+        type: actionTypes.UPLOAD_USER_PROFILE_RIF_FAIL,
+        error: error
+    };
+};
+
 export const verifyUserProfileRif = (isVerified) => {
     return {
         type: actionTypes.VERIFY_USER_PROFILE_RIF,
@@ -103,6 +156,32 @@ export const verifyUserProfileRifSuccess = (isVerified) => {
 export const verifyUserProfileRifFail = (error) => {
     return {
         type: actionTypes.VERIFY_USER_PROFILE_RIF_FAIL,
+        error: error
+    };
+};
+
+export const fetchSpecializations = () => {
+    return {
+        type: actionTypes.FETCH_SPECIALIZATIONS
+    };
+};
+
+export const fetchSpecializationsStart = () => {
+    return {
+        type: actionTypes.FETCH_SPECIALIZATIONS_START
+    };
+};
+
+export const fetchSpecializationsSuccess = (specializationList) => {
+    return {
+        type: actionTypes.FETCH_SPECIALIZATIONS_SUCCESS,
+        specializationList: specializationList
+    };
+};
+
+export const fetchSpecializationsFail = (error) => {
+    return {
+        type: actionTypes.FETCH_SPECIALIZATIONS_FAIL,
         error: error
     };
 };

@@ -56,8 +56,17 @@ class AuthTokenSerializer(serializers.Serializer):
         return attrs
 
 
+class SpecializationSerializer(serializers.ModelSerializer):
+    """ """
+    class Meta:
+        model = Specialization
+        fields = ('id', 'name')
+        read_only_fields = ('id',)
+
+
 class CurrentUserSerializer(serializers.ModelSerializer):
     """ """
+    specialization = SpecializationSerializer(many=True, read_only=True)
 
     class Meta:
         model = User
@@ -74,7 +83,7 @@ class CurrentUserRIFImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'image')
+        fields = ('id', 'rif')
         read_only_fields = ('id',)
 
 
@@ -84,12 +93,4 @@ class VerifyUserRIFImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'rif_validated')
-        read_only_fields = ('id',)
-
-
-class SpecializationSerializer(serializers.ModelSerializer):
-    """ """
-    class Meta:
-        model = Specialization
-        fields = ('id', 'name')
         read_only_fields = ('id',)

@@ -1,12 +1,13 @@
-import React, { useEffect, Suspense, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 import * as actions from './store/actions/index';
 import { withStyles } from '@material-ui/core/styles';
-import routes from './routes';
-import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import 'react-image-lightbox/style.css';
 import './scss/style.scss'
+
+import PrivateRoute from './components/PrivateRoute/PrivateRoute'
+import routes from './routes';
 
 
 const styles = {
@@ -46,68 +47,136 @@ const styles = {
     }
 };
 
+const loading = (
+    <div className="pt-3 text-center">
+        <div className="sk-spinner sk-spinner-pulse"></div>
+    </div>
+)
+
 const App = props => {
+
     const dispatch = useDispatch();
+    // const userRoles = useSelector(state => state.auth.user.roles);
 
     const isLoading = useSelector(state => state.auth.loading);
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
     const isLoaded = useSelector(state => state.auth.isLoaded);
+    // const userHasData = useSelector(state => state.auth.userHasData);
+    const isAuthFuncLoaded = useSelector(state => state.auth.isAuthFuncLoaded);
 
-    const onTryAutoSignup = useCallback(() => dispatch(actions.authCheckState()), [dispatch])
+    const Auth = React.lazy(() => { return import('./containers/Auth/Auth'); });
+    const Activate = React.lazy(() => { return import('./containers/Auth/Activate/Activate'); });
+    const ResetPassword = React.lazy(() => { return import('./containers/Auth/ResetPassword/ResetPassword') });
+    const ResetPasswordConfirm = React.lazy(() => { return import('./containers/Auth/ResetPasswordConfirm/ResetPasswordConfirm') });
+    const Logout = React.lazy(() => { return import('./containers/Auth/Logout/Logout') });
+
+    const onTryAutoSignup = useCallback(() => dispatch(actions.authCheckState()), [dispatch]);
+    // const onUserHasData = useCallback(() => dispatch(actions.authCheckUserData()), [dispatch]);
+
 
     useEffect(() => {
-        onTryAutoSignup();
+        if (isAuthFuncLoaded) {
+        } else {onTryAutoSignup();}
+        // onUserHasData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [isAuthFuncLoaded]);
+
+    const DefaultLayout = React.lazy(() => { return import('./hoc/Layout/DefaultLayout')})
 
     return (
         <div>
-            {isLoading && !isLoaded
-                ?
-                null
-                :
-                <Suspense fallback={<p>Loading...</p>}>
-                    <Router>
-                        {routes.map((route, index) => {
-                            if (route.isPrivate) {
-                                return (
-                                    <PrivateRoute
-                                        key={index}
-                                        path={route.path}
-                                        exact={route.exact}
-                                        isAuth={isAuthenticated}
-                                        isLoad={isLoading}
-                                        component={(props => {
-                                            return (
-                                                <route.layout {...props}>
-                                                    <route.component {...props} />
-                                                </route.layout>
-                                            );
-                                        })}
-                                    />
-                                )
-                            } else {
-                                return (
-                                    <Route
-                                        key={index}
-                                        path={route.path}
-                                        exact={route.exact}
-                                        component={(props => {
-                                            return (
-                                                <route.layout {...props}>
-                                                    <route.component {...props} />
-                                                </route.layout>
-                                            )
-                                        })}
-                                    />
-                                );
-                            }
-                        })}
-                    </Router>
-                </Suspense>
-            }
+            <React.Suspense fallback={<p>Loading...</p>}>
+                {!isAuthFuncLoaded
+                    ?
+                        null
+                    :
+                        <Router>
+                            {routes.map((route, index) => {
+                                if (route.isPrivate) {
+                                    return (
+                                        <PrivateRoute
+                                            key={index}
+                                            path={route.path}
+                                            exact={route.exact}
+                                            isAuthenticated={isAuthenticated}
+                                            isLoaded={isLoaded}
+                                            component={(props => {
+                                                return (
+                                                    <route.layout {...props}>
+                                                        <route.component {...props} />
+                                                    </route.layout>
+                                                );
+                                            })}
+                                        />
+                                    )
+                                } else {
+                                    return (
+                                        <Route
+                                            key={index}
+                                            path={route.path}
+                                            exact={route.exact}
+                                            component={(props => {
+                                                return (
+                                                    <route.layout {...props}>
+                                                        <route.component {...props} />
+                                                    </route.layout>
+                                                )
+                                            })}
+                                        />
+                                    );
+                                }
+                            })}
+                        </Router>
+                }
+            </React.Suspense>
         </div>
     );
 };
 
 export default withStyles(styles)(App);
+
+
+// {isLoading && !isAuthFuncLoaded
+//     ?
+//     null
+//     :
+//     <Suspense fallback={<p>Loading...</p>}>
+//         <Router>
+//             {routes.map((route, index) => {
+//                 if (route.isPrivate) {
+//                     return (
+//                         <PrivateRoute
+//                             key={index}
+//                             path={route.path}
+//                             exact={route.exact}
+//                             isAuthenticated={isAuthenticated}
+//                             isLoading={isLoading}
+//                             component={(props => {
+//                                 return (
+//                                     <route.layout {...props}>
+//                                         <route.component {...props} />
+//                                     </route.layout>
+//                                 );
+//                             })}
+//                         />
+//                     )
+//                 } else {
+//                     return (
+//                         <Route
+//                             key={index}
+//                             path={route.path}
+//                             exact={route.exact}
+//                             component={(props => {
+//                                 return (
+//                                     <route.layout {...props}>
+//                                         <route.component {...props} />
+//                                     </route.layout>
+//                                 )
+//                             })}
+//                         />
+//                     );
+//                 }
+//             })}
+//         </Router>
+//     </Suspense>
+// }

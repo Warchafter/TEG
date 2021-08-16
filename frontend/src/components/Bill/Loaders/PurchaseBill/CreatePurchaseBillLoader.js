@@ -77,6 +77,7 @@ const CreatePurchaseBillLoader = (props) => {
         onFetchPaymentMethodList();
         onFetchPaymentStatusList();
         onFetchPurchaseStatusList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const [modalInsert, setModalInsert] = useState(false);
@@ -106,14 +107,14 @@ const CreatePurchaseBillLoader = (props) => {
         console.log(purchaseBillSelected);
     }
 
-    const bodyInsert = (
-        <div className={classes.modal}>
-            <h3>Agregar nueva factura</h3>
-            <br /><br />
-            <Button color="primary">Agregar</Button>
-            <Button onClick={modalInsertOpenedHandler}>Cancelar</Button>
-        </div>
-    );
+    // const bodyInsert = (
+    //     <div className={classes.modal}>
+    //         <h3>Agregar nueva factura</h3>
+    //         <br /><br />
+    //         <Button color="primary">Agregar</Button>
+    //         <Button onClick={modalInsertOpenedHandler}>Cancelar</Button>
+    //     </div>
+    // );
 
     // "purchase_order_date": "2021-06-15T13:26:44Z",
     // "purchase_payment_date": null,

@@ -35,6 +35,7 @@ const PaymentMethodL = () => {
     // with the options to render the different requests.
 
 
+    // eslint-disable-next-line no-unused-vars
     const [mainOption, setMainOption] = useState(paymentMethodButtonOptions);
     const [mainContent, setMainContent] = useState(null);
     const classes = useStyles();

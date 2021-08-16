@@ -3,7 +3,7 @@ const SidebarNavItems = () => {
         {
             title: "Corpo Overview",
             to: "/corpo/corpo-overview",
-            htmlBefore: '<i class="material-icons">edit</i>',
+            htmlBefore: '<i className="material-icons">edit</i>',
             htmlAfter: ""
         },
     ]

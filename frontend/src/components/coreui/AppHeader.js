@@ -11,7 +11,8 @@ import {
   CNavLink,
   CNavItem,
 } from '@coreui/react';
-import CIcon from '@coreui/icons-react';
+import CIcon from '@coreui/icons-react'
+import { freeSet } from '@coreui/icons'
 
 import MenuIcon from '@material-ui/icons/Menu';
 
@@ -53,23 +54,23 @@ const AppHeader = () => {
             <CNavLink href="#">Settings</CNavLink>
           </CNavItem>
         </CHeaderNav>
-        <CHeaderNav>
+        {/* <CHeaderNav>
           <CNavItem>
             <CNavLink href="#">
-              <CIcon name="cil-bell" size="lg" />
+              <CIcon content={freeSet.cilBell} size="lg"/>
             </CNavLink>
           </CNavItem>
           <CNavItem>
             <CNavLink href="#">
-              <CIcon name="cil-list" size="lg" />
+              <CIcon content={freeSet.cilList} size="lg"/>
             </CNavLink>
           </CNavItem>
           <CNavItem>
             <CNavLink href="#">
-              <CIcon name="cil-envelope-open" size="lg" />
+              <CIcon content={freeSet.cilEnvelopeOpen} size="lg"/>
             </CNavLink>
           </CNavItem>
-        </CHeaderNav>
+        </CHeaderNav> */}
         <CHeaderNav className="ms-3">
           <AppHeaderDropdown />
         </CHeaderNav>

@@ -1,12 +1,14 @@
-import { put } from 'redux-saga/effects';
+import { put, select } from 'redux-saga/effects';
 import axios from '../../axios-db';
 
 import { getSnackbarData } from '../../shared/utility';
 import * as actions from '../actions/index';
 
+export const getUserId = (state) => state.auth.user
+
 
 export function* fetchUserProfileDetailSaga(action) {
-    yield put(action.fetchUserProfileDetailStart());
+    yield put(actions.fetchUserProfileDetailStart());
     const access = yield localStorage.getItem('access');
     const config = {
         headers: {
@@ -15,7 +17,7 @@ export function* fetchUserProfileDetailSaga(action) {
             'Accept': 'application/json'
         }
     };
-    const url = `/user/users/${action.userId}`;
+    const url = '/user/users/current/';
     try {
         let response = yield axios.get(url, config);
         console.log(response.data);
@@ -26,8 +28,29 @@ export function* fetchUserProfileDetailSaga(action) {
     };
 };
 
+export function* fetchSelectedUserProfileDetailSaga(action) {
+    yield put(actions.fetchSelectedUserProfileDetailStart());
+    const access = yield localStorage.getItem('access');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': access ? `JWT ${access}` : null,
+            'Accept': 'application/json'
+        }
+    };
+    const url = `/user/users/${action.selectedUserId}/`;
+    try {
+        let response = yield axios.get(url, config);
+        console.log(response.data);
+        yield put(actions.fetchSelectedUserProfileDetailSuccess(response.data));
+    } catch (error) {
+        yield put(actions.fetchSelectedUserProfileDetailFail(error));
+        yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer el perfil de usuario', 'error')));
+    };
+};
+
 export function* fetchUserProfileListSaga(action) {
-    yield put(action.fetchUserProfileListStart());
+    yield put(actions.fetchUserProfileListStart());
     const access = yield localStorage.getItem('access');
     const config = {
         headers: {
@@ -48,85 +71,58 @@ export function* fetchUserProfileListSaga(action) {
 };
 
 export function* modifyUserProfileDetailSaga(action) {
-    yield put(action.modifyUserProfileDetailStart());
-    const access = yield localStorage.getItem('access');
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': access ? `JWT ${access}` : null,
-            'Accept': 'application/json'
-        }
-    };
-    const url = ''
+    yield put(actions.modifyUserProfileDetailStart());
+    // const access = yield localStorage.getItem('access');
+    // const config = {
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         'Authorization': access ? `JWT ${access}` : null,
+    //         'Accept': 'application/json'
+    //     }
+    // };
+    // const url = ''
 }
 
-export function* fetchSupplierSaga(action) {
-    yield put(actions.fetchSupplierStart());
+export function* uploadUserProfileRifSaga(action) {
+    yield put(actions.uploadUserProfileRifStart());
     const access = yield localStorage.getItem('access');
     const config = {
         headers: {
-            'Content-Type': 'application/json',
-            'Authorization': access ? `JWT ${access}` : null,
-            'Accept': 'application/json'
-        }
-    };
-    const url = '/supplier/suppliers/' + action.data.supplierId + '/';
-    try {
-        let response = yield axios.get(url, config);
-        console.log(response.data);
-        yield put(actions.fetchSupplierSuccess(response.data));
-    } catch (error) {
-        yield put(actions.fetchSupplierFail(error));
-        yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer el detalle del proveedor', 'error')));
-    };
-};
-
-export function* fetchSupplierListSaga(action) {
-    yield put(actions.fetchSupplierListStart());
-    const access = yield localStorage.getItem('access');
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': access ? `JWT ${access}` : null,
-            'Accept': 'application/json'
-        }
-    };
-    const url = '/supplier/suppliers/';
-    try {
-        let response = yield axios.get(url, config);
-        console.log(response.data);
-        yield put(actions.fetchSupplierListSuccess(response.data));
-    } catch (error) {
-        yield put(actions.fetchSupplierListFail(error));
-        yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer los proveedores', 'error')));
-    };
-};
-
-export function* modifySupplierProductSaga(action) {
-    // The payload must contain all the fields of the product that is being
-    // modified + the id of said product from the supplier list.
-    yield put(actions.modifySupplierProductStart());
-    const access = yield localStorage.getItem('access');
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
             'Authorization': `JWT ${access}`,
             'Accept': 'application/json'
         }
     };
-    const body = JSON.stringify({
-        product: action.data.supplierProductData.productId,
-        supplier: action.data.supplierProductData.supplierID,
-        price: action.data.supplierProductData.price,
-        stock: action.data.supplierProductData.stock
-    });
-    const url = `/supplier/supplier-products/${action.data.supplierProductSelected}`;
+    let userId = yield select(getUserId);
+    console.log(action.formData);
+    const url = `/user/users/${userId.id}/upload-image/`;
     try {
-        let response = yield axios.put(url, body, config);
-        yield put(actions.modifySupplierProductSuccess(response.data));
-        yield put(actions.enqueueSnackbar(getSnackbarData('Modificado el producto del proveedor')));
+        let response = yield axios.post(url, action.formData, config);
+        yield put(actions.uploadUserProfileRifSuccess(response.data.rif));
+        yield put(actions.enqueueSnackbar(getSnackbarData('El RIF ha sido actualizado exitosamente', 'success')));
     } catch (error) {
-        yield put(actions.modifySupplierProductFail(error));
-        yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo modificar el producto del proveedor', 'error')));
+        console.log(error);
+        yield put(actions.uploadUserProfileRifFail());
+        yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo actualizar el RIF', 'error')));
+    };
+};
+
+export function* fetchSpecializationsSaga(action) {
+    yield put(actions.fetchSpecializationsStart());
+    const access = yield localStorage.getItem('access');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': access ? `JWT ${access}` : null,
+            'Accept': 'application/json'
+        }
+    };
+    const url = '/user/specializations/';
+    try {
+        let response = yield axios.get(url, config);
+        console.log(response.data);
+        yield put(actions.fetchSpecializationsSuccess(response.data));
+    } catch (error) {
+        yield put(actions.fetchSpecializationsFail(error));
+        yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer el listado de Especializaciones', 'error')));
     };
 };

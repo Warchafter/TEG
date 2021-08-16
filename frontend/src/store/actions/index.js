@@ -23,7 +23,15 @@ export {
     authPasswordResetConfirm,
     authUserActivation,
     authUserActivationSuccess,
-    authUserActivationFail
+    authUserActivationFail,
+    authCheckUserData,
+    authCheckUserDataStart,
+    authCheckUserDataSuccess,
+    authCheckUserDataFail,
+    authRefreshAccessToken,
+    authRefreshAccessTokenStart,
+    authRefreshAccessTokenSuccess,
+    authRefreshAccessTokenFail,
 } from './auth';
 
 export {
@@ -31,6 +39,10 @@ export {
     fetchUserProfileDetailStart,
     fetchUserProfileDetailSuccess,
     fetchUserProfileDetailFail,
+    fetchSelectedUserProfileDetail,
+    fetchSelectedUserProfileDetailStart,
+    fetchSelectedUserProfileDetailSuccess,
+    fetchSelectedUserProfileDetailFail,
     fetchUserProfileList,
     fetchUserProfileListStart,
     fetchUserProfileListSuccess,
@@ -39,10 +51,18 @@ export {
     modifyUserProfileDetailStart,
     modifyUserProfileDetailSuccess,
     modifyUserProfileDetailFail,
+    uploadUserProfileRif,
+    uploadUserProfileRifStart,
+    uploadUserProfileRifSuccess,
+    uploadUserProfileRifFail,
     verifyUserProfileRif,
     verifyUserProfileRifStart,
     verifyUserProfileRifSuccess,
-    verifyUserProfileRifFail
+    verifyUserProfileRifFail,
+    fetchSpecializations,
+    fetchSpecializationsStart,
+    fetchSpecializationsSuccess,
+    fetchSpecializationsFail
 } from './userProfile';
 
 export {
@@ -215,6 +235,7 @@ export {
     setMainContentTesting,
     setSidebarShow,
     setSidebarUnfoldable,
+    setUserProfileMainContent,
 } from './interface';
 
 export {

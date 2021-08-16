@@ -191,8 +191,10 @@ class UserViewSet(viewsets.ModelViewSet):
         """Return appropriate serializer class"""
         if self.action == 'retrieve':
             return serializers.CurrentUserSerializer
-        if self.action == 'list':
+        elif self.action == 'list':
             return serializers.UserListSerializer
+        elif self.action == 'upload_image':
+            return serializers.CurrentUserRIFImageSerializer
 
         return self.serializer_class
 
@@ -200,10 +202,9 @@ class UserViewSet(viewsets.ModelViewSet):
         """Create a new purchase bill"""
         pass
 
-    @action(methods=['GET'], detail=True, url_path='test_me')
-    def get_all_users(request):
-        data = User.objects.all().order_by('email')
-        serializer = CurrentUserSerializer(data, many=True)
+    @action(methods=['GET'], detail=False, url_path='current')
+    def get_current_user(self, request, pk=None):
+        serializer = CurrentUserSerializer(request.user)
         print(request.data)
         return Response(serializer.data)
 
@@ -234,7 +235,7 @@ class UserViewSet(viewsets.ModelViewSet):
         user = self.get_object()
         serializer = self.get_serializer(
             user,
-            date=request.data
+            data=request.data
         )
 
         if serializer.is_valid():
@@ -248,3 +249,9 @@ class UserViewSet(viewsets.ModelViewSet):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+
+
+class SpecializationViewSet(BaseUserAttrViewSet):
+    """Manage specializations in the database"""
+    queryset = Specialization.objects.all()
+    serializer_class = serializers.SpecializationSerializer

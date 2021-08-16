@@ -97,7 +97,8 @@ const AppHeaderDropdown = () => {
           </CBadge>
         </CDropdownItem>
         <CDropdownHeader className="bg-light fw-semibold py-2">Settings</CDropdownHeader>
-        <CDropdownItem href="/user-profile">
+        {/* <CDropdownItem href="/suppliers" onClick={() => {onSetRedirectPath('/suppliers')}}> */}
+        <CDropdownItem href="/user-profile" >
           <CIcon name="cil-user" className="me-2" />
           Profile
         </CDropdownItem>

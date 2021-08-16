@@ -1,16 +1,17 @@
 import React from 'react';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import ReceiptIcon from '@material-ui/icons/Receipt';
-import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import { NavLink } from 'react-router-dom';
 
-const _nav = [
+import CIcon from '@coreui/icons-react'
+import { freeSet } from '@coreui/icons'
+
+
+export const _nav2 = [
   {
     _component: 'CNavItem',
     as: NavLink,
     anchor: 'Dashboard',
     to: '/dashboard',
-    icon: <DashboardIcon fontSize="large" />,
+    icon: <CIcon content={freeSet.cilHome} customClasses="nav-icon"/>,
     badge: {
       color: 'info',
       text: 'NEW',
@@ -29,14 +30,51 @@ const _nav = [
     as: NavLink,
     anchor: 'Pruebas Proveedores',
     to: '/suppliertesting',
-    icon: <LocalShippingIcon fontSize="large" />,
+    icon: <CIcon content={freeSet.cilTruck} customClasses="nav-icon"/>,
   },
   {
     _component: 'CNavItem',
     as: NavLink,
     anchor: 'Proveedores',
     to: '/suppliers',
-    icon: <LocalShippingIcon fontSize="large" />,
+    icon: <CIcon content={freeSet.cilTruck} customClasses="nav-icon"/>,
+  },
+];
+
+
+export const _nav1 = [
+  {
+    _component: 'CNavItem',
+    as: NavLink,
+    anchor: 'Dashboard',
+    to: '/dashboard',
+    icon: <CIcon content={freeSet.cilHome} customClasses="nav-icon"/>,
+    badge: {
+      color: 'info',
+      text: 'NEW',
+    },
+  },
+  {
+    _component: 'CNavTitle',
+    anchor: 'Productos',
+  },
+  {
+    _component: 'CNavTitle',
+    anchor: 'Proveedores',
+  },
+  {
+    _component: 'CNavItem',
+    as: NavLink,
+    anchor: 'Pruebas Proveedores',
+    to: '/suppliertesting',
+    icon: <CIcon content={freeSet.cilTruck} customClasses="nav-icon"/>,
+  },
+  {
+    _component: 'CNavItem',
+    as: NavLink,
+    anchor: 'Proveedores',
+    to: '/suppliers',
+    icon: <CIcon content={freeSet.cilTruck} customClasses="nav-icon"/>,
   },
   {
     _component: 'CNavTitle',
@@ -47,14 +85,13 @@ const _nav = [
     as: NavLink,
     anchor: 'Facturas',
     to: '/to',
-    icon: <ReceiptIcon fontSize="large" />,
+    icon: <CIcon content={freeSet.cilDescription} customClasses="nav-icon"/>,
     items: [
       {
         _component: 'CNavItem',
         as: NavLink,
         anchor: 'Pagos Facturas',
         to: '/bill-payments',
-        icon: <ReceiptIcon fontSize="large" />,
       },
     ],
   },
@@ -63,42 +100,39 @@ const _nav = [
     as: NavLink,
     anchor: 'Pruebas Facturas',
     to: '/billtesting',
-    icon: <ReceiptIcon fontSize="large" />,
+    icon: <CIcon content={freeSet.cilControl} customClasses="nav-icon"/>,
   },
   {
     _component: 'CNavItem',
     as: NavLink,
     anchor: 'Vertical Tabs Test',
     to: '/vertical-tabs-testing',
-    icon: <ReceiptIcon fontSize="large" />,
+    icon: <CIcon content={freeSet.cilVerticalAlignCenter} customClasses="nav-icon"/>,
   },
   {
     _component: 'CNavGroup',
     as: NavLink,
     anchor: 'Demo',
     to: '/to',
-    icon: <ReceiptIcon fontSize="large" />,
+    icon: <CIcon content={freeSet.cilPuzzle} customClasses="nav-icon"/>,
     items: [
       {
         _component: 'CNavItem',
         as: NavLink,
         anchor: 'Demo Kanban Style Grid',
         to: '/demo2',
-        icon: <ReceiptIcon fontSize="large" />,
       },
       {
         _component: 'CNavItem',
         as: NavLink,
         anchor: 'Demo Firebase Style Grid',
         to: '/demo3',
-        icon: <ReceiptIcon fontSize="large" />,
       },
       {
         _component: 'CNavItem',
         as: NavLink,
         anchor: 'Demo Nested List',
         to: '/demo4',
-        icon: <ReceiptIcon fontSize="medium" />,
       },
     ],
   },
@@ -111,8 +145,14 @@ const _nav = [
     as: NavLink,
     anchor: 'Extra',
     to: '/to',
-    icon: <ReceiptIcon fontSize="large" />,
+    icon: <CIcon content={freeSet.cilStar} customClasses="nav-icon"/>,
     items: [
+      {
+        _component: 'CNavItem',
+        as: NavLink,
+        anchor: 'Verificar RIF',
+        to: '/extra/verify-rif'
+      },
       {
         _component: 'CNavItem',
         as: NavLink,
@@ -147,4 +187,3 @@ const _nav = [
   },
 ];
 
-export default _nav;

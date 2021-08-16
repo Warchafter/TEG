@@ -462,7 +462,7 @@ export function* createBillPaymentDetailSaga(action) {
         };
         url = `/bill/bill-payment-details/${response.data.id}/upload-image/`;
         try {
-            let responseFile = yield axios.post(url, action.formData, config);
+            yield axios.post(url, action.formData, config);
         } catch (error) {
             yield put(actions.createBillPaymentDetailFail(error));
             yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo cargar la imagen del recibo del pago', 'error')));

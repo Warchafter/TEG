@@ -252,7 +252,7 @@ const Auth = props => {
         )
     }
 
-    if (isAuthenticated) {
+    if (!loading && isAuthenticated) {
         return <Redirect to='/' />
     }
 
@@ -312,7 +312,8 @@ const mapStateToProps = state => {
         loading: state.auth.loading,
         error: state.auth.error,
         isAuthenticated: state.auth.isAuthenticated,
-        rememberMe: state.auth.rememberMe
+        rememberMe: state.auth.rememberMe,
+        userHasData: state.auth.userHasData
     };
 };
 
@@ -321,6 +322,7 @@ const mapDispatchToProps = dispatch => {
         onAuth: (email, password, rememberMe) => dispatch(actions.auth(email, password, rememberMe)),
         onAuthUserSignUp: (email, name, password, re_password) => dispatch(actions.authUserSignUp(email, name, password, re_password)),
         onAuthRememberMe: (rememberMe) => dispatch(actions.authRememberMe(rememberMe)),
+        onUseHasData: () => dispatch(actions.authCheckUserData()),
     };
 };
 

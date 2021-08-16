@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import * as actions from '../../store/actions/index';
@@ -17,15 +17,22 @@ import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
 
 // sidebar nav config
-import navigation from '../../_nav';
+import {_nav1} from '../../_nav';
+import {_nav2} from '../../_nav';
 
 const AppSidebar = () => {
   const dispatch = useDispatch();
   const unfoldable = useSelector((state) => state.interface.sidebarUnfoldable);
   const sidebarShow = useSelector((state) => state.interface.sidebarShow);
+  const userProfileDetail = useSelector((state) => state.userProfile.userProfileDetail);
 
+  const onFetchUserProfileDetail = useCallback(() => dispatch(actions.fetchUserProfileDetail()), [dispatch]);
   const onSetSidebarUnfoldable = useCallback(() => dispatch(actions.setSidebarUnfoldable()), [dispatch]);
   const onSetSidebarShow = useCallback(() => dispatch(actions.setSidebarShow()), [dispatch]);
+
+  useEffect(() => {
+    onFetchUserProfileDetail()
+  }, [])
 
   return (
     <CSidebar
@@ -43,7 +50,10 @@ const AppSidebar = () => {
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>
-          <CCreateNavItem items={navigation} />
+          <CCreateNavItem
+            items={
+              userProfileDetail.is_staff ? _nav1 : _nav2
+            } />
         </SimpleBar>
       </CSidebarNav>
       <CSidebarToggler

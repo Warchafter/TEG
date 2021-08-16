@@ -1,12 +1,12 @@
-import React, { useState, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { IconButton, Menu, MenuItem } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { withRouter } from 'react-router-dom';
-import { withStyles, makeStyles, fade } from '@material-ui/core/styles';
+import { withStyles, makeStyles, alpha } from '@material-ui/core/styles';
 
 import NavigationItem from './NavigationItem/NavigationItem';
-import * as actions from '../../../store/actions/index';
+// import * as actions from '../../../store/actions/index';
 
 const StyledMenu = withStyles({
     paper: {
@@ -59,9 +59,9 @@ const useStyles = makeStyles(theme => ({
     search: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(theme.palette.common.white, 0.15),
+        backgroundColor: alpha(theme.palette.common.white, 0.15),
         '&:hover': {
-            backgroundColor: fade(theme.palette.common.white, 0.25),
+            backgroundColor: alpha(theme.palette.common.white, 0.25),
         },
         marginRight: theme.spacing(2),
         marginLeft: 0,
@@ -106,9 +106,9 @@ const NavigationItems = (props) => {
 
     const isCorpo = useSelector(state => state.corpo.isCorpo);
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
-    const onToggleCorpoView = useCallback(() => dispatch(actions.toggleCorpoView()), [dispatch,]);
+    // const onToggleCorpoView = useCallback(() => dispatch(actions.toggleCorpoView()), [dispatch,]);
 
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
@@ -119,9 +119,9 @@ const NavigationItems = (props) => {
         url && props.history.push(url);
     };
 
-    const handleViewChange = (event) => {
-        onToggleCorpoView();
-    };
+    // const handleViewChange = (event) => {
+    //     onToggleCorpoView();
+    // };
 
     return (
         <ul className={classes.NavigationItems}>

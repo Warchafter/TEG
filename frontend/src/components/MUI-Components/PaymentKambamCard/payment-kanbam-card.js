@@ -6,7 +6,6 @@ import Card from '@material-ui/core/Card';
 import Slider from '@material-ui/core/Slider';
 import DescriptionIcon from '@material-ui/icons/Description';
 import CallMade from '@material-ui/icons/CallMade';
-import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 
 import Tooltip from '@material-ui/core/Tooltip';
 import Grid from '@material-ui/core/Grid';
@@ -15,7 +14,7 @@ import IconButton from '@material-ui/core/IconButton';
 
 import { Typography } from '@material-ui/core';
 
-import { Row, Column, Item } from '@mui-treasury/components/flex';
+import { Item } from '@mui-treasury/components/flex';
 import { useSizedIconButtonStyles } from '@mui-treasury/styles/iconButton/sized';
 
 import { Redirect } from 'react-router-dom';
@@ -83,6 +82,9 @@ const useStyles = makeStyles(({ spacing, palette }) => {
             padding: '3px 10px',
             display: 'inline-block'
         },
+        idTag: {
+            textAlign: 'center',
+        }
     };
 });
 
@@ -148,15 +150,15 @@ export const KanbanCardDemo = React.memo(function KanbanCard(props) {
         return <Redirect to={url} />
     }
 
-    const [open, setOpen] = useState(false);
+    // const [open, setOpen] = useState(false);
 
-    const handleOpen = () => {
-        setOpen(true);
-    };
+    // const handleOpen = () => {
+    //     setOpen(true);
+    // };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+    // const handleClose = () => {
+    //     setOpen(false);
+    // };
 
 
     return (
@@ -169,11 +171,6 @@ export const KanbanCardDemo = React.memo(function KanbanCard(props) {
                     container
                 >
                     <Grid item={1}>
-                        <Typography
-                            className={styles.status}
-                        >{props.id}</Typography>
-                    </Grid>
-                    <Grid item={1}>
                         <Tooltip title="Abrir Detalle">
                             <IconButton aria-label="open">
                                 <DescriptionIcon
@@ -183,6 +180,11 @@ export const KanbanCardDemo = React.memo(function KanbanCard(props) {
                                 />
                             </IconButton>
                         </Tooltip>
+                    </Grid>
+                    <Grid item={1} className={styles.idTag}>
+                        <Typography
+                            className={styles.status}
+                        >{props.id}</Typography>
                     </Grid>
                 </Grid>
             </Box>

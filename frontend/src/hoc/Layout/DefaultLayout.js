@@ -1,16 +1,18 @@
-import React from 'react'
-import { AppContent, AppSidebar, AppFooter, AppHeader } from '../../components/index'
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { AppContent, AppSidebar, AppHeader } from '../../components/index';
 
-const DefaultLayout = () => {
+const DefaultLayout = (props) => {
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+
     return (
         <div>
-            <AppSidebar />
+            {!isAuthenticated ? null : <AppSidebar />}
             <div className="wrapper d-flex flex-column min-vh-100 bg-light">
-                <AppHeader />
+                {!isAuthenticated ? null : <AppHeader />}
                 <div className="body flex-grow-1 px-3">
-                    <AppContent />
+                    <AppContent {...props} />
                 </div>
-                <AppFooter />
             </div>
         </div>
     );

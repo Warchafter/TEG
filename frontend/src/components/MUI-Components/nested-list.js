@@ -13,11 +13,6 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
 
-import NotificationsIcon from '@material-ui/icons/Notifications';
-// import DraftsIcon from '@material-ui/icons/Drafts';
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
-import MessageIcon from '@material-ui/icons/Message';
-
 const useStyles = makeStyles((theme) => ({
     list: {
         boxShadow: '0 8px 16px 0 #BDC9D7',

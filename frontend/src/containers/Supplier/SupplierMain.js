@@ -2,12 +2,9 @@ import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     Grid,
-    Paper,
-    Typography
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import ShowcaseCardDemo from '../../components/Supplier/SupplierFirebaseCard';
 
 import * as actions from '../../store/actions/index';
 import Notifier from '../../components/Notifier/Notifier';
@@ -41,6 +38,10 @@ export const SupplierMain = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
 
+    if (false) {
+        console.log(classes);
+    }
+
     const isLoadingExRate = useSelector(state => state.bill.loadingExRates);
     const ExRateDataLoaded = useSelector(state => state.bill.ExRateDataLoaded);
     const exchangeRates = useSelector(state => state.bill.exchangeRatesData);
@@ -60,7 +61,7 @@ export const SupplierMain = () => {
                 <Grid item xs={4}>
                     <CurrencyValueCard exchangeRates={exchangeRates} loading={isLoadingExRate} ExRateDataLoaded={ExRateDataLoaded} />
                 </Grid>
-                <Grid item xs={8}><ShowcaseCardDemo className={classes.FBCard}></ShowcaseCardDemo></Grid>
+                {/* <Grid item xs={8}><ShowcaseCardDemo className={classes.FBCard}></ShowcaseCardDemo></Grid> */}
             </Grid>
         </React.Fragment>
     )

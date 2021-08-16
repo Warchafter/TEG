@@ -90,6 +90,7 @@ const FetchBillProductCharacteristicListLoader = (props) => {
     };
 
     const billPaymentDetailListImageHandler = () => {
+        // eslint-disable-next-line array-callback-return
         billProductCharacteristicList.map(index => {
             setImageList(prevArray => [...prevArray, index.product_image]);
         });

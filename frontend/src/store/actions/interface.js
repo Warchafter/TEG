@@ -24,3 +24,11 @@ export const setSidebarShow = () => {
         type: actionTypes.SET_SIDEBAR_SHOW
     };
 };
+
+export const setUserProfileMainContent = (selectedOption, contentComponent) => {
+    return {
+        type: actionTypes.SET_USER_PROFILE_MAIN_CONTENT,
+        selectedOption: selectedOption,
+        contentComponent: contentComponent
+    };
+};

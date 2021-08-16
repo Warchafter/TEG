@@ -8,6 +8,8 @@ export function* logoutSaga(action) {
     yield call([localStorage, 'removeItem'], 'access');
     yield call([localStorage, 'removeItem'], 'refresh');
     yield call([localStorage, 'removeItem'], 'rememberMe');
+    yield call([localStorage, 'removeItem'], 'userId');
+    yield call([localStorage, 'removeItem'], 'name');
     yield put(actions.logoutSucceed());
 };
 
@@ -119,9 +121,10 @@ export function* authLoadUserSaga(action) {
 };
 
 export function* authCheckStateSaga(action) {
-    const access = yield localStorage.getItem('access');
-    const refresh = yield localStorage.getItem('refresh');
-    const rememberMe = yield localStorage.getItem('rememberMe');
+    let access = yield localStorage.getItem('access');
+    let refresh = yield localStorage.getItem('refresh');
+    let rememberMe = yield localStorage.getItem('rememberMe');
+    let user = yield localStorage.getItem('name');
     if (access) {
         const config = {
             headers: {
@@ -132,23 +135,27 @@ export function* authCheckStateSaga(action) {
         let body = JSON.stringify({ token: access })
 
         try {
-            let response = yield axios.post('/auth/jwt/verify/', body, config)
-
-            if (response.data.code !== 'token_not_valid') {
-                yield put(actions.authSuccess(access, refresh, rememberMe));
-                yield put(actions.authLoadUser());
-            } else {
-                if (rememberMe && refresh) {
-                    body = JSON.stringify({ refresh: refresh });
-                    response = yield axios.post('/auth/jwt/refresh/', body, config);
+            yield axios.post('/auth/jwt/verify/', body, config)
+            yield put(actions.authSuccess(access, refresh, rememberMe));
+            if (!user) { yield put(actions.authLoadUser()); }
+            } catch (error) {
+            console.log(error);
+            if (rememberMe && refresh) {
+                body = JSON.stringify({ token: refresh });
+                try {
+                    let response = yield axios.post('/auth/jwt/verify/', body, config);
+                    yield authRefreshAccessTokenSaga();
+                    access = yield localStorage.getItem('access');
                     yield put(actions.authSuccess(response.data.access, response.data.refresh, rememberMe));
                     yield put(actions.authLoadUser());
-                } else {
+                } catch (error) {
                     yield put(actions.logout());
                     yield put(actions.authUserLoadedFail());
                 }
+            } else {
+                yield put(actions.logout());
+                yield put(actions.authUserLoadedFail());
             }
-        } catch (error) {
             yield put(actions.logout());
             yield put(actions.authUserLoadedFail());
             yield put(actions.enqueueSnackbar(getSnackbarData(error.response.data.detail, 'error')));
@@ -198,5 +205,39 @@ export function* authPasswordResetConfirmSaga(action) {
     } catch (error) {
         yield put(actions.authPasswordResetConfirmFail());
         yield put(actions.enqueueSnackbar(getSnackbarData(error.response.data.detail, 'error')));
+    };
+};
+
+export function* authCheckUserDataSaga(action) {
+    yield put(actions.authCheckUserDataStart());
+    const access = yield localStorage.getItem('access');
+    const refresh = yield localStorage.getItem('refresh');
+    if (access && refresh) {
+        const userHasData = true;
+        yield put(actions.authCheckUserDataSuccess(userHasData));
+    } else {
+        const userHasData = false;
+        yield put(actions.authCheckUserDataFail(userHasData));
+    };
+};
+
+export function* authRefreshAccessTokenSaga(action) {
+    yield put(actions.authRefreshAccessTokenStart());
+    const refresh = yield localStorage.getItem('refresh');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    };
+    const body = JSON.stringify({ refresh: refresh });
+    const url = '/auth/jwt/refresh/';
+    try {
+        let response = yield axios.post(url, body, config);
+        yield put(actions.authRefreshAccessTokenSuccess());
+        yield localStorage.setItem('access', response.data.access);
+        yield localStorage.setItem('refresh', response.data.refresh);
+    } catch (error) {
+        yield put(actions.authRefreshAccessTokenFail(error));
+        yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo refrescar el token de refrescado', 'error')));
     };
 };

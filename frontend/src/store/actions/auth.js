@@ -161,8 +161,8 @@ export const authPasswordReset = (email) => {
     return {
         type: actionTypes.AUTH_PASSWORD_RESET,
         email: email
-    }
-}
+    };
+};
 
 export const authPasswordResetConfirm = (uid, token, new_password, re_new_password) => {
     return {
@@ -171,5 +171,55 @@ export const authPasswordResetConfirm = (uid, token, new_password, re_new_passwo
         token: token,
         new_password: new_password,
         re_new_password: re_new_password
-    }
-}
+    };
+};
+
+export const authCheckUserData = () => {
+    return {
+        type: actionTypes.AUTH_CHECK_USER_DATA,
+    };
+};
+
+export const authCheckUserDataStart = (data) => {
+    return {
+        type: actionTypes.AUTH_CHECK_USER_DATA_START,
+        data: data
+    };
+};
+
+export const authCheckUserDataSuccess = (useHasData) => {
+    return {
+        type: actionTypes.AUTH_CHECK_USER_DATA_SUCCESS,
+        userHasData: useHasData
+    };
+};
+
+export const authCheckUserDataFail = (userHasData) => {
+    return {
+        type: actionTypes.AUTH_CHECK_USER_DATA_FAIL,
+    };
+};
+
+export const authRefreshAccessToken = () => {
+    return {
+        type: actionTypes.AUTH_REFRESH_ACCESS_TOKEN
+    };
+};
+
+export const authRefreshAccessTokenStart = () => {
+    return {
+        type: actionTypes.AUTH_REFRESH_ACCESS_TOKEN_START,
+    };
+};
+
+export const authRefreshAccessTokenSuccess = () => {
+    return {
+        type: actionTypes.AUTH_REFRESH_ACCESS_TOKEN_SUCCESS,
+    };
+};
+
+export const authRefreshAccessTokenFail = () => {
+    return {
+        type: actionTypes.AUTH_REFRESH_ACCESS_TOKEN_FAIL,
+    };
+};

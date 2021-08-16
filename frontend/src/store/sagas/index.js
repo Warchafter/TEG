@@ -10,14 +10,19 @@ import {
     authCheckStateSaga,
     authPasswordResetSaga,
     authUserActivationSaga,
-    authPasswordResetConfirmSaga
+    authPasswordResetConfirmSaga,
+    authCheckUserDataSaga,
+    authRefreshAccessTokenSaga,
 } from './auth';
 
 import {
     fetchUserProfileDetailSaga,
+    fetchSelectedUserProfileDetailSaga,
     fetchUserProfileListSaga,
     modifyUserProfileDetailSaga,
-    // verifyUserProfileDetailSaga
+    uploadUserProfileRifSaga,
+    // verifyUserProfileDetailSaga,
+    fetchSpecializationsSaga,
 } from './userProfile';
 
 import {
@@ -73,6 +78,7 @@ import {
 
 import {
     setMainContentTestingSaga,
+    setUserProfileMainContentSaga,
     toggleSidebarSaga,
 } from './interface';
 
@@ -86,14 +92,19 @@ export function* watchAuth() {
         takeEvery(actionTypes.AUTH_CHECK_STATE, authCheckStateSaga),
         takeEvery(actionTypes.AUTH_PASSWORD_RESET, authPasswordResetSaga),
         takeEvery(actionTypes.AUTH_PASSWORD_RESET_CONFIRM, authPasswordResetConfirmSaga),
+        takeEvery(actionTypes.AUTH_CHECK_USER_DATA, authCheckUserDataSaga),
+        takeLatest(actionTypes.AUTH_REFRESH_ACCESS_TOKEN, authRefreshAccessTokenSaga),
     ]);
 };
 
 export function* watchUserProfile() {
     yield all([
         takeLatest(actionTypes.FETCH_USER_PROFILE_DETAIL, fetchUserProfileDetailSaga),
+        takeLatest(actionTypes.FETCH_SELECTED_USER_PROFILE_DETAIL, fetchSelectedUserProfileDetailSaga),
         takeLatest(actionTypes.FETCH_USER_PROFILE_LIST, fetchUserProfileListSaga),
         takeLatest(actionTypes.MODIFY_USER_PROFILE_DETAIL, modifyUserProfileDetailSaga),
+        takeLatest(actionTypes.UPLOAD_USER_PROFILE_RIF, uploadUserProfileRifSaga),
+        takeEvery(actionTypes.FETCH_SPECIALIZATIONS, fetchSpecializationsSaga),
     ]);
 };
 
@@ -160,5 +171,5 @@ export function* watchInterface() {
     yield all([
         takeEvery(actionTypes.TOGGLE_SIDEBAR, toggleSidebarSaga),
         takeEvery(actionTypes.SET_MAIN_CONTENT_TESTING, setMainContentTestingSaga),
-    ]);
+        ]);
 };

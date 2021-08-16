@@ -7,6 +7,7 @@ from user import views
 router = DefaultRouter()
 # router.register('specializations', views.SpecializationView)
 router.register('users', views.UserViewSet)
+router.register('specializations', views.SpecializationViewSet)
 
 app_name = 'user'
 

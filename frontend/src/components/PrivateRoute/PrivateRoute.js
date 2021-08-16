@@ -1,14 +1,15 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+
 import { Route, Redirect } from 'react-router-dom';
 
-
-const PrivateRoute = ({ component: Component, isAuth, isLoad, props, ...rest }) => {
+const PrivateRoute = ({ component: Component, isAuthenticated, isLoaded, props, ...rest }) => {
 
     // const userRoles = useSelector(state => state.auth.user.roles);
 
+    console.log("isLoaded:", isLoaded, " | isAuthenticated: ", isAuthenticated);
+
     return (
-        isLoad
+        !isLoaded
             ?
             null
             :
@@ -16,7 +17,7 @@ const PrivateRoute = ({ component: Component, isAuth, isLoad, props, ...rest }) 
                 {...rest}
                 render=
                 {
-                    props => !isAuth
+                    props => !isAuthenticated
                         ? (<Redirect to='/Auth' />)
                         // ? null
                         : (<Component {...props} />)
@@ -24,5 +25,6 @@ const PrivateRoute = ({ component: Component, isAuth, isLoad, props, ...rest }) 
             />
     );
 };
+
 
 export default PrivateRoute;
