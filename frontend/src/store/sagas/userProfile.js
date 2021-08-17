@@ -20,7 +20,6 @@ export function* fetchUserProfileDetailSaga(action) {
     const url = '/user/users/current/';
     try {
         let response = yield axios.get(url, config);
-        console.log(response.data);
         yield put(actions.fetchUserProfileDetailSuccess(response.data));
     } catch (error) {
         yield put(actions.fetchUserProfileDetailFail(error));

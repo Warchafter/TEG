@@ -6,9 +6,7 @@ import * as yup from 'yup';
 import { makeStyles } from '@material-ui/core/styles';
 import {
     TextField,
-    Button,
     Grid,
-    Typography
 } from '@material-ui/core';
 
 import * as actions from '../../../store/actions/index';

@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import * as actions from './store/actions/index';
 import { withStyles } from '@material-ui/core/styles';
 import 'react-image-lightbox/style.css';
@@ -54,25 +54,13 @@ const loading = (
 )
 
 const App = props => {
-
     const dispatch = useDispatch();
-    // const userRoles = useSelector(state => state.auth.user.roles);
 
-    const isLoading = useSelector(state => state.auth.loading);
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
     const isLoaded = useSelector(state => state.auth.isLoaded);
-    // const userHasData = useSelector(state => state.auth.userHasData);
     const isAuthFuncLoaded = useSelector(state => state.auth.isAuthFuncLoaded);
 
-    const Auth = React.lazy(() => { return import('./containers/Auth/Auth'); });
-    const Activate = React.lazy(() => { return import('./containers/Auth/Activate/Activate'); });
-    const ResetPassword = React.lazy(() => { return import('./containers/Auth/ResetPassword/ResetPassword') });
-    const ResetPasswordConfirm = React.lazy(() => { return import('./containers/Auth/ResetPasswordConfirm/ResetPasswordConfirm') });
-    const Logout = React.lazy(() => { return import('./containers/Auth/Logout/Logout') });
-
     const onTryAutoSignup = useCallback(() => dispatch(actions.authCheckState()), [dispatch]);
-    // const onUserHasData = useCallback(() => dispatch(actions.authCheckUserData()), [dispatch]);
-
 
     useEffect(() => {
         if (isAuthFuncLoaded) {
@@ -81,11 +69,9 @@ const App = props => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAuthFuncLoaded]);
 
-    const DefaultLayout = React.lazy(() => { return import('./hoc/Layout/DefaultLayout')})
-
     return (
         <div>
-            <React.Suspense fallback={<p>Loading...</p>}>
+            <React.Suspense fallback={loading}>
                 {!isAuthFuncLoaded
                     ?
                         null
@@ -134,49 +120,3 @@ const App = props => {
 };
 
 export default withStyles(styles)(App);
-
-
-// {isLoading && !isAuthFuncLoaded
-//     ?
-//     null
-//     :
-//     <Suspense fallback={<p>Loading...</p>}>
-//         <Router>
-//             {routes.map((route, index) => {
-//                 if (route.isPrivate) {
-//                     return (
-//                         <PrivateRoute
-//                             key={index}
-//                             path={route.path}
-//                             exact={route.exact}
-//                             isAuthenticated={isAuthenticated}
-//                             isLoading={isLoading}
-//                             component={(props => {
-//                                 return (
-//                                     <route.layout {...props}>
-//                                         <route.component {...props} />
-//                                     </route.layout>
-//                                 );
-//                             })}
-//                         />
-//                     )
-//                 } else {
-//                     return (
-//                         <Route
-//                             key={index}
-//                             path={route.path}
-//                             exact={route.exact}
-//                             component={(props => {
-//                                 return (
-//                                     <route.layout {...props}>
-//                                         <route.component {...props} />
-//                                     </route.layout>
-//                                 )
-//                             })}
-//                         />
-//                     );
-//                 }
-//             })}
-//         </Router>
-//     </Suspense>
-// }

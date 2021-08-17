@@ -492,6 +492,9 @@ class BillClientSubmission(models.Model):
     )
     bill_name_receiver = models.CharField(max_length=255, blank=False)
     product_requirements = models.TextField(blank=False)
+    submission_date = models.DateTimeField(default=timezone.now)
+    handling_date = models.DateTimeField(blank=True, null=True)
+    has_been_handled = models.BooleanField(default=False)
 
     def __str__(self):
         return self.bill_name_receiver

@@ -123,7 +123,7 @@ export function* createBillClientSubmissionSaga(action) {
         let response = yield axios.post(url, body, config);
         console.log(response);
         yield put(actions.createBillClientSubmissionSuccess(response.data));
-        yield put(actions.enqueueSnackbar(getSnackbarData('La Solicitud fue enviada exitosamente!')));
+        yield put(actions.enqueueSnackbar(getSnackbarData('La Solicitud fue enviada exitosamente!', 'success')));
     } catch (error) {
         yield put(actions.createBillClientSubmissionFail(error));
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo enviar la solicitud', 'error')));
@@ -163,7 +163,6 @@ export function* fetchBillClientSubmissionListSaga(action) {
     const url = '/bill/bill-client-submissions/';
     try {
         let response = yield axios.get(url, config);
-        console.log(response.data);
         yield put(actions.fetchBillClientSubmissionListSuccess(response.data));
     } catch (error) {
         yield put(actions.fetchBillClientSubmissionListFail(error));
@@ -182,13 +181,11 @@ export function* createPurchaseBillSaga(action) {
         }
     };
     const body = JSON.stringify(action.data);
-    console.log(action.data);
     const url = '/bill/purchase-bills/';
     try {
         let response = yield axios.post(url, body, config);
-        console.log(response);
         yield put(actions.createPurchaseBillSuccess(response.data));
-        yield put(actions.enqueueSnackbar(getSnackbarData('La Factura fue creada exitosamente!')));
+        yield put(actions.enqueueSnackbar(getSnackbarData('La Factura fue creada exitosamente!', 'success')));
     } catch (error) {
         yield put(actions.createPurchaseBillFail(error));
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo crear la factura', 'error')));
@@ -286,7 +283,7 @@ export function* createBillDetailSaga(action) {
     try {
         let response = yield axios.post(url, body, config);
         yield put(actions.createBillDetailSuccess(response.data));
-        yield put(actions.enqueueSnackbar(getSnackbarData('El detalle de la factura fue creado exitosamente!')));
+        yield put(actions.enqueueSnackbar(getSnackbarData('El detalle de la factura fue creado exitosamente!', 'success')));
     } catch (error) {
         yield put(actions.createBillDetailFail(error));
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo crear el detalle de la factura', 'error')));
@@ -314,7 +311,7 @@ export function* modifyBillDetailSaga(action) {
     try {
         let response = yield axios.put(url, body, config);
         yield put(actions.modifyBillDetailSuccess(response.data));
-        yield put(actions.enqueueSnackbar(getSnackbarData(`Modificada el detalle de la factura: ${action.data.billDetailSelected}`)));
+        yield put(actions.enqueueSnackbar(getSnackbarData(`Modificado el detalle de la factura: ${action.data.billDetailSelected}`, 'success')));
     } catch (error) {
         yield put(actions.modifyBillDetailFail(error));
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo modificar detalle de la factura', 'error')));
@@ -337,7 +334,7 @@ export function* deleteBillDetailSaga(action) {
     try {
         let response = yield axios.delete(url, config);
         yield put(actions.deleteBillDetailSuccess(response.data));
-        yield put(actions.enqueueSnackbar(getSnackbarData('Eliminado el detalle de la factura')));
+        yield put(actions.enqueueSnackbar(getSnackbarData('Eliminado el detalle de la factura', 'success')));
     } catch (error) {
         yield put(actions.deleteBillDetailFail(error));
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo eliminar el detalle de la factura', 'error')));
@@ -402,7 +399,7 @@ export function* createBillProductCharacteristicSaga(action) {
     try {
         let response = yield axios.post(url, body, config);
         yield put(actions.createBillProductCharacteristicSuccess(response.data));
-        yield put(actions.enqueueSnackbar(getSnackbarData('El detalle de la factura fue creado exitosamente!')));
+        yield put(actions.enqueueSnackbar(getSnackbarData('El detalle de la factura fue creado exitosamente!', 'success')));
     } catch (error) {
         yield put(actions.createBillProductCharacteristicFail(error));
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo crear el detalle de la factura', 'error')));
@@ -432,7 +429,7 @@ export function* modifyBillProductCharacteristicSaga(action) {
     try {
         let response = yield axios.put(url, body, config);
         yield put(actions.modifyBillProductCharacteristicSuccess(response.data));
-        yield put(actions.enqueueSnackbar(getSnackbarData(`Modificado las características del producto de la factura: ${action.data.billProductCharacteristicSelected}`)));
+        yield put(actions.enqueueSnackbar(getSnackbarData(`Modificadas las características del producto de la factura: ${action.data.billProductCharacteristicSelected}`, 'success')));
     } catch (error) {
         yield put(actions.modifyBillProductCharacteristicFail(error));
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo modificar la característica del producto de la factura', 'error')));
@@ -455,7 +452,7 @@ export function* deleteBillProductCharacteristicSaga(action) {
     try {
         let response = yield axios.delete(url, config);
         yield put(actions.deleteBillProductCharacteristicSuccess(response.data));
-        yield put(actions.enqueueSnackbar(getSnackbarData('Eliminado las características del producto de la factura')));
+        yield put(actions.enqueueSnackbar(getSnackbarData('Eliminada las características del producto de la factura', 'success')));
     } catch (error) {
         yield put(actions.deleteBillProductCharacteristicFail(error));
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo eliminar las características del producto de la factura', 'error')));
@@ -534,7 +531,7 @@ export function* createBillPaymentDetailSaga(action) {
         }
 
         yield put(actions.createBillPaymentDetailSuccess(response.data));
-        yield put(actions.enqueueSnackbar(getSnackbarData('El detalle del pago fue creado exitosamente!')));
+        yield put(actions.enqueueSnackbar(getSnackbarData('El detalle del pago fue creado exitosamente!', 'success')));
     } catch (error) {
         yield put(actions.createBillPaymentDetailFail(error));
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo crear el detalle del pago', 'error')));
@@ -560,7 +557,7 @@ export function* modifyBillPaymentDetailSaga(action) {
     try {
         let response = yield axios.put(url, body, config);
         yield put(actions.modifyBillPaymentDetailSuccess(response.data));
-        yield put(actions.enqueueSnackbar(getSnackbarData('Modificado el detalle del pago')));
+        yield put(actions.enqueueSnackbar(getSnackbarData('Modificado el detalle del pago','success')));
     } catch (error) {
         yield put(actions.modifyBillPaymentDetailFail(error));
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo modificar el detalle del pago', 'error')));
@@ -582,7 +579,7 @@ export function* deleteBillPaymentDetailSaga(action) {
     try {
         yield axios.delete(url, config);
         yield put(actions.deleteBillPaymentDetailSuccess(id));
-        yield put(actions.enqueueSnackbar(getSnackbarData(`Eliminado el detalle del pago: ${id}`)));
+        yield put(actions.enqueueSnackbar(getSnackbarData(`Eliminado el detalle del pago: ${id}`, 'success')));
     } catch (error) {
         yield put(actions.deleteBillPaymentDetailFail(error));
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo modificar el detalle del pago', 'error')));

@@ -6,8 +6,6 @@ const PrivateRoute = ({ component: Component, isAuthenticated, isLoaded, props, 
 
     // const userRoles = useSelector(state => state.auth.user.roles);
 
-    console.log("isLoaded:", isLoaded, " | isAuthenticated: ", isAuthenticated);
-
     return (
         !isLoaded
             ?
@@ -25,6 +23,5 @@ const PrivateRoute = ({ component: Component, isAuthenticated, isLoaded, props, 
             />
     );
 };
-
 
 export default PrivateRoute;

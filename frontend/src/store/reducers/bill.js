@@ -18,6 +18,7 @@ const initialState = {
     purchaseBillListPag: [],
     purchaseBillList: [],
     purchaseBillData: [],
+    purchaseBillCreated: [],
     purchaseBillSelected: [],
     purchaseBillModifiedId: null,
     billDetailData: [],
@@ -119,7 +120,6 @@ const fetchPaymentStatusListStart = (state, action) => {
 };
 
 const fetchPaymentStatusListSuccess = (state, action) => {
-    console.log(action);
     return updateObject(state, {
         paymentStatusList: action.paymentStatusList,
         error: null,
@@ -136,9 +136,8 @@ const createBillClientSubmissionStart = (state, action) => {
 };
 
 const createBillClientSubmissionSuccess = (state, action) => {
-    const updatedBill = state.puchaseBillList.concat(action.puchseBillCreatedId);
     const updatedState = {
-        puchaseBillList: updatedBill,
+        billClientSubmissionCreated: action.billClientSubmissionCreated,
         error: null,
         loading: false
     };
@@ -198,9 +197,8 @@ const createPurchaseBillStart = (state, action) => {
 };
 
 const createPurchaseBillSuccess = (state, action) => {
-    const updatedBill = state.puchaseBillList.concat(action.puchseBillCreatedId);
     const updatedState = {
-        puchaseBillList: updatedBill,
+        purchaseBillCreated: action.purchaseBillCreated,
         error: null,
         loading: false
     };

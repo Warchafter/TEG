@@ -38,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
+    tableFullWrapper: {
+        width: 'inherit'
+    },
     table: {
         width: '100%'
     },
@@ -79,6 +82,7 @@ const BillClientSubmissionForm = () => {
     const billClientSubmissionList = useSelector(state => state.bill.billClientSubmissionList);
     const userProfileDetail = useSelector(state => state.userProfile.userProfileDetail);
 
+
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -86,10 +90,14 @@ const BillClientSubmissionForm = () => {
         setPage(newPage);
     };
 
-    const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
+    const handleChangeRowsPerPage = event => {
+        setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
+
+    const emptyRows =
+        rowsPerPage - Math.min(rowsPerPage, billClientSubmissionList.length - page * rowsPerPage);
+
 
     const onFetchBillClientSubmissionList = useCallback(() => dispatch(actions.fetchBillClientSubmissionList()), [dispatch]);
     const onSetSelectedBillClientSubmission = useCallback((data) => dispatch(actions.setSelectedBillClientSubmission(data)), [dispatch]);
@@ -132,11 +140,6 @@ const BillClientSubmissionForm = () => {
         };
     };
 
-    // const addPurchaseBillHandler = (row) => {
-    //     onSetSelectedBillClientSubmission(row);
-    //     onSet
-    // }
-
     return (
         <div className={styles.root}>
             {
@@ -144,7 +147,7 @@ const BillClientSubmissionForm = () => {
                     ? <CSpinner color="primary" />
                     :
                     <Grid container>
-                        <Card >
+                        <Card  className={styles.tableFullWrapper}>
                             <Grid item xs={12}>
                                 <TableContainer component={styles.tableContainer}>
                                 <Table className={styles.table} size="small" aria-label="a dense table">
@@ -156,7 +159,9 @@ const BillClientSubmissionForm = () => {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {billClientSubmissionList.map((row) => (
+                                        {billClientSubmissionList
+                                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                            .map((row) => (
                                             <TableRow key={row.id}>
                                                 <TableCell>
                                                     <Typography
@@ -179,6 +184,11 @@ const BillClientSubmissionForm = () => {
                                                 </TableCell>
                                             </TableRow>
                                         ))}
+                                        {emptyRows > 0 && (
+                                            <TableRow style={{ height: 53 * emptyRows }}>
+                                            <TableCell colSpan={6} />
+                                            </TableRow>
+                                        )}
                                     </TableBody>
                                 </Table>
                                 </TableContainer>
@@ -187,9 +197,9 @@ const BillClientSubmissionForm = () => {
                                 <TableFooter>
                                     <TablePagination
                                         labelRowsPerPage='Registros por página'
-                                        rowsPerPageOptions={[5, 10, 15]}
+                                        rowsPerPageOptions={[5,]}
                                         component="div"
-                                        count={billClientSubmissionListCount}
+                                        count={billClientSubmissionList.length}
                                         rowsPerPage={rowsPerPage}
                                         page={page}
                                         onChangePage={handleChangePage}

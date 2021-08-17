@@ -91,18 +91,6 @@ export const _nav1 = [
         anchor: 'Demo Kanban Style Grid',
         to: '/demo2',
       },
-      {
-        _component: 'CNavItem',
-        as: NavLink,
-        anchor: 'Demo Firebase Style Grid',
-        to: '/demo3',
-      },
-      {
-        _component: 'CNavItem',
-        as: NavLink,
-        anchor: 'Demo Nested List',
-        to: '/demo4',
-      },
     ],
   },
   {

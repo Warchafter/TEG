@@ -3,11 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { makeStyles } from '@material-ui/styles';
 import {
-    Button,
-    Grid
+    Grid,
 } from '@material-ui/core';
-
-import CloudDoneIcon from '@material-ui/icons/CloudDone';
 
 import * as actions from '../../../store/actions/index';
 
@@ -50,21 +47,12 @@ const UserProfileStaff = () => {
     const userProfileDetail = useSelector(state => state.userProfile.userProfileDetail);
 
     const onFetchUserProfileDetail = useCallback((user) => dispatch(actions.fetchUserProfileDetail(user)), [dispatch]);
-    const onSelectedOptionHandler = useCallback(
-        (selectedOption, contentComponent) => dispatch(
-            actions.setUserProfileMainContent(selectedOption, contentComponent)
-        ), [dispatch]);
 
     useEffect(() => {
         if (isAuthenticated && userProfileDetail) {
             onFetchUserProfileDetail();
         };
     }, []);
-
-    const optionSelectedHandler = (e) => {
-        console.log(e.target.name);
-        onSelectedOptionHandler(e.target.name, "something");
-    }
 
     return (
         <div className={styles.root}>

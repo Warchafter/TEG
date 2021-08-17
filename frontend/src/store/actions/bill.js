@@ -232,10 +232,10 @@ export const createPurchaseBillStart = (purchaseBillData) => {
     };
 };
 
-export const createPurchaseBillSuccess = (purchaseBillCreatedId) => {
+export const createPurchaseBillSuccess = (purchaseBillCreated) => {
     return {
         type: actionTypes.CREATE_PURCHASE_BILL_SUCCESS,
-        purchaseBillCreatedId: purchaseBillCreatedId
+        purchaseBillCreated: purchaseBillCreated
     };
 };
 

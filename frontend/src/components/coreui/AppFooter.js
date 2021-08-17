@@ -4,7 +4,7 @@ import { CFooter } from '@coreui/react'
 import {Grid} from '@material-ui/core'
 
 import CIcon from '@coreui/icons-react'
-import { freeSet, brandSet } from '@coreui/icons'
+import { brandSet } from '@coreui/icons'
 
 const AppFooter = () => {
   return (

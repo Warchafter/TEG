@@ -65,7 +65,8 @@ class BillClientSubmissionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BillClientSubmission
-        fields = ('id', 'bill_name_receiver', 'product_requirements')
+        fields = ('id', 'bill_name_receiver', 'product_requirements',
+                  'submission_date', 'handling_date', 'has_been_handled')
         read_only_fields = ('id',)
 
 

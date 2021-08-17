@@ -17,10 +17,6 @@ const useStyles = makeStyles(({ spacing, palette, theme }) => {
     };
 });
 
-const validationSchema = yup.object({
-    
-});
-
 const PurchaseBillCreation = () => {
     const dispatch = useDispatch();
     const styles = useStyles();
@@ -37,14 +33,14 @@ const PurchaseBillCreation = () => {
             payment_method: 4,
             currency: 5,
             bank: 5,
-            employee_in_charge: userProfileDetail.id,
             purchase_status: 1,
             delivery_status: 1,
+            employee_in_charge: userProfileDetail.id,
+            bill_client_submission: billClientSubmissionSelected.id
         },
         onSubmit: (values) => {
             onCreatePurchaseBill(values);
         },
-        validationSchema: validationSchema
     });
 
 

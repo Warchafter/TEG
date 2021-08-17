@@ -1,13 +1,10 @@
-import React, { useCallback, useSelector } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Card,
-    Grid,
 } from '@material-ui/core';
 
-import * as actions from '../../../store/actions/index';
 import BillClientSubmissionForm from '../../../components/Bill/BillClientSubmission/BillClientSubmissionForm';
 import Notifier from '../../../components/Notifier/Notifier';
 
@@ -26,11 +23,7 @@ const useStyles = makeStyles((theme) => ({
 // Crear una pantalla de creación de factura exitosa.
 
 const BillClientSubmission = () => {
-    const dispatch = useDispatch();
     const styles = useStyles();
-
-    // const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
-
 
     return (
         <div className={styles.root}>

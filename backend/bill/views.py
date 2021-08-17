@@ -2,7 +2,7 @@ from io import StringIO
 from django.core.paginator import Page
 from django.db.models import query
 from django.db.models.query import QuerySet
-from rest_framework.decorators import action
+from rest_framework.decorators import action, permission_classes
 from rest_framework.response import Response
 from rest_framework import viewsets, mixins, status, generics
 import product
@@ -38,6 +38,18 @@ class IsClientOrReadOnly(BasePermission):
             return True
 
         return request.user.roles == 'user'
+
+
+class IsAuthenticatedOrReadOnly(BasePermission):
+    """Object-level permission to allow al authenticated users to edit an object"""
+
+    def has_permission(self, request, view):
+        if request.method in SAFE_METHODS:
+            return True
+        elif request.user.role == 'user':
+            return True
+
+        return request.user.is_staff
 
 
 class IsStaffOrReadOnly(BasePermission):
@@ -97,6 +109,23 @@ class StandardResultsSetPagination(PageNumberPagination):
         })
 
 
+class SmallResultsSetPagination(PageNumberPagination):
+    """Custom smaller pagination class"""
+    page_size = 5
+    page_size_query_param = 'page_size'
+    max_page_size = 20
+
+    def get_paginated_response(self, data):
+        return Response({
+            'links': {
+                'next': self.get_next_link(),
+                'previous': self.get_previous_link()
+            },
+            'count': self.page.paginator.count,
+            'results': data
+        })
+
+
 class BankViewSet(BaseProductAttrViewSet):
     """Manage banks in the database"""
     queryset = Bank.objects.all()
@@ -140,7 +169,7 @@ class BillClientSubmissionViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.SearchFilter,)
     queryset = BillClientSubmission.objects.all()
     authentication_classes = (JWTAuthentication,)
-    permission_classes = (IsClientOrReadOnly,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     pagination_class = StandardResultsSetPagination
 
     def _params_to_ints(self, qs):

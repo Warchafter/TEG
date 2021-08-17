@@ -10,7 +10,6 @@ import {
     TableHead,
     TableRow,
     TableCell,
-    TableBody
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({

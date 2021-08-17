@@ -67,6 +67,9 @@ class SupplierEmailsDetailSerializer(SupplierEmailsSerializer):
 class SupplierProductsSerializer(serializers.ModelSerializer):
     """Serializer for supplier products objects"""
 
+    product = ProductDetailSerializer(many=False, read_only=True)
+    supplier = SupplierSerializer(many=False, read_only=True)
+
     class Meta:
         model = SupplierProducts
         fields = ('id', 'product', 'supplier', 'price', 'stock')
