@@ -182,6 +182,7 @@ export function* createPurchaseBillSaga(action) {
         }
     };
     const body = JSON.stringify(action.data);
+    console.log(action.data);
     const url = '/bill/purchase-bills/';
     try {
         let response = yield axios.post(url, body, config);

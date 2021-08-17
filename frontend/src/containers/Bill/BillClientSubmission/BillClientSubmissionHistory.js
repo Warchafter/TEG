@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core';
 
 import * as actions from '../../../store/actions/index';
+import Notifier from '../../../components/Notifier/Notifier';
 
 import BillClientSubmissionHistoryList from '../../../components/Bill/BillClientSubmission/BillClientSubmissionHistoryList';
 import BillClientSubmissionDescription from '../../../components/Bill/BillClientSubmission/BillClientSubmissionDescription';
@@ -43,6 +44,7 @@ const BillClientSubmissionHistory = () => {
     return (
         <div className={styles.root}>
             {/* {!isAuthenticated ? null : */}
+                <Notifier />
                 <Grid container spacing={3}>
                     <Grid item xs={4}>
                         <BillClientSubmissionHistoryList />

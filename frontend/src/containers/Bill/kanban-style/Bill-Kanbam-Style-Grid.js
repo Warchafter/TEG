@@ -105,38 +105,6 @@ const BillKanbanStyleGrid = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // const onPaymentBillCounterHandler = (billPaymentType) => {
-    //     if (billPaymentType === 1) {
-    //         setPaymentBillCounter1(paymentBillCounter1 + 1);
-    //     } else if (billPaymentType === 2) {
-    //         setPaymentBillCounter2(paymentBillCounter2 + 1);
-    //     } else {
-    //         setPaymentBillCounter3(paymentBillCounter3 + 1);
-    //     }
-    // };
-
-    const paymentCard = (type) => {
-        if (type === 1) {
-            purchaseBillList.map(index => {
-                if (index.payment_status.id === 1) {
-                    return <Grid item xs={12}><KanbanCardDemo key={index.id} {...index} /></Grid>
-                }
-            });
-        } else if (type === 2) {
-            purchaseBillList.map(index => {
-                if (index.payment_status.id === 2) {
-                    return <Grid item xs={12}><KanbanCardDemo key={index.id} {...index} /></Grid>
-                }
-        });
-        } else if (type === 3) {
-            purchaseBillList.map(index => {
-                if (index.payment_status.id === 3) {
-                    return <Grid item xs={12}><KanbanCardDemo key={index.id} {...index} /></Grid>
-                }
-            });
-        }
-    }
-
     return (
         <React.Fragment>
             <CurrencyValueCard exchangeRates={exchangeRates} loading={isLoadingExRate} ExRateDataLoaded={ExRateDataLoaded} />
@@ -171,7 +139,11 @@ const BillKanbanStyleGrid = () => {
                                 >
                                     <NiceHeaderCard title={"Por Pagar"} type={"Por Pagar"}/>
                                     {
-                                        paymentCard(1)
+                                        purchaseBillList.map(index => {
+                                            if (index.payment_status.id === 1) {
+                                                return <Grid item xs={12}><KanbanCardDemo key={index.id} {...index} /></Grid>
+                                            }
+                                        })
                                     }
                                 </Grid>
                             </Grid>
@@ -184,7 +156,11 @@ const BillKanbanStyleGrid = () => {
                                 >
                                     <NiceHeaderCard title={"Pago Parcial"} type={"Pago Parcial"}/>
                                     {
-                                        paymentCard(2)
+                                        purchaseBillList.map(index => {
+                                            if (index.payment_status.id === 2) {
+                                                return <Grid item xs={12}><KanbanCardDemo key={index.id} {...index} /></Grid>
+                                            }
+                                        })
                                     }
                                 </Grid>
                             </Grid>
@@ -197,7 +173,11 @@ const BillKanbanStyleGrid = () => {
                                 >
                                     <NiceHeaderCard title={"Pago Completo"} type={"Pago Completo"}/>
                                     {
-                                        paymentCard(3)
+                                        purchaseBillList.map(index => {
+                                        if (index.payment_status.id === 3) {
+                                            return <Grid item xs={12}><KanbanCardDemo key={index.id} {...index} /></Grid>
+                                        }
+                                        })
                                     }
                                 </Grid>
                             </Grid>

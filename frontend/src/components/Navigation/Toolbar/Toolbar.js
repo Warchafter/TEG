@@ -5,7 +5,7 @@ import {
     Toolbar,
 } from '@material-ui/core';
 
-import Logo from '../../Logo/Logo';
+import IHLogoLarge from '../../Logo/IHLogoLarge';
 import NavigationItems from '../NavigationItems/NavigationItems';
 import DrawerToggle from '../SideDrawer/DrawerToggle/DrawerToggle';
 
@@ -38,7 +38,7 @@ const ToolbarCustom = (props) => {
                 <Toolbar>
                     <DrawerToggle clicked={props.drawerToggleClicked} />
                     <div className={classes.logo} >
-                        <Logo />
+                        <IHLogoLarge />
                     </div>
                     <nav className={classes.desktopOnly}>
                         <NavigationItems isAuthenticated={props.isAuth} />

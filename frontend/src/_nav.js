@@ -4,44 +4,6 @@ import { NavLink } from 'react-router-dom';
 import CIcon from '@coreui/icons-react'
 import { freeSet } from '@coreui/icons'
 
-
-export const _nav2 = [
-  {
-    _component: 'CNavItem',
-    as: NavLink,
-    anchor: 'Dashboard',
-    to: '/dashboard',
-    icon: <CIcon content={freeSet.cilHome} customClasses="nav-icon"/>,
-    badge: {
-      color: 'info',
-      text: 'NEW',
-    },
-  },
-  {
-    _component: 'CNavTitle',
-    anchor: 'Productos',
-  },
-  {
-    _component: 'CNavTitle',
-    anchor: 'Facturas',
-  },
-  {
-    _component: 'CNavItem',
-    as: NavLink,
-    anchor: 'Solicitud de Facturación',
-    to: '/bill-client-submission',
-    icon: <CIcon content={freeSet.cilCart} customClasses="nav-icon"/>,
-  },
-  {
-    _component: 'CNavItem',
-    as: NavLink,
-    anchor: 'Mis Facturas',
-    to: '/bill-client-submission-history',
-    icon: <CIcon content={freeSet.cilListRich} customClasses="nav-icon"/>,
-  },
-];
-
-
 export const _nav1 = [
   {
     _component: 'CNavItem',
@@ -94,6 +56,13 @@ export const _nav1 = [
         to: '/bill-payments',
       },
     ],
+  },
+  {
+    _component: 'CNavItem',
+    as: NavLink,
+    anchor: 'Solicitudes de Cotización',
+    to: '/bill-client-submission-history',
+    icon: <CIcon content={freeSet.cilListRich} customClasses="nav-icon"/>,
   },
   {
     _component: 'CNavItem',
@@ -186,4 +155,43 @@ export const _nav1 = [
     ],
   },
 ];
+
+export const _nav2 = [
+  {
+    _component: 'CNavItem',
+    as: NavLink,
+    anchor: 'Dashboard',
+    to: '/dashboard',
+    icon: <CIcon content={freeSet.cilHome} customClasses="nav-icon"/>,
+    badge: {
+      color: 'info',
+      text: 'NEW',
+    },
+  },
+  {
+    _component: 'CNavTitle',
+    anchor: 'Productos',
+  },
+  {
+    _component: 'CNavTitle',
+    anchor: 'Facturas',
+  },
+  {
+    _component: 'CNavItem',
+    as: NavLink,
+    anchor: 'Solicitud de Facturación',
+    to: '/bill-client-submission',
+    icon: <CIcon content={freeSet.cilCart} customClasses="nav-icon"/>,
+  },
+  {
+    _component: 'CNavItem',
+    as: NavLink,
+    anchor: 'Mis Solicitudes',
+    to: '/bill-client-submission-history',
+    icon: <CIcon content={freeSet.cilListRich} customClasses="nav-icon"/>,
+  },
+];
+
+
+
 

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.models import Bank, BillClientSubmission, BillDetail, BillPaymentDetail, BillProductCharacteristics, ProductCharacteristics, PaymentMethod, Currency, PurchaseBill, PurchaseStatus, PaymentStatus, SupplierProducts
+from core.models import Bank, BillClientSubmission, BillDetail, BillPaymentDetail, BillProductCharacteristics, ProductCharacteristics, PaymentMethod, Currency, PurchaseBill, PurchaseStatus, PaymentStatus, DeliveryStatus, SupplierProducts
 from product.serializers import ProductDetailSerializer, ProductCharacteristicSerializer, ProductCharacteristicDetailSerializer
 from supplier.serializers import SupplierProductDetailSerializer, SupplierProductsSerializer
 from user.serializers import CurrentUserSerializer
@@ -55,7 +55,7 @@ class DeliveryStatusSerializer(serializers.ModelSerializer):
     """Serializer for status of delivery option objects"""
 
     class Meta:
-        model = PaymentStatus
+        model = DeliveryStatus
         fields = ('id', 'name')
         read_only_fields = ('id',)
 

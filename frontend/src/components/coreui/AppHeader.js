@@ -11,8 +11,6 @@ import {
   CNavLink,
   CNavItem,
 } from '@coreui/react';
-import CIcon from '@coreui/icons-react'
-import { freeSet } from '@coreui/icons'
 
 import MenuIcon from '@material-ui/icons/Menu';
 
@@ -21,7 +19,7 @@ import * as actions from '../../store/actions/index';
 import { AppBreadcrumb } from '../index';
 import { AppHeaderDropdown } from './header/index';
 
-import Logo from '../Logo/Logo';
+import IHLogoLarge from '../../components/Logo/IHLogoLarge';
 
 const AppHeader = () => {
   const dispatch = useDispatch();
@@ -38,7 +36,7 @@ const AppHeader = () => {
           <MenuIcon />
         </CHeaderToggler>
         <CHeaderBrand className="mx-auto d-md-none" to="/">
-          <Logo />
+          <IHLogoLarge />
           {/* <CIcon name="logo" height="48" alt="Logo" /> */}
         </CHeaderBrand>
         <CHeaderNav className="d-none d-md-flex me-auto">

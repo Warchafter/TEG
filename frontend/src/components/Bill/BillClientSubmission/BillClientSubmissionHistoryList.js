@@ -93,26 +93,44 @@ const BillClientSubmissionForm = () => {
 
     const onFetchBillClientSubmissionList = useCallback(() => dispatch(actions.fetchBillClientSubmissionList()), [dispatch]);
     const onSetSelectedBillClientSubmission = useCallback((data) => dispatch(actions.setSelectedBillClientSubmission(data)), [dispatch]);
+    const onCreatePurchaseBill = useCallback((initialValues) => dispatch(actions.createPurchaseBill(initialValues)), [dispatch]);
 
     useEffect(() => {
         onFetchBillClientSubmissionList();
-    }, [])
+    }, []);
+
+    const createPurchaseBill = (row) => {
+        onSetSelectedBillClientSubmission(row);
+
+        const initialValues = {
+            payment_method: 4,
+            currency: 5,
+            bank: 5,
+            purchase_status: 1,
+            payment_status: 4,
+            employee_in_charge: userProfileDetail.id,
+            delivery_status: 1,
+            bill_client_submission: row.id,
+        };
+
+        onCreatePurchaseBill(initialValues);
+    };
 
     const canAddPuchaseBill = (row) => {
         if (userProfileDetail.roles === 'user') {
             return null;
         } else {
             return  (
-                <Item position={'right'} mr={-0.5} onClick={() => onSetSelectedBillClientSubmission(row)} >
-                    <StyledTooltip title={'Ver Detalle'}>
+                <Item position={'right'} mr={-0.5} onClick={() => createPurchaseBill(row)} >
+                    <StyledTooltip title={'Crear Factura'}>
                         <IconButton classes={iconBtnStyles}>
                             <NoteAddIcon />
                         </IconButton>
                     </StyledTooltip>
                 </Item>
-            )
-        }
-    }
+            );
+        };
+    };
 
     // const addPurchaseBillHandler = (row) => {
     //     onSetSelectedBillClientSubmission(row);

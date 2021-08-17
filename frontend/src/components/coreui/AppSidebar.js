@@ -11,7 +11,8 @@ import {
   CCreateNavItem,
 } from '@coreui/react';
 
-import Logo from '../Logo/Logo';
+import IHLogoLarge from '../Logo/IHLogoLarge';
+import IHLogoSmall from '../Logo/IHLogoSmall';
 
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
@@ -44,7 +45,7 @@ const AppSidebar = () => {
       onHide={() => onSetSidebarShow()} //sidebarShow: false
     >
       <CSidebarBrand className="d-none d-md-flex" to="/">
-        <Logo />
+        {!unfoldable ? <IHLogoLarge /> : <IHLogoSmall />}
         {/* <CIcon className="sidebar-brand-full" name="logo-negative" height={35} /> */}
         {/* <CIcon className="sidebar-brand-narrow" name="sygnet" height={35} /> */}
       </CSidebarBrand>
