@@ -129,19 +129,7 @@ const NavigationItems = (props) => {
                 ?
                 <React.Fragment>
                     <NavigationItem link="/" exact>Inicio</NavigationItem>
-                    <NavigationItem link="/products" exact>Products</NavigationItem>
-                    <NavigationItem link="/billtesting" exact>Bill Testing</NavigationItem>
-                    {/* <Button onClick={handleViewChange}>
-                        <NavigationItem link="/" exact>Corpo View</NavigationItem>
-                    </Button> */}
                     <div className={classes.grow} />
-                    {/* <div className={classes.button}>
-                        <IconButton aria-label="Mostrar items del carrito" color="inherit">
-                            <Badge badgeContent={2} color="secondary">
-                                <ShoppingCart />
-                            </Badge>
-                        </IconButton>
-                    </div> */}
                 </React.Fragment>
                 :
                 null

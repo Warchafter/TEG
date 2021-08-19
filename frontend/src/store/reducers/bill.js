@@ -12,6 +12,7 @@ const initialState = {
     billClientSubmissionListCount: [],
     billClientSubmissionListPag: [],
     billClientSubmissionList: [],
+    billClientSubmissionListFiltered: [],
     billClientSubmissionSelected: [],
     isBillClientSubmissionSelected: false,
     purchaseBillListCount: [],
@@ -181,6 +182,25 @@ const fetchBillClientSubmissionListSuccess = (state, action) => {
 };
 
 const fetchBillClientSubmissionListFail = (state, action) => {
+    return updateObject(state, { error: action.error, loadingBillClientSubmissionHistoryList: false });
+};
+
+const fetchBillClientSubmissionListFilteredStart = (state, action) => {
+    return updateObject(state, { error: null, loadingBillClientSubmissionHistoryList: true });
+};
+
+const fetchBillClientSubmissionListFilteredSuccess = (state, action) => {
+    const updatedState = {
+        billClientSubmissionListFilteredCount: action.billClientSubmissionListFilteredData.count,
+        billClientSubmissionListFilteredPag: action.billClientSubmissionListFilteredData.links,
+        billClientSubmissionListFiltered: action.billClientSubmissionListFilteredData.results,
+        error: null,
+        loadingBillClientSubmissionHistoryList: false
+    };
+    return updateObject(state, updatedState);
+};
+
+const fetchBillClientSubmissionListFilteredFail = (state, action) => {
     return updateObject(state, { error: action.error, loadingBillClientSubmissionHistoryList: false });
 };
 

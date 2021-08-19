@@ -15,6 +15,12 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
+    textField: {
+        minWidth: '600px'
+    },
+    gridPadding: {
+        padding: '20px'
+    }
 }))
 
 const validationSchema = yup.object({
@@ -41,8 +47,10 @@ const BillClientSubmissionForm = () => {
 
     return (
         <div className={styles.root}>
-            <Grid container spacing={4}>
-                <Grid item container spacing={5} xs={12}>
+            <Grid container spacing={4} className={styles.gridPadding}>
+                <Grid item xs={3}>
+                </Grid>
+                <Grid item container spacing={5} xs={6} column>
                     <form onSubmit={formik.handleSubmit}>
                         <Grid item xs={12}>
                             <TextField
@@ -51,6 +59,7 @@ const BillClientSubmissionForm = () => {
                                 label='Nombre a quien se hará la factura'
                                 type='text'
                                 variant="filled"
+                                className={styles.textField}
                                 value={formik.values.bill_name_receiver}
                                 onChange={formik.handleChange}
                                 error={formik.touched.bill_name_receiver && Boolean(formik.errors.bill_name_receiver)}
@@ -66,6 +75,7 @@ const BillClientSubmissionForm = () => {
                                 type='text'
                                 multiline
                                 variant="filled"
+                                className={styles.textField}
                                 value={formik.values.product_requirements}
                                 onChange={formik.handleChange}
                                 error={formik.touched.product_requirements && Boolean(formik.errors.product_requirements)}
@@ -80,6 +90,8 @@ const BillClientSubmissionForm = () => {
                             >Enviar</button>
                         </Grid>
                     </form>
+                </Grid>
+                <Grid item xs={3}>
                 </Grid>
             </Grid>
         </div>

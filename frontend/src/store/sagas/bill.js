@@ -1,4 +1,4 @@
-import { put } from 'redux-saga/effects';
+import { put, select } from 'redux-saga/effects';
 import axios from '../../axios-db';
 
 import { getSnackbarData } from '../../shared/utility';
@@ -132,6 +132,7 @@ export function* createBillClientSubmissionSaga(action) {
 
 export function* fetchBillClientSubmissionDetailSaga(action) {
     yield put(actions.fetchBillClientSubmissionDetailStart());
+    let userId = yield select(getUserId);
     const access = yield localStorage.getItem('access');
     const config = {
         headers: {
@@ -152,6 +153,29 @@ export function* fetchBillClientSubmissionDetailSaga(action) {
 
 export function* fetchBillClientSubmissionListSaga(action) {
     yield put(actions.fetchBillClientSubmissionListStart());
+    console.log(action)
+    const access = yield localStorage.getItem('access');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': access ? `JWT ${access}` : null,
+            'Accept': 'application/json'
+        }
+    };
+    const url1 = `/bill/bill-client-submissions/?user=${action.userId}`;
+    const url2 = '/bill/bill-client-submissions/';
+
+    try {
+        let response = yield axios.get(action.users ? url1 : url2, config);
+        yield put(actions.fetchBillClientSubmissionListSuccess(response.data));
+    } catch (error) {
+        yield put(actions.fetchBillClientSubmissionListFail(error));
+        yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer las solicitudes', 'error')));
+    };
+};
+
+export function* fetchBillClientSubmissionListFilteredSaga(action) {
+    yield put(actions.fetchBillClientSubmissionListFilteredStart());
     const access = yield localStorage.getItem('access');
     const config = {
         headers: {
@@ -163,9 +187,9 @@ export function* fetchBillClientSubmissionListSaga(action) {
     const url = '/bill/bill-client-submissions/';
     try {
         let response = yield axios.get(url, config);
-        yield put(actions.fetchBillClientSubmissionListSuccess(response.data));
+        yield put(actions.fetchBillClientSubmissionListFilteredSuccess(response.data));
     } catch (error) {
-        yield put(actions.fetchBillClientSubmissionListFail(error));
+        yield put(actions.fetchBillClientSubmissionListFilteredFail(error));
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer las solicitudes', 'error')));
     };
 };

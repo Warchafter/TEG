@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import * as actions from './store/actions/index';
 import { withStyles } from '@material-ui/core/styles';
 import 'react-image-lightbox/style.css';
@@ -57,7 +57,6 @@ const App = props => {
     const dispatch = useDispatch();
 
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
-    const isLoaded = useSelector(state => state.auth.isLoaded);
     const isAuthFuncLoaded = useSelector(state => state.auth.isAuthFuncLoaded);
 
     const onTryAutoSignup = useCallback(() => dispatch(actions.authCheckState()), [dispatch]);
@@ -72,6 +71,7 @@ const App = props => {
     return (
         <div>
             <React.Suspense fallback={loading}>
+                {/* {!isAuthFuncLoaded && } */}
                 {!isAuthFuncLoaded
                     ?
                         null
@@ -84,8 +84,7 @@ const App = props => {
                                             key={index}
                                             path={route.path}
                                             exact={route.exact}
-                                            isAuthenticated={isAuthenticated}
-                                            isLoaded={isLoaded}
+                                            // isAuthenticated={isAuthenticated}
                                             component={(props => {
                                                 return (
                                                     <route.layout {...props}>

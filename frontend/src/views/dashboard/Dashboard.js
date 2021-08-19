@@ -38,32 +38,17 @@ const Dashboard = () => {
           <CRow>
             <CCol sm="5">
               <h4 id="traffic" className="card-title mb-0">
-                Traffic
+                Rendimiento
               </h4>
-              <div className="small text-medium-emphasis">January - July 2021</div>
+              <div className="small text-medium-emphasis">Enero - Julio 2021</div>
             </CCol>
             <CCol sm="7" className="d-none d-md-block">
-              <CButton color="primary" className="float-end">
-                <CIcon name="cil-cloud-download" />
-              </CButton>
-              <CButtonGroup className="float-end me-3">
-                {['Day', 'Month', 'Year'].map((value) => (
-                  <CButton
-                    color="outline-secondary"
-                    key={value}
-                    className="mx-0"
-                    active={value === 'Month'}
-                  >
-                    {value}
-                  </CButton>
-                ))}
-              </CButtonGroup>
             </CCol>
           </CRow>
           <CChartLine
             style={{ height: '300px', marginTop: '40px' }}
             data={{
-              labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+              labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio'],
               datasets: [
                 {
                   label: 'My First dataset',
@@ -148,28 +133,28 @@ const Dashboard = () => {
         <CCardFooter>
           <CRow className="text-center">
             <CCol md sm="12" className="mb-sm-2 mb-0">
-              <div className="text-medium-emphasis">Visits</div>
-              <strong>29.703 Users (40%)</strong>
+              <div className="text-medium-emphasis">Visitas</div>
+              <strong>29.703 Usuarios (40%)</strong>
               <CProgress thin className="mt-2" precision={1} color="success" value={40} />
             </CCol>
             <CCol md sm="12" className="mb-sm-2 mb-0">
-              <div className="text-medium-emphasis">Unique</div>
-              <strong>24.093 Users (20%)</strong>
+              <div className="text-medium-emphasis">Únicas</div>
+              <strong>24.093 Usuarios (20%)</strong>
               <CProgress thin className="mt-2" precision={1} color="info" value={20} />
             </CCol>
             <CCol md sm="12" className="mb-sm-2 mb-0">
-              <div className="text-medium-emphasis">Pageviews</div>
-              <strong>78.706 Views (60%)</strong>
+              <div className="text-medium-emphasis">Cotizaciones</div>
+              <strong>78.706 Cotizaciones (60%)</strong>
               <CProgress thin className="mt-2" precision={1} color="warning" value={60} />
             </CCol>
             <CCol md sm="12" className="mb-sm-2 mb-0">
-              <div className="text-medium-emphasis">New Users</div>
-              <strong>22.123 Users (80%)</strong>
+              <div className="text-medium-emphasis">Nuevos Usuarios</div>
+              <strong>22.123 Usuarios (80%)</strong>
               <CProgress thin className="mt-2" precision={1} color="danger" value={80} />
             </CCol>
             <CCol md sm="12" className="mb-sm-2 mb-0">
-              <div className="text-medium-emphasis">Bounce Rate</div>
-              <strong>Average Rate (40.15%)</strong>
+              <div className="text-medium-emphasis">Ingresos</div>
+              <strong>Promedio (40.15%)</strong>
               <CProgress thin className="mt-2" precision={1} value={40.15} />
             </CCol>
           </CRow>
@@ -178,33 +163,33 @@ const Dashboard = () => {
 
       <WidgetsBrand withCharts />
 
-      <CRow>
+      {/* <CRow>
         <CCol xs>
           <CCard className="mb-4">
-            <CCardHeader>Traffic {' & '} Sales</CCardHeader>
+            <CCardHeader>Tráfico {' & '} Ventas</CCardHeader>
             <CCardBody>
               <CRow>
                 <CCol xs="12" md="6" xl="6">
                   <CRow>
                     <CCol sm="6">
                       <div className="border-start border-start-4 border-start-info py-1 px-3">
-                        <div className="text-medium-emphasis small">New Clients</div>
+                        <div className="text-medium-emphasis small">Nuevos Clientes</div>
                         <div className="fs-5 fw-semibold">9,123</div>
                       </div>
                     </CCol>
                     <CCol sm="6">
                       <div className="border-start border-start-4 border-start-danger py-1 px-3 mb-3">
-                        <div className="text-medium-emphasis small">Recurring Clients</div>
+                        <div className="text-medium-emphasis small">Clientes Recurrentes</div>
                         <div className="fs-5 fw-semibold">22,643</div>
                       </div>
-                    </CCol>
+                    </CCol>3
                   </CRow>
 
                   <hr className="mt-0" />
 
                   <div className="progress-group mb-4">
                     <div className="progress-group-prepend">
-                      <span className="text-medium-emphasis small">Monday</span>
+                      <span className="text-medium-emphasis small">Lunes</span>
                     </div>
                     <div className="progress-group-bars">
                       <CProgress thin color="info" value={34} />
@@ -213,7 +198,7 @@ const Dashboard = () => {
                   </div>
                   <div className="progress-group mb-4">
                     <div className="progress-group-prepend">
-                      <span className="text-medium-emphasis small">Tuesday</span>
+                      <span className="text-medium-emphasis small">Martes</span>
                     </div>
                     <div className="progress-group-bars">
                       <CProgress thin color="info" value={56} />
@@ -222,7 +207,7 @@ const Dashboard = () => {
                   </div>
                   <div className="progress-group mb-4">
                     <div className="progress-group-prepend">
-                      <span className="text-medium-emphasis small">Wednesday</span>
+                      <span className="text-medium-emphasis small">Miércoles</span>
                     </div>
                     <div className="progress-group-bars">
                       <CProgress thin color="info" value={12} />
@@ -231,7 +216,7 @@ const Dashboard = () => {
                   </div>
                   <div className="progress-group mb-4">
                     <div className="progress-group-prepend">
-                      <span className="text-medium-emphasis small">Thursday</span>
+                      <span className="text-medium-emphasis small">Jueves</span>
                     </div>
                     <div className="progress-group-bars">
                       <CProgress thin color="info" value={43} />
@@ -240,29 +225,11 @@ const Dashboard = () => {
                   </div>
                   <div className="progress-group mb-4">
                     <div className="progress-group-prepend">
-                      <span className="text-medium-emphasis small">Friday</span>
+                      <span className="text-medium-emphasis small">Viernes</span>
                     </div>
                     <div className="progress-group-bars">
                       <CProgress thin color="info" value={22} />
                       <CProgress thin color="danger" value={73} />
-                    </div>
-                  </div>
-                  <div className="progress-group mb-4">
-                    <div className="progress-group-prepend">
-                      <span className="text-medium-emphasis small">Saturday</span>
-                    </div>
-                    <div className="progress-group-bars">
-                      <CProgress thin color="info" value={53} />
-                      <CProgress thin color="danger" value={82} />
-                    </div>
-                  </div>
-                  <div className="progress-group mb-4">
-                    <div className="progress-group-prepend">
-                      <span className="text-medium-emphasis small">Sunday</span>
-                    </div>
-                    <div className="progress-group-bars">
-                      <CProgress thin color="info" value={9} />
-                      <CProgress thin color="danger" value={69} />
                     </div>
                   </div>
                 </CCol>
@@ -582,7 +549,7 @@ const Dashboard = () => {
             </CCardBody>
           </CCard>
         </CCol>
-      </CRow>
+      </CRow> */}
     </>
   )
 }

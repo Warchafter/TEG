@@ -205,7 +205,6 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(methods=['GET'], detail=False, url_path='current')
     def get_current_user(self, request, pk=None):
         serializer = CurrentUserSerializer(request.user)
-        print(request.data)
         return Response(serializer.data)
 
     @action(methods=['POST'], detail=True, url_path='verify-user')

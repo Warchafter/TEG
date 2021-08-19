@@ -3,6 +3,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Card,
+    Grid
 } from '@material-ui/core';
 
 import BillClientSubmissionForm from '../../../components/Bill/BillClientSubmission/BillClientSubmissionForm';
@@ -28,10 +29,18 @@ const BillClientSubmission = () => {
     return (
         <div className={styles.root}>
                 <Notifier />
-                <Card className={styles.card}>
-                    <h1>Solicitud de Facturación</h1>
-                    <BillClientSubmissionForm />
-                </Card>
+                <Grid container spacing={3}>
+                    <Card className={styles.card}>
+                        <Grid item xs={12}>
+                            <h1>Solicitud de Facturación</h1>
+                        </Grid>
+                    </Card>
+                    <Grid item xs={12}>
+                    <Card className={styles.card}>
+                        <BillClientSubmissionForm />
+                    </Card>
+                    </Grid>
+                </Grid>
         </div>
     );
 };

@@ -30,7 +30,6 @@ const MainOptions = (props) => {
         ), [dispatch]);
 
     const optionSelectedHandler = (e) => {
-        console.log(e.target.name);
         onSelectedOptionHandler(e.target.name, "something");
     }
 

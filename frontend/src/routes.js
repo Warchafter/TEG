@@ -55,6 +55,10 @@ const BillFirebaseStyleGrid = React.lazy(() => { return import('./containers/Bil
 const VerticalTabs = React.lazy(() => { return import('./components/MUI-Components/vertical-tabs') });
 const NestedList = React.lazy(() => { return import('./components/MUI-Components/nested-list') });
 
+// apex charts
+
+const ApexCharts = React.lazy(() => { return import('./containers/ApexCharts/ApexCharts') });
+
 // examples
 
 // const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -316,7 +320,14 @@ let routes = [
         component: BillClientSubmissionHistory,
         isPrivate: true
     },
-    { path: '/dashboard', name: 'Dashboard', component: Dashboard, layout: DefaultLayout },
+    {
+        path: '/apex-charts-testing',
+        layout: DefaultLayout,
+        name: "Gráficas de Apex Charts",
+        component: ApexCharts,
+        isPrivate: true
+    },
+    { path: '/dashboard', name: 'Dashboard', component: Dashboard, layout: DefaultLayout, isPrivate: true },
     // { path: '/theme', name: 'Theme', component: Colors, exact: true, layout: DefaultLayout },
     // { path: '/theme/colors', name: 'Colors', component: Colors, layout: DefaultLayout },
     // { path: '/theme/typography', name: 'Typography', component: Typography, layout: DefaultLayout },

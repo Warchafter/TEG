@@ -51,10 +51,6 @@ const UserProfile = () => {
     //     fetchUserProfileDetail(user.id);
     // }, [fetchUserProfileDetail, user.id])
 
-    const showUserProfileData = () => {
-        console.log(userProfileDetail);
-    }
-
     // A Interface store has to be created in order to keep track of whichever options we're choosing.
     // An action has to be dispatch, storing both the component that need to be rendered, and the title of said component
     // This could be done using the routes.js method that is currently being use to dinamically render based on url path
@@ -65,9 +61,6 @@ const UserProfile = () => {
         <div className={styles.root}>
             <Notifier />
             <Grid container spacing={3} >
-                {/* <Box style={{background: 'darkgreen'}}>
-                    <p>Big container</p>
-                </Box> */}
                 <Grid item xs={3}>
                     <Grid container spacing={3} direction='column' >
                         <Grid item xs={12}>

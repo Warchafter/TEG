@@ -46,7 +46,7 @@ class IsAuthenticatedOrReadOnly(BasePermission):
     def has_permission(self, request, view):
         if request.method in SAFE_METHODS:
             return True
-        elif request.user.role == 'user':
+        elif request.user.roles == 'user':
             return True
 
         return request.user.is_staff
@@ -184,16 +184,21 @@ class BillClientSubmissionViewSet(viewsets.ModelViewSet):
         """Retrieve the client bill submissions for all users"""
         bill_name_receiver = self.request.query_params.get(
             'bill_name_receiver')
+        user = self.request.query_params.get(
+            'user'
+        )
         order_by = self.request.query_params.get('order_by')
         queryset = self.queryset
         is_staff = self.request.user.is_staff
-        roles = self.request.user.roles
-
-        print(roles)
 
         if bill_name_receiver:
             queryset = queryset.filter(
                 bill_name_receiver__iexact=bill_name_receiver).order_by('id')
+        if user:
+            user_ids = self._params_to_ints(
+                user)
+            queryset = queryset.filter(
+                user_id__in=user_ids)
 
         # only admin users can view all objects, available or not
         if is_staff:
@@ -504,7 +509,6 @@ class BillPaymentDetailViewSet(viewsets.ModelViewSet):
             bill_payment_detail,
             data=request.data
         )
-        print(request.data)
 
         if serializer.is_valid():
             serializer.save()

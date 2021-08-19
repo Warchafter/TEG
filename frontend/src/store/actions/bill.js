@@ -185,9 +185,10 @@ export const fetchBillClientSubmissionDetailFail = (error) => {
     };
 };
 
-export const fetchBillClientSubmissionList = () => {
+export const fetchBillClientSubmissionList = (userId) => {
     return {
-        type: actionTypes.FETCH_BILL_CLIENT_SUBMISSION_LIST
+        type: actionTypes.FETCH_BILL_CLIENT_SUBMISSION_LIST,
+        userId: userId
     };
 };
 
@@ -207,6 +208,32 @@ export const fetchBillClientSubmissionListSuccess = (billClientSubmissionListDat
 export const fetchBillClientSubmissionListFail = (error) => {
     return {
         type: actionTypes.FETCH_BILL_CLIENT_SUBMISSION_LIST_FAIL,
+        error: error
+    };
+};
+
+export const fetchBillClientSubmissionListFiltered = () => {
+    return {
+        type: actionTypes.FETCH_BILL_CLIENT_SUBMISSION_LIST_FILTERED
+    };
+};
+
+export const fetchBillClientSubmissionListFilteredStart = () => {
+    return {
+        type: actionTypes.FETCH_BILL_CLIENT_SUBMISSION_LIST_FILTERED_START
+    };
+};
+
+export const fetchBillClientSubmissionListFilteredSuccess = (billClientSubmissionListFilteredData) => {
+    return {
+        type: actionTypes.FETCH_BILL_CLIENT_SUBMISSION_LIST_FILTERED_SUCCESS,
+        billClientSubmissionListFilteredData: billClientSubmissionListFilteredData
+    };
+};
+
+export const fetchBillClientSubmissionListFilteredFail = (error) => {
+    return {
+        type: actionTypes.FETCH_BILL_CLIENT_SUBMISSION_LIST_FILTERED_FAIL,
         error: error
     };
 };

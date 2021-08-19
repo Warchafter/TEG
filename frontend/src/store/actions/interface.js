@@ -32,3 +32,10 @@ export const setUserProfileMainContent = (selectedOption, contentComponent) => {
         contentComponent: contentComponent
     };
 };
+
+export const setSupplierMainContent = (selectedOption) => {
+    return {
+        type: actionTypes.SET_SUPPLIER_MAIN_CONTENT,
+        selectedOption: selectedOption
+    };
+};

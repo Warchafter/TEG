@@ -107,7 +107,6 @@ const BillKanbanStyleGrid = () => {
 
     return (
         <React.Fragment>
-            <CurrencyValueCard exchangeRates={exchangeRates} loading={isLoadingExRate} ExRateDataLoaded={ExRateDataLoaded} />
             <Grid
                 spacing={3}
                 direction="column"
@@ -115,15 +114,18 @@ const BillKanbanStyleGrid = () => {
                 container
             >
                 <Grid item xs={12}>
+                <CurrencyValueCard exchangeRates={exchangeRates} loading={isLoadingExRate} ExRateDataLoaded={ExRateDataLoaded} />
+                </Grid>
+                {/* <Grid item xs={12}>
                     <div className={classes.alertLight}>
                         <div className={classes.alertTitle}>Test Title
                         </div>
                         " Test description to understand the padding a little bit better. "
                     </div>
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12}>
                     <Card className={cx(classes.card)} elevation={0}>
-                        <h2>This is a title that needs to be padded better</h2>
+                        <h2>Estados de Pagos de Cotizaciones Pendientes</h2>
                     </Card>
                 </Grid>
                 {isLoading === false && purchaseBillList !== []

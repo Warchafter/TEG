@@ -203,7 +203,7 @@ const Auth = props => {
                     fullWidth
                     name={formElement.id}
                     label={formElement.config.elementConfig.placeholder}
-                    type={formElement.config.valid && formElement.config.touched}
+                    type={formElement.config.elementConfig.type}
                     id={formElement.id}
                     error={!formElement.config.valid && formElement.config.touched}
                     onChange={(event) => inputChangedHandler(event, formElement.id)}

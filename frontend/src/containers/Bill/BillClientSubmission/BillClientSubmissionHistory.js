@@ -29,6 +29,8 @@ const BillClientSubmissionHistory = () => {
     const billClientSubmissionSelected = useSelector(state => state.bill.billClientSubmissionSelected);
     const purchaseBillCreated = useSelector(state => state.bill.purchaseBillCreated);
 
+    
+
     const selectedOption = (selectionData) => {
         if (isBillClientSubmissionSelected) {
             return <BillClientSubmissionDescription selectedOption={selectionData} />
@@ -48,8 +50,6 @@ const BillClientSubmissionHistory = () => {
             return null
         };
     };
-
-    console.log(purchaseBillCreated);
 
     return (
         <div className={styles.root}>

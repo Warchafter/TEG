@@ -27,13 +27,6 @@ export const _nav1 = [
   {
     _component: 'CNavItem',
     as: NavLink,
-    anchor: 'Pruebas Proveedores',
-    to: '/suppliertesting',
-    icon: <CIcon content={freeSet.cilTruck} customClasses="nav-icon"/>,
-  },
-  {
-    _component: 'CNavItem',
-    as: NavLink,
     anchor: 'Proveedores',
     to: '/suppliers',
     icon: <CIcon content={freeSet.cilTruck} customClasses="nav-icon"/>,
@@ -72,23 +65,16 @@ export const _nav1 = [
     icon: <CIcon content={freeSet.cilControl} customClasses="nav-icon"/>,
   },
   {
-    _component: 'CNavItem',
-    as: NavLink,
-    anchor: 'Vertical Tabs Test',
-    to: '/vertical-tabs-testing',
-    icon: <CIcon content={freeSet.cilVerticalAlignCenter} customClasses="nav-icon"/>,
-  },
-  {
     _component: 'CNavGroup',
     as: NavLink,
-    anchor: 'Demo',
+    anchor: 'Pagos',
     to: '/to',
     icon: <CIcon content={freeSet.cilPuzzle} customClasses="nav-icon"/>,
     items: [
       {
         _component: 'CNavItem',
         as: NavLink,
-        anchor: 'Demo Kanban Style Grid',
+        anchor: 'Pagos Por Procesar',
         to: '/demo2',
       },
     ],
@@ -141,6 +127,13 @@ export const _nav1 = [
         to: '/extra/purchase-status',
       },
     ],
+  },
+  {
+    _component: 'CNavItem',
+    as: NavLink,
+    anchor: 'Apex Charts',
+    to: '/apex-charts-testing',
+    icon: <CIcon content={freeSet.cilGraph} customClasses="nav-icon"/>,
   },
 ];
 

@@ -135,7 +135,7 @@ const FetchBillProductCharacteristicListLoader = (props) => {
                                             <Typography className={classes.name}>{row.bill_detail.product.product.title}</Typography>
                                             <Typography color="textSecondary" variant="body2">{row.bill_detail.product.product.description}</Typography>
                                         </Grid>
-                                        <Grid item xs={5}>
+                                        {/* <Grid item xs={5}>
                                             <CardActionArea className={classes.cardMedia} onClick={openHandler}>
                                                 <CardMedia
                                                     className={classes.media}
@@ -143,7 +143,7 @@ const FetchBillProductCharacteristicListLoader = (props) => {
                                                     title="Evidencia de Pago"
                                                 />
                                             </CardActionArea>
-                                        </Grid>
+                                        </Grid> */}
                                     </Grid>
                                 </TableCell>
                                 <TableCell>

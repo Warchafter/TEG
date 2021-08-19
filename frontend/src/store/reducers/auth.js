@@ -105,7 +105,7 @@ const authLogout = (state, action) => {
         isAuthenticated: false,
         user: null,
         rememberMe: false,
-        isAuthFuncLoaded: true
+        isAuthFuncLoaded: false
     });
 };
 

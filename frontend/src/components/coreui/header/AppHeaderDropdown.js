@@ -1,6 +1,4 @@
 import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
-import * as actions from '../../../store/actions/index';
 import { useSelector } from 'react-redux';
 import {
   CBadge,
@@ -15,8 +13,6 @@ import CIcon from '@coreui/icons-react';
 
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import DraftsIcon from '@material-ui/icons/Drafts';
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
-import MessageIcon from '@material-ui/icons/Message';
 // import PersonIcon from '@material-ui/icons/Person';
 // import SettingsIcon from '@material-ui/icons/Settings';
 // import PaymentIcon from '@material-ui/icons/Payment';
@@ -50,11 +46,10 @@ const useStyles = makeStyles((theme) => ({
 const AppHeaderDropdown = () => {
   const classes = useStyles();
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  const userProfileDetail = useSelector(state => state.userProfile.userProfileDetail);
   const user = useSelector(state => state.auth.user);
 
-  const dispatch = useDispatch();
 
-  const onLogout = useCallback(() => dispatch(actions.logout()), [dispatch]);
 
   return (
     <CDropdown variant="nav-item">
@@ -70,29 +65,15 @@ const AppHeaderDropdown = () => {
         <CDropdownHeader className="bg-light fw-semibold py-2">Account</CDropdownHeader>
         <CDropdownItem href="/billtesting">
           <NotificationsIcon />
-          Updates
+          Pagos
           <CBadge color="info" className="ms-2">
             42
           </CBadge>
         </CDropdownItem>
         <CDropdownItem href="#">
           <DraftsIcon />
-          Messages
+          Facturas
           <CBadge color="success" className="ms-2">
-            42
-          </CBadge>
-        </CDropdownItem>
-        <CDropdownItem href="#">
-          <AssignmentTurnedInIcon />
-          Tasks
-          <CBadge color="danger" className="ms-2">
-            42
-          </CBadge>
-        </CDropdownItem>
-        <CDropdownItem href="#">
-          <MessageIcon />
-          Comments
-          <CBadge color="warning" className="ms-2">
             42
           </CBadge>
         </CDropdownItem>
@@ -106,25 +87,11 @@ const AppHeaderDropdown = () => {
           <CIcon name="cil-settings" className="me-2" />
           Settings
         </CDropdownItem>
-        <CDropdownItem href="#">
-          <CIcon name="cil-credit-card" className="me-2" />
-          Payments
-          <CBadge color="secondary" className="ms-2">
-            42
-          </CBadge>
-        </CDropdownItem>
-        <CDropdownItem href="#">
-          <CIcon name="cil-file" className="me-2" />
-          Projects
-          <CBadge color="primary" className="ms-2">
-            42
-          </CBadge>
-        </CDropdownItem>
         {isAuthenticated
           ?
           <React.Fragment>
             <CDropdownDivider />
-            <CDropdownItem href="/logout" onClick={onLogout}>
+            <CDropdownItem href="/logout">
               <CIcon name="cil-lock-locked" className="me-2" />
               Log Out
             </CDropdownItem>

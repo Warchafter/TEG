@@ -78,10 +78,8 @@ const BillClientSubmissionForm = () => {
 
     const iconBtnStyles = useSizedIconButtonStyles({ padding: 8, childSize: 20 });
 
-    const billClientSubmissionListCount = useSelector(state => state.bill.billClientSubmissionListCount);
     const billClientSubmissionList = useSelector(state => state.bill.billClientSubmissionList);
     const userProfileDetail = useSelector(state => state.userProfile.userProfileDetail);
-
 
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -98,13 +96,20 @@ const BillClientSubmissionForm = () => {
     const emptyRows =
         rowsPerPage - Math.min(rowsPerPage, billClientSubmissionList.length - page * rowsPerPage);
 
-
-    const onFetchBillClientSubmissionList = useCallback(() => dispatch(actions.fetchBillClientSubmissionList()), [dispatch]);
+    const onFetchBillClientSubmissionList = useCallback((userId) => dispatch(actions.fetchBillClientSubmissionList(userId)), [dispatch]);
     const onSetSelectedBillClientSubmission = useCallback((data) => dispatch(actions.setSelectedBillClientSubmission(data)), [dispatch]);
     const onCreatePurchaseBill = useCallback((initialValues) => dispatch(actions.createPurchaseBill(initialValues)), [dispatch]);
 
     useEffect(() => {
-        onFetchBillClientSubmissionList();
+        if (userProfileDetail) {
+            if (userProfileDetail.roles === 'user') {
+                console.log("1");
+                onFetchBillClientSubmissionList(userProfileDetail.id);
+            } else {
+                console.log(userProfileDetail);
+                onFetchBillClientSubmissionList();
+            }
+        }
     }, []);
 
     const createPurchaseBill = (row) => {

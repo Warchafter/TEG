@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
         padding: '10px',
         border: 'none',
         borderTop: '1px dotted black'
-    },
+    },  
 }));
 
 const loading = (
@@ -47,7 +47,7 @@ const PurchaseBillCreatedCard = (props) => {
                     ?
                         <Card>
                             <div className={styles.dottedLineWrapen}>
-                                <h1>Test Title</h1>
+                                {/* <h1>{purchaseBillSelected.}</h1> */}
                             </div>
                         </Card>
                     :

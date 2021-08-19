@@ -1,6 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../../shared/utility';
 import getSidebarNavItems from '../../data/sidebar-nav-items';
+import { authUserActivation } from '../actions';
 
 const initialState = {
     menuVisible: false,
@@ -9,7 +10,8 @@ const initialState = {
     sidebarUnfoldable: false,
     sidebarShow: false,
     userProfileSelectedOption: 'title',
-    userProfileContentComponent: null
+    userProfileContentComponent: null,
+    supplierSelectedOption: 'title',
 };
 
 const toggleSidebar = (state, action) => {
@@ -43,6 +45,11 @@ const setUserProfileMainContent = (state, action) => {
     });
 };
 
+const setSupplierMainContent = (state, action) => {
+    return updateObject(state, {
+        supplierSelectedOption: action.selectedOption,
+    });
+};
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -51,6 +58,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.SET_SIDEBAR_SHOW: return setSidebarShow(state, action);
         case actionTypes.SET_SIDEBAR_UNFOLDABLE: return setSidebarUnfoldable(state, action);
         case actionTypes.SET_USER_PROFILE_MAIN_CONTENT: return setUserProfileMainContent(state, action);
+        case actionTypes.SET_SUPPLIER_MAIN_CONTENT: return setSupplierMainContent(state, action);
         default:
             return state;
     };

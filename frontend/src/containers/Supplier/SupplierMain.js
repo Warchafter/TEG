@@ -1,12 +1,14 @@
 import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+    Card,
     Grid,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 
 import * as actions from '../../store/actions/index';
+import SupplierMainOptions from '../../components/Supplier/SupplierMainOptions.js';
 import Notifier from '../../components/Notifier/Notifier';
 import CurrencyValueCard from '../../components/Cards/currencyValueCard';
 
@@ -21,13 +23,8 @@ const useStyles = makeStyles(() => ({
         },
     },
     card: {
-        border: '2px solid',
-        borderColor: 'rgba(179, 179, 189, 0.3)',
-        borderRadius: 16,
-        transition: '0.4s',
-        '&:hover': {
-            borderColor: '#5B9FED',
-        },
+        boxShadow: '0px 14px 80px rgba(34, 35, 58, 0.2)',
+        padding: '10px'
     },
     FBCard: {
         width: '100%'
@@ -36,11 +33,7 @@ const useStyles = makeStyles(() => ({
 
 export const SupplierMain = () => {
     const dispatch = useDispatch();
-    const classes = useStyles();
-
-    if (false) {
-        console.log(classes);
-    }
+    const styles = useStyles();
 
     const isLoadingExRate = useSelector(state => state.bill.loadingExRates);
     const ExRateDataLoaded = useSelector(state => state.bill.ExRateDataLoaded);
@@ -56,12 +49,17 @@ export const SupplierMain = () => {
     return (
         <React.Fragment>
             <Notifier />
-            <Grid container spacing={4}>
-                {/* <Grid item xs={4}><Paper className={classes.paper}><Typography>Proveedores</Typography></Paper></Grid> */}
+            <Grid container spacing={3}>
+                <Grid item xs={3}>
+                    <Grid item xs={12}>
+                            <Card className={styles.card}>
+                                <SupplierMainOptions className={styles.mainOptions}/>
+                            </Card>
+                    </Grid>
+                </Grid>
                 <Grid item xs={4}>
                     <CurrencyValueCard exchangeRates={exchangeRates} loading={isLoadingExRate} ExRateDataLoaded={ExRateDataLoaded} />
                 </Grid>
-                {/* <Grid item xs={8}><ShowcaseCardDemo className={classes.FBCard}></ShowcaseCardDemo></Grid> */}
             </Grid>
         </React.Fragment>
     )

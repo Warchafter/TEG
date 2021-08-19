@@ -162,7 +162,7 @@ export function* authCheckStateSaga(action) {
             yield put(actions.authFail(error.response.data.detail));
         }
     } else {
-        yield put(actions.logout());
+        // yield put(actions.logout());
         yield put(actions.authUserLoadedFail());
     }
 };
