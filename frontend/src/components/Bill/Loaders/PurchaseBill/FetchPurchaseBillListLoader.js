@@ -56,7 +56,6 @@ const useStyles = makeStyles((theme) => ({
 
 const FetchPurchaseBillListLoader = (props) => {
     const classes = useStyles();
-
     const dispatch = useDispatch();
 
     const [page, setPage] = React.useState(0);

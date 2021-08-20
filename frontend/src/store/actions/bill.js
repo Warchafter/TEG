@@ -309,10 +309,9 @@ export const fetchPurchaseBill = (data) => {
     };
 };
 
-export const fetchPurchaseBillStart = (purchaseBillSelected) => {
+export const fetchPurchaseBillStart = () => {
     return {
-        type: actionTypes.FETCH_PURCHASE_BILL_START,
-        purchaseBillSelected: purchaseBillSelected
+        type: actionTypes.FETCH_PURCHASE_BILL_START
     };
 };
 
@@ -353,6 +352,42 @@ export const fetchPurchaseBillListFail = (error) => {
     return {
         type: actionTypes.FETCH_PURCHASE_BILL_LIST_FAIL,
         error: error
+    };
+};
+
+export const fetchBillDetailListFiltered = (data) => {
+    return {
+        type: actionTypes.FETCH_BILL_DETAIL_LIST_FILTERED,
+        data: data
+    };
+};
+
+export const fetchBillDetailListFilteredStart = () => {
+    return {
+        type: actionTypes.FETCH_BILL_DETAIL_LIST_FILTERED_START
+    };
+};
+
+export const fetchBillDetailListFilteredSuccess = (billDetailListFiltered) => {
+    return {
+        type: actionTypes.FETCH_BILL_DETAIL_LIST_FILTERED_SUCCESS,
+        billDetailListFiltered: billDetailListFiltered
+    };
+};
+
+export const fetchBillDetailListFilteredFail = (error) => {
+    return {
+        type: actionTypes.FETCH_BILL_DETAIL_LIST_FILTERED_FAIL,
+        error: error
+    };
+};
+
+
+
+export const setPurchaseBillToModify = (data) => {
+    return {
+        type: actionTypes.SET_PURCHASE_BILL_TO_MODIFY,
+        data: data
     };
 };
 

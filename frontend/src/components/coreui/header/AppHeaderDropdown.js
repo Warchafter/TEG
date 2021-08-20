@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import {
   CBadge,
@@ -46,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
 const AppHeaderDropdown = () => {
   const classes = useStyles();
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
-  const userProfileDetail = useSelector(state => state.userProfile.userProfileDetail);
   const user = useSelector(state => state.auth.user);
 
 
@@ -78,7 +77,6 @@ const AppHeaderDropdown = () => {
           </CBadge>
         </CDropdownItem>
         <CDropdownHeader className="bg-light fw-semibold py-2">Settings</CDropdownHeader>
-        {/* <CDropdownItem href="/suppliers" onClick={() => {onSetRedirectPath('/suppliers')}}> */}
         <CDropdownItem href="/user-profile" >
           <CIcon name="cil-user" className="me-2" />
           Profile

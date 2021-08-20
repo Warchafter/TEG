@@ -15,18 +15,12 @@ const useStyles = makeStyles((theme) => ({
     card: {
 
     },
-    dottedLineWrapen: {
+    dotterLineWrapper: {
         padding: '10px',
         border: 'none',
         borderTop: '1px dotted black'
-    },  
+    },
 }));
-
-const loading = (
-    <div className="pt-3 text-center">
-        <div className="sk-spinner sk-spinner-pulse"></div>
-    </div>
-)
 
 const PurchaseBillCreatedCard = (props) => {
     const dispatch = useDispatch();
@@ -38,20 +32,22 @@ const PurchaseBillCreatedCard = (props) => {
 
     useEffect(() => {
         onFetchPurchaseBill(props.purchaseBillCreated.id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.purchaseBillCreated.id,])
+
+    console.log(purchaseBillSelected);
 
     return (
         <div className={styles.root}>
             {
-                purchaseBillSelected.length !== 0
-                    ?
-                        <Card>
-                            <div className={styles.dottedLineWrapen}>
-                                {/* <h1>{purchaseBillSelected.}</h1> */}
-                            </div>
-                        </Card>
-                    :
-                    {loading}
+                purchaseBillSelected ?
+                    <Card>
+                        <div className={styles.dotterLineWrapper}>
+                            <h1>{purchaseBillSelected.id}</h1>
+                        </div>
+                    </Card>
+                :
+                null
             }
         </div>
     );

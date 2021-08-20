@@ -126,6 +126,10 @@ class ProductViewSet(viewsets.ModelViewSet):
         queryset = self.queryset
         is_staff = self.request.user.is_staff
 
+        if status:
+            queryset = queryset.filter(
+                status__iexact=status
+            ).order_by('id')
         if brand and status:
             brand_ids = self._params_to_ints(brand)
             queryset = queryset.filter(

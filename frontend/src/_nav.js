@@ -18,6 +18,88 @@ export const _nav1 = [
   },
   {
     _component: 'CNavTitle',
+    anchor: 'Facturas',
+  },
+  {
+    _component: 'CNavGroup',
+    as: NavLink,
+    anchor: 'Cotizaciones',
+    to: '/to',
+    icon: <CIcon content={freeSet.cilFile} customClasses="nav-icon"/>,
+    items: [
+      {
+        _component: 'CNavItem',
+        as: NavLink,
+        anchor: 'Solicitudes de Cotización',
+        to: '/bill-client-submission-history',
+      },
+    ],
+  },
+  {
+    _component: 'CNavGroup',
+    as: NavLink,
+    anchor: 'Facturas',
+    to: '/to',
+    icon: <CIcon content={freeSet.cilDescription} customClasses="nav-icon"/>,
+    items: [
+      {
+        _component: 'CNavItem',
+        as: NavLink,
+        anchor: 'Facturas por Procesar',
+        to: '/purchase-bill-pending',
+      },
+      {
+        _component: 'CNavItem',
+        as: NavLink,
+        anchor: 'Modificar Factura',
+        to: '/purchase-bill-modify',
+      },
+    ],
+  },
+  {
+    _component: 'CNavGroup',
+    as: NavLink,
+    anchor: 'Pagos',
+    to: '/to',
+    icon: <CIcon content={freeSet.cilCreditCard} customClasses="nav-icon"/>,
+    items: [
+      {
+        _component: 'CNavItem',
+      as: NavLink,
+      anchor: 'Pagos Facturas',
+      to: '/bill-payments',
+      },
+      {
+        _component: 'CNavItem',
+        as: NavLink,
+        anchor: 'Pagos Por Procesar',
+        to: '/demo2',
+      },
+    ],
+  },
+  {
+    _component: 'CNavGroup',
+    as: NavLink,
+    anchor: 'Entregas',
+    to: '/to',
+    icon: <CIcon content={freeSet.cilShareBoxed} customClasses="nav-icon"/>,
+    items: [
+      {
+        _component: 'CNavItem',
+        as: NavLink,
+        anchor: 'Histórico Entregas',
+        to: '/demo2',
+      },
+      {
+        _component: 'CNavItem',
+      as: NavLink,
+      anchor: 'Entregas Pendientes',
+      to: '/bill-payments',
+    },
+    ],
+  },
+  {
+    _component: 'CNavTitle',
     anchor: 'Productos',
   },
   {
@@ -32,52 +114,11 @@ export const _nav1 = [
     icon: <CIcon content={freeSet.cilTruck} customClasses="nav-icon"/>,
   },
   {
-    _component: 'CNavTitle',
-    anchor: 'Facturas',
-  },
-  {
-    _component: 'CNavGroup',
-    as: NavLink,
-    anchor: 'Facturas',
-    to: '/to',
-    icon: <CIcon content={freeSet.cilDescription} customClasses="nav-icon"/>,
-    items: [
-      {
-        _component: 'CNavItem',
-        as: NavLink,
-        anchor: 'Pagos Facturas',
-        to: '/bill-payments',
-      },
-    ],
-  },
-  {
-    _component: 'CNavItem',
-    as: NavLink,
-    anchor: 'Solicitudes de Cotización',
-    to: '/bill-client-submission-history',
-    icon: <CIcon content={freeSet.cilListRich} customClasses="nav-icon"/>,
-  },
-  {
     _component: 'CNavItem',
     as: NavLink,
     anchor: 'Pruebas Facturas',
     to: '/billtesting',
-    icon: <CIcon content={freeSet.cilControl} customClasses="nav-icon"/>,
-  },
-  {
-    _component: 'CNavGroup',
-    as: NavLink,
-    anchor: 'Pagos',
-    to: '/to',
     icon: <CIcon content={freeSet.cilPuzzle} customClasses="nav-icon"/>,
-    items: [
-      {
-        _component: 'CNavItem',
-        as: NavLink,
-        anchor: 'Pagos Por Procesar',
-        to: '/demo2',
-      },
-    ],
   },
   {
     _component: 'CNavTitle',

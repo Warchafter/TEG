@@ -18,6 +18,27 @@ const AppFooter = () => {
             <CIcon content={brandSet.cibMaterialDesign}/>
           </Grid>
           <Grid item>
+            <CIcon content={brandSet.cibReact}/>
+          </Grid>
+          <Grid item>
+            <CIcon content={brandSet.cibRedux}/>
+          </Grid>
+          <Grid item>
+            <CIcon content={brandSet.cibPython}/>
+          </Grid>
+          <Grid item>
+            <CIcon content={brandSet.cibDjango}/>
+          </Grid>
+          <Grid item>
+            <CIcon content={brandSet.cibPostgresql}/>
+          </Grid>
+          <Grid item>
+            <CIcon content={brandSet.cibDocker}/>
+          </Grid>
+          <Grid item>
+            <CIcon content={brandSet.cibUbuntu}/>
+          </Grid>
+          <Grid item>
             <span className="ms-1">&copy; 2021 IH Insumos Hospitalarios.</span>
           </Grid>
         </Grid>

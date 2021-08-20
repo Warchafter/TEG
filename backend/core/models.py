@@ -568,7 +568,8 @@ class BillDetail(models.Model):
         on_delete=models.DO_NOTHING
     )
     product = models.ForeignKey(SupplierProducts, on_delete=models.DO_NOTHING)
-    quantity = models.IntegerField()
+    quantity = models.IntegerField(blank=False, null=False)
+    price = models.FloatField(blank=False, null=False)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.DO_NOTHING

@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom'
 import * as actions from './store/actions/index';
 import { withStyles } from '@material-ui/core/styles';
 import 'react-image-lightbox/style.css';
@@ -56,8 +56,8 @@ const loading = (
 const App = props => {
     const dispatch = useDispatch();
 
-    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
     const isAuthFuncLoaded = useSelector(state => state.auth.isAuthFuncLoaded);
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
     const onTryAutoSignup = useCallback(() => dispatch(actions.authCheckState()), [dispatch]);
 
@@ -67,6 +67,7 @@ const App = props => {
         // onUserHasData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAuthFuncLoaded]);
+
 
     return (
         <div>

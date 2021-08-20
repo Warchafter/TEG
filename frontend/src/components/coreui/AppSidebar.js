@@ -33,6 +33,7 @@ const AppSidebar = () => {
 
   useEffect(() => {
     onFetchUserProfileDetail()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

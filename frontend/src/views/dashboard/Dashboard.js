@@ -1,26 +1,26 @@
 import React, { lazy } from 'react'
 
 import {
-  CAvatar,
-  CButton,
-  CButtonGroup,
+  // CAvatar,
+  // CButton,
+  // CButtonGroup,
   CCard,
   CCardBody,
   CCardFooter,
-  CCardHeader,
+  // CCardHeader,
   CCol,
   CProgress,
   CRow,
-  CTable,
-  CTableBody,
-  CTableDataCell,
-  CTableHead,
-  CTableHeaderCell,
-  CTableRow,
+  // CTable,
+  // CTableBody,
+  // CTableDataCell,
+  // CTableHead,
+  // CTableHeaderCell,
+  // CTableRow,
 } from '@coreui/react'
 import { CChartLine } from '@coreui/react-chartjs'
 import { getStyle, hexToRgba } from '@coreui/utils'
-import CIcon from '@coreui/icons-react'
+// import CIcon from '@coreui/icons-react'
 
 const WidgetsDropdown = lazy(() => import('../components/widgets/WidgetsDropdown.js'))
 const WidgetsBrand = lazy(() => import('../components/widgets/WidgetsBrand.js'))

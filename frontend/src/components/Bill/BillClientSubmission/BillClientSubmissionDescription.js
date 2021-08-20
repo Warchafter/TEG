@@ -55,7 +55,7 @@ const BillClientSubmissionDescription = (props) => {
         return (
         <div className={styles.root}>
             <Card className={styles.scrollCardMenu}>
-                <Grid container spacing={3} xs={12}  className={styles.GridHeader}>
+                <Grid container spacing={3} className={styles.GridHeader}>
                     <Grid item xs={12}>
                         <TableContainer component={styles.tableContainer}>
                             <Table size="small" aria-label="a dense table">

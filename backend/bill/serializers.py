@@ -116,7 +116,7 @@ class BillDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BillDetail
-        fields = ('id', 'purchase_bill', 'product', 'quantity')
+        fields = ('id', 'purchase_bill', 'product', 'quantity', 'price')
         read_only_fields = ('id',)
 
 

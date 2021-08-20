@@ -22,11 +22,15 @@ const initialState = {
     purchaseBillCreated: [],
     purchaseBillSelected: [],
     purchaseBillModifiedId: null,
+    purchaseBillToModify: null,
     billDetailData: [],
     billDetailSelected: [],
     billDetailListCount: [],
     billDetailListPag: [],
     billDetailList: [],
+    billDetailListFilteredCount: [],
+    billDetailListFilteredPag: [],
+    billDetailListFiltered: [],
     billDetailId: [],
     billDetailCreated: [],
     billDetailSelectedId: null,
@@ -185,24 +189,24 @@ const fetchBillClientSubmissionListFail = (state, action) => {
     return updateObject(state, { error: action.error, loadingBillClientSubmissionHistoryList: false });
 };
 
-const fetchBillClientSubmissionListFilteredStart = (state, action) => {
-    return updateObject(state, { error: null, loadingBillClientSubmissionHistoryList: true });
-};
+// const fetchBillClientSubmissionListFilteredStart = (state, action) => {
+//     return updateObject(state, { error: null, loadingBillClientSubmissionHistoryList: true });
+// };
 
-const fetchBillClientSubmissionListFilteredSuccess = (state, action) => {
-    const updatedState = {
-        billClientSubmissionListFilteredCount: action.billClientSubmissionListFilteredData.count,
-        billClientSubmissionListFilteredPag: action.billClientSubmissionListFilteredData.links,
-        billClientSubmissionListFiltered: action.billClientSubmissionListFilteredData.results,
-        error: null,
-        loadingBillClientSubmissionHistoryList: false
-    };
-    return updateObject(state, updatedState);
-};
+// const fetchBillClientSubmissionListFilteredSuccess = (state, action) => {
+//     const updatedState = {
+//         billClientSubmissionListFilteredCount: action.billClientSubmissionListFilteredData.count,
+//         billClientSubmissionListFilteredPag: action.billClientSubmissionListFilteredData.links,
+//         billClientSubmissionListFiltered: action.billClientSubmissionListFilteredData.results,
+//         error: null,
+//         loadingBillClientSubmissionHistoryList: false
+//     };
+//     return updateObject(state, updatedState);
+// };
 
-const fetchBillClientSubmissionListFilteredFail = (state, action) => {
-    return updateObject(state, { error: action.error, loadingBillClientSubmissionHistoryList: false });
-};
+// const fetchBillClientSubmissionListFilteredFail = (state, action) => {
+//     return updateObject(state, { error: action.error, loadingBillClientSubmissionHistoryList: false });
+// };
 
 const setSelectedBillClientSubmission = (state, action) => {
     console.log(action)
@@ -252,11 +256,12 @@ const modifyPurchaseBillFail = (state, action) => {
 
 const fetchPurchaseBillStart = (state, action) => {
     return updateObject(state, { error: null, loading: true });
-}
+};
 
 const fetchPurchaseBillSuccess = (state, action) => {
+    console.log("Action", action)
     const updatedState = {
-        purchaseBillSelected: action.purchaseBillSelected,
+        purchaseBillSelected: action.purchaseBillData,
         error: null,
         loading: false
     };
@@ -285,6 +290,10 @@ const fetchPurchaseBillListSuccess = (state, action) => {
 const fetchPurchaseBillListFail = (state, action) => {
     return updateObject(state, { error: action.error, loading: false });
 };
+
+const setPurchaseBillToModify = (state, action) => {
+    return updateObject(state, { purchaseBillToModify: action.data });
+}
 
 const createBillDetailStart = (state, action) => {
     return updateObject(state, { error: null, loading: true });
@@ -374,6 +383,25 @@ const fetchBillDetailListSuccess = (state, action) => {
 };
 
 const fetchBillDetailListFail = (state, action) => {
+    return updateObject(state, { error: action.error, loading: false });
+};
+
+const fetchBillDetailListFilteredStart = (state, action) => {
+    return updateObject(state, { error: null, loading: true });
+};
+
+const fetchBillDetailListFilteredSuccess = (state, action) => {
+    const updatedState = {
+        billDetailListFilteredCount: action.billDetailListFiltered.count,
+        billDetailListFilteredPag: action.billDetailListFiltered.links,
+        billDetailListFiltered: action.billDetailListFiltered.results,
+        error: null,
+        loading: false
+    };
+    return updateObject(state, updatedState);
+};
+
+const fetchBillDetailListFilteredFail = (state, action) => {
     return updateObject(state, { error: action.error, loading: false });
 };
 
@@ -614,6 +642,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_PURCHASE_BILL_LIST_START: return fetchPurchaseBillListStart(state, action);
         case actionTypes.FETCH_PURCHASE_BILL_LIST_SUCCESS: return fetchPurchaseBillListSuccess(state, action);
         case actionTypes.FETCH_PURCHASE_BILL_LIST_FAIL: return fetchPurchaseBillListFail(state, action);
+        case actionTypes.SET_PURCHASE_BILL_TO_MODIFY: return setPurchaseBillToModify(state, action);
         case actionTypes.CREATE_BILL_DETAIL_START: return createBillDetailStart(state, action);
         case actionTypes.CREATE_BILL_DETAIL_SUCCESS: return createBillDetailSuccess(state, action);
         case actionTypes.CREATE_BILL_DETAIL_FAIL: return createBillDetailFail(state, action);
@@ -629,6 +658,9 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_BILL_DETAIL_LIST_START: return fetchBillDetailListStart(state, action);
         case actionTypes.FETCH_BILL_DETAIL_LIST_SUCCESS: return fetchBillDetailListSuccess(state, action);
         case actionTypes.FETCH_BILL_DETAIL_LIST_FAIL: return fetchBillDetailListFail(state, action);
+        case actionTypes.FETCH_BILL_DETAIL_LIST_FILTERED_START: return fetchBillDetailListFilteredStart(state, action);
+        case actionTypes.FETCH_BILL_DETAIL_LIST_FILTERED_SUCCESS: return fetchBillDetailListFilteredSuccess(state, action);
+        case actionTypes.FETCH_BILL_DETAIL_LIST_FILTERED_FAIL: return fetchBillDetailListFilteredFail(state, action);
         case actionTypes.CREATE_BILL_PRODUCT_CHARACTERISTIC_START: return createBillProductCharacteristicStart(state, action);
         case actionTypes.CREATE_BILL_PRODUCT_CHARACTERISTIC_SUCCESS: return createBillProductCharacteristicSuccess(state, action);
         case actionTypes.CREATE_BILL_PRODUCT_CHARACTERISTIC_FAIL: return createBillProductCharacteristicFail(state, action);

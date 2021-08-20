@@ -1,5 +1,5 @@
 import React from 'react';
-import Products from './components/Products/ProductsList/ProductsList';
+
 import DefaultLayout from './hoc/Layout/DefaultLayout';
 
 // Layout Types
@@ -24,6 +24,9 @@ const Loaders = React.lazy(() => { return import('./containers/Products/Loaders/
 const Bill = React.lazy(() => { return import('./containers/Bill/Bill') });
 const BillClientSubmission = React.lazy(() => { return import('./containers/Bill/BillClientSubmission/BillClientSubmission') });
 const BillClientSubmissionHistory = React.lazy(() => { return import('./containers/Bill/BillClientSubmission/BillClientSubmissionHistory') });
+const PurchaseBillList = React.lazy(() => { return import('./components/Bill/PurchaseBill/PurchaseBillList') });
+const PurchaseBillModifier = React.lazy(() => {return import('./containers/Bill/PurchaseBill/PurchaseBillModifier')})
+
 
 // Supplier
 
@@ -157,13 +160,6 @@ let routes = [
         name: "Log Out",
         component: Logout,
         isPrivate: true
-    },
-    {
-        path: '/products',
-        layout: Layout,
-        name: "Products",
-        component: Products,
-        isPrivate: false
     },
     {
         path: '/loaders',
@@ -326,6 +322,22 @@ let routes = [
         name: "Gráficas de Apex Charts",
         component: ApexCharts,
         isPrivate: true
+    },
+    {
+        path: '/purchase-bill-modify',
+        layout: DefaultLayout,
+        name: "Facturas por Procesar",
+        component: PurchaseBillModifier,
+        isPrivate: true,
+        exact: true
+    },
+    {
+        path: '/purchase-bill-pending',
+        layout: DefaultLayout,
+        name: "Facturas por Procesar",
+        component: PurchaseBillList,
+        isPrivate: true,
+        exact: true
     },
     { path: '/dashboard', name: 'Dashboard', component: Dashboard, layout: DefaultLayout, isPrivate: true },
     // { path: '/theme', name: 'Theme', component: Colors, exact: true, layout: DefaultLayout },

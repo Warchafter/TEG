@@ -27,8 +27,12 @@ import {
 
 import {
     createCharTypeSaga,
+    createProductSaga,
     fetchBrandsSaga,
-    fetchCharTypesSaga
+    fetchCharTypesSaga,
+    fetchProductListFilteredSaga,
+    fetchProductListSaga,
+    modifyProductSaga
 } from './product';
 
 import {
@@ -62,6 +66,7 @@ import {
     deleteBillDetailSaga,
     fetchBillDetailSaga,
     fetchBillDetailListSaga,
+    fetchBillDetailListFilteredSaga,
     createBillProductCharacteristicSaga,
     modifyBillProductCharacteristicSaga,
     deleteBillProductCharacteristicSaga,
@@ -81,7 +86,6 @@ import {
 
 import {
     setMainContentTestingSaga,
-    setUserProfileMainContentSaga,
     toggleSidebarSaga,
 } from './interface';
 
@@ -116,6 +120,10 @@ export function* watchProduct() {
         takeLatest(actionTypes.CREATE_CHAR_TYPE, createCharTypeSaga),
         takeEvery(actionTypes.FETCH_CHAR_TYPES, fetchCharTypesSaga),
         takeEvery(actionTypes.FETCH_BRANDS, fetchBrandsSaga),
+        takeLatest(actionTypes.CREATE_PRODUCT, createProductSaga),
+        takeLatest(actionTypes.MODIFY_PRODUCT, modifyProductSaga),
+        takeEvery(actionTypes.FETCH_PRODUCT_LIST, fetchProductListSaga),
+        takeEvery(actionTypes.FETCH_PRODUCT_LIST_FILTERED, fetchProductListFilteredSaga),
     ]);
 };
 
@@ -153,6 +161,7 @@ export function* watchBill() {
         takeLatest(actionTypes.DELETE_BILL_DETAIL, deleteBillDetailSaga),
         takeEvery(actionTypes.FETCH_BILL_DETAIL, fetchBillDetailSaga),
         takeEvery(actionTypes.FETCH_BILL_DETAIL_LIST, fetchBillDetailListSaga),
+        takeEvery(actionTypes.FETCH_BILL_DETAIL_LIST_FILTERED, fetchBillDetailListFilteredSaga),
         takeLatest(actionTypes.CREATE_BILL_PRODUCT_CHARACTERISTIC, createBillProductCharacteristicSaga),
         takeEvery(actionTypes.MODIFY_BILL_PRODUCT_CHARACTERISTIC, modifyBillProductCharacteristicSaga),
         takeLatest(actionTypes.DELETE_BILL_PRODUCT_CHARACTERISTIC, deleteBillProductCharacteristicSaga),

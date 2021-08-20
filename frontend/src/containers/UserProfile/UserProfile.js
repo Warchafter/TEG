@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -7,7 +6,6 @@ import {
     Card,
 } from '@material-ui/core';
 
-import * as actions from '../../store/actions/index';
 import MainOptions from '../../components/UserProfile/MainOptions.js';
 import SecondaryOptions from '../../components/UserProfile/SecondaryOptions';
 import MainContent from '../../components/UserProfile/MainContent';
@@ -30,26 +28,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const UserProfile = () => {
-    const dispatch = useDispatch();
     const styles = useStyles();
 
-    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
-    const user = useSelector(state => state.auth.user);
-    const userProfileDetail = useSelector(state => state.userProfile.userProfileDetail);
-
-    // const onFetchUserProfileDetail = useCallback((user) => dispatch(actions.fetchUserProfileDetail(user)), [dispatch]);
-
-    // const fetchUserProfileDetail = useCallback((isAuthenticated, user) => {
-    //     if (true) {
-    //         onFetchUserProfileDetail(user);
-    //     } else {
-    //         return null
-    //     }
-    // }, [onFetchUserProfileDetail]);
-
-    // useEffect(() => {
-    //     fetchUserProfileDetail(user.id);
-    // }, [fetchUserProfileDetail, user.id])
 
     // A Interface store has to be created in order to keep track of whichever options we're choosing.
     // An action has to be dispatch, storing both the component that need to be rendered, and the title of said component
@@ -83,7 +63,6 @@ const UserProfile = () => {
                     </Grid>
                 </Grid>
             </Grid>
-            {/* <button onClick={showUserProfileData}>log user profile data</button> */}
         </div>
     )
 };

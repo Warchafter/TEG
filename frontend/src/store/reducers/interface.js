@@ -1,7 +1,6 @@
 import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../../shared/utility';
 import getSidebarNavItems from '../../data/sidebar-nav-items';
-import { authUserActivation } from '../actions';
 
 const initialState = {
     menuVisible: false,

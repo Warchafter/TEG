@@ -110,6 +110,7 @@ const BillClientSubmissionForm = () => {
                 onFetchBillClientSubmissionList();
             }
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const createPurchaseBill = (row) => {
@@ -167,27 +168,27 @@ const BillClientSubmissionForm = () => {
                                         {billClientSubmissionList
                                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                             .map((row) => (
-                                            <TableRow key={row.id}>
-                                                <TableCell>
-                                                    <Typography
-                                                        className={styles.status}
-                                                    ># {row.id}</Typography>
-                                                </TableCell>
-                                                <TableCell>
-                                                    <Typography className={styles.name}>A nombre de:</Typography>
-                                                    <Typography className={styles.subName}>{row.bill_name_receiver}</Typography>
-                                                </TableCell>
-                                                <TableCell>
-                                                    <Item position={'right'} mr={-0.5} onClick={() => onSetSelectedBillClientSubmission(row)} >
-                                                        <StyledTooltip title={'Ver Detalle'}>
-                                                            <IconButton classes={iconBtnStyles}>
-                                                                <PageviewIcon />
-                                                            </IconButton>
-                                                        </StyledTooltip>
-                                                    </Item>
-                                                    {canAddPuchaseBill(row)}
-                                                </TableCell>
-                                            </TableRow>
+                                                <TableRow key={row.id}>
+                                                    <TableCell>
+                                                        <Typography
+                                                            className={styles.status}
+                                                        ># {row.id}</Typography>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <Typography className={styles.name}>A nombre de:</Typography>
+                                                        <Typography className={styles.subName}>{row.bill_name_receiver}</Typography>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <Item position={'right'} mr={-0.5} onClick={() => onSetSelectedBillClientSubmission(row)} >
+                                                            <StyledTooltip title={'Ver Detalle'}>
+                                                                <IconButton classes={iconBtnStyles}>
+                                                                    <PageviewIcon />
+                                                                </IconButton>
+                                                            </StyledTooltip>
+                                                        </Item>
+                                                        {canAddPuchaseBill(row)}
+                                                    </TableCell>
+                                                </TableRow>
                                         ))}
                                         {emptyRows > 0 && (
                                             <TableRow style={{ height: 53 * emptyRows }}>

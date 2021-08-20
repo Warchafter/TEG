@@ -70,3 +70,87 @@ export function* fetchBrandsSaga(action) {
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer las marcas', 'error')));
     };
 };
+
+export function* createProductSaga(action) {
+    yield put(actions.createProductStart());
+    const access = yield localStorage.getItem('access');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': access ? `JWT ${access}` : null,
+            'Accept': 'application/json'
+        }
+    };
+    const body = JSON.stringify(action.data);
+    const url = '/product/products/';
+    try {
+        let response = yield axios.post(url, body, config);
+        yield put(actions.createProductSuccess(response.data));
+        yield put(actions.enqueueSnackbar(getSnackbarData('El producto fue creado exitosamente', 'success')));
+    } catch (error) {
+        yield put(actions.createProductFail(error));
+        yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo crear el product', 'error')));
+    };
+};
+
+export function* modifyProductSaga(action) {
+    yield put(actions.modifyProductStart());
+    const access = yield localStorage.getItem('access');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': access ? `JWT ${access}` : null,
+            'Accept': 'application/json'
+        }
+    };
+    const body = JSON.stringify(action.data);
+    const url = `/product/products/${action.data.id}`;
+    try {
+        let response = yield axios.put(url, body, config);
+        yield put(actions.modifyProductSuccess(response.data));
+        yield put(actions.enqueueSnackbar(getSnackbarData(`El producto: ${action.data.name} fue modificado`, 'success')));
+    } catch (error) {
+        yield put(actions.modifyProductFail(error));
+        yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo modificar el producto', 'error')));
+    };
+};
+
+export function* fetchProductListSaga(action) {
+    yield put(actions.fetchProductListStart());
+    const access = yield localStorage.getItem('access');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': access ? `JWT ${access}` : null,
+            'Accept': 'application/json'
+        }
+    };
+    const url = '/product/products/';
+    try {
+        let response = yield axios.get(url, config);
+        yield put(actions.fetchProductListSuccess(response.data));
+    } catch (error) {
+        yield put(actions.fetchProductListFail(error));
+        yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer el listado de productos', 'error')));
+    };
+};
+
+export function* fetchProductListFilteredSaga(action) {
+    yield put(actions.fetchProductListFilteredStart());
+    const access = yield localStorage.getItem('access');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': access ? `JWT ${access}` : null,
+            'Accept': 'application/json'
+        }
+    };
+    const url = `/product/products/?status=publicado`;
+    try {
+        let response = yield axios.get(url, config);
+        yield put(actions.fetchProductListFilteredSuccess(response.data));
+    } catch (error) {
+        yield put(actions.fetchProductListFilteredFail(error));
+        yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer el listado de productos publicados', 'error')));
+    };
+};
