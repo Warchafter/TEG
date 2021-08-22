@@ -138,7 +138,7 @@ class BillProductCharacteristicsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BillProductCharacteristics
-        fields = ('id', 'characteristic_sel', 'bill_detail', 'user')
+        fields = ('id', 'characteristic_sel', 'bill_detail')
         read_only_fields = ('id',)
 
 

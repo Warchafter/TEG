@@ -20,6 +20,8 @@ import {
     Tooltip,
 } from '@material-ui/core';
 import PageviewIcon from '@material-ui/icons/Pageview';
+import EditIcon from '@material-ui/icons/Edit';
+import PaymentIcon from '@material-ui/icons/Payment';
 import { Item } from '@mui-treasury/components/flex';
 import { useSizedIconButtonStyles } from '@mui-treasury/styles/iconButton/sized';
 
@@ -94,10 +96,14 @@ const PurchaseBillList = () => {
     // Supplier Product ID
     // Quantity
 
+    const userProfileDetail = useSelector(state => state.userProfile.userProfileDetail);
     const purchaseBillList = useSelector(state => state.bill.purchaseBillList);
+    const billClientSubmissionSelected = useSelector(state => state.bill.billClientSubmissionSelected);
 
-    const onFetchPurchaseBillList = useCallback(() => dispatch(actions.fetchPurchaseBillList()), [dispatch]);
+    const onFetchPurchaseBillList = useCallback((data) => dispatch(actions.fetchPurchaseBillList(data)), [dispatch]);
     const onSetPurchaseBillToModify = useCallback((data) => dispatch(actions.setPurchaseBillToModify(data)), [dispatch]);
+    const onSetPurchaseBillToInspect = useCallback((data) => dispatch(actions.setPurchaseBillToInspect(data)), [dispatch]);
+    const onSetPurchaseBillToModifyPayment = useCallback((data) => dispatch(actions.setPurchaseBillToModifyPayment(data)), [dispatch]);
 
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -115,8 +121,32 @@ const PurchaseBillList = () => {
         rowsPerPage - Math.min(rowsPerPage, purchaseBillList.length - page * rowsPerPage);
 
     useEffect(() => {
-        onFetchPurchaseBillList();
-    }, [onFetchPurchaseBillList]);
+        if (userProfileDetail.roles === 'user') {
+            if (billClientSubmissionSelected) {
+                onFetchPurchaseBillList(billClientSubmissionSelected);
+            }
+        } else {
+            if (billClientSubmissionSelected) {
+                onFetchPurchaseBillList(billClientSubmissionSelected);
+            } else {
+                onFetchPurchaseBillList();
+            }
+        }
+    }, [onFetchPurchaseBillList, billClientSubmissionSelected]);
+
+    const canModifyPurchaseBillHandler = (row) => {
+        if (userProfileDetail.roles === 'empleado') {
+            return (
+                <Item position={'right'} mr={-0.5} onClick={() => onSetPurchaseBillToModify(row)} >
+                    <StyledTooltip title={'Ver Detalle'}>
+                        <IconButton>
+                            <EditIcon fontSize="large" />
+                        </IconButton>
+                    </StyledTooltip>
+                </Item>
+            );
+        };
+    };
 
     return (
         <div className={styles.root}>
@@ -198,10 +228,20 @@ const PurchaseBillList = () => {
                                                             >{row.payment_status.name}</Typography>
                                                         </TableCell>
                                                         <TableCell>
-                                                            <Item position={'right'} mr={-0.5} onClick={() => onSetPurchaseBillToModify(row)} >
+                                                            {
+                                                                canModifyPurchaseBillHandler(row)
+                                                            }
+                                                            <Item position={'right'} mr={-0.5} onClick={() => onSetPurchaseBillToInspect(row)} >
                                                                 <StyledTooltip title={'Ver Detalle'}>
                                                                     <IconButton>
                                                                         <PageviewIcon fontSize="large" />
+                                                                    </IconButton>
+                                                                </StyledTooltip>
+                                                            </Item>
+                                                            <Item position={'right'} mr={-0.5} onClick={() => onSetPurchaseBillToModifyPayment(row)} >
+                                                                <StyledTooltip title={'Cargar Pago'}>
+                                                                    <IconButton>
+                                                                        <PaymentIcon fontSize="large" />
                                                                     </IconButton>
                                                                 </StyledTooltip>
                                                             </Item>

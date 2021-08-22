@@ -62,8 +62,7 @@ export const SupplierMain = () => {
                 </Grid>
             </Grid>
         </React.Fragment>
-    )
-
+    );
 };
 
 export default SupplierMain;

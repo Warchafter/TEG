@@ -12,6 +12,7 @@ const initialState = {
     supplierProductCreatedId: null,
     supplierProductSelected: null,
     supplierProductModifiedId: null,
+    supplierRIFSelected: null,
     error: null,
     loading: false
 };
@@ -185,6 +186,10 @@ const fetchSupplierProductListFail = (state, action) => {
     return updateObject(state, { error: action.error, loading: false });
 };
 
+const setSupplierRIFSelected = (state, action) => {
+    return updateObject(state, { supplierRIFSelected: action.data });
+};
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.CREATE_SUPPLIER_START: return createSupplierStart(state, action);
@@ -217,6 +222,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_SUPPLIER_PRODUCT_LIST_START: return fetchSupplierProductListStart(state, action);
         case actionTypes.FETCH_SUPPLIER_PRODUCT_LIST_SUCCESS: return fetchSupplierProductListSuccess(state, action);
         case actionTypes.FETCH_SUPPLIER_PRODUCT_LIST_FAIL: return fetchSupplierProductListFail(state, action);
+        case actionTypes.SET_SUPPLIER_RIF_SELECTED: return setSupplierRIFSelected(state, action);
         default: return state;
     };
 };

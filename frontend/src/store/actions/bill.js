@@ -329,9 +329,10 @@ export const fetchPurchaseBillFail = (error) => {
     };
 };
 
-export const fetchPurchaseBillList = () => {
+export const fetchPurchaseBillList = (data) => {
     return {
-        type: actionTypes.FETCH_PURCHASE_BILL_LIST
+        type: actionTypes.FETCH_PURCHASE_BILL_LIST,
+        data: data
     };
 };
 
@@ -382,11 +383,23 @@ export const fetchBillDetailListFilteredFail = (error) => {
     };
 };
 
-
-
 export const setPurchaseBillToModify = (data) => {
     return {
         type: actionTypes.SET_PURCHASE_BILL_TO_MODIFY,
+        data: data
+    };
+};
+
+export const setPurchaseBillToInspect = (data) => {
+    return {
+        type: actionTypes.SET_PURCHASE_BILL_TO_INSPECT,
+        data: data
+    };
+};
+
+export const setPurchaseBillToModifyPayment = (data) => {
+    return {
+        type: actionTypes.SET_PURCHASE_BILL_TO_MODIFY_PAYMENT,
         data: data
     };
 };
@@ -667,6 +680,33 @@ export const fetchBillProductCharacteristicListFail = (error) => {
     };
 };
 
+export const fetchBillProductCharacteristicListFiltered = (data) => {
+    return {
+        type: actionTypes.FETCH_BILL_PRODUCT_CHARACTERISTIC_LIST_FILTERED,
+        data: data
+    };
+};
+
+export const fetchBillProductCharacteristicListFilteredStart = () => {
+    return {
+        type: actionTypes.FETCH_BILL_PRODUCT_CHARACTERISTIC_LIST_FILTERED_START
+    };
+};
+
+export const fetchBillProductCharacteristicListFilteredSuccess = (billProductCharacteristicListFiltered) => {
+    return {
+        type: actionTypes.FETCH_BILL_PRODUCT_CHARACTERISTIC_LIST_FILTERED_SUCCESS,
+        billProductCharacteristicListFiltered: billProductCharacteristicListFiltered
+    };
+};
+
+export const fetchBillProductCharacteristicListFilteredFail = (error) => {
+    return {
+        type: actionTypes.FETCH_BILL_PRODUCT_CHARACTERISTIC_LIST_FILTERED_FAIL,
+        error: error
+    };
+};
+
 export const createBillPaymentDetail = (data, formData) => {
     return {
         type: actionTypes.CREATE_BILL_PAYMENT_DETAIL,
@@ -826,6 +866,33 @@ export const fetchExchangeRatesSuccess = (exchangeRatesData) => {
 export const fetchExchangeRatesFail = (error) => {
     return {
         type: actionTypes.FETCH_EXCHANGE_RATES_FAIL,
+        error: error
+    };
+};
+
+export const uploadBillPaymentDetailImage = (data) => {
+    return {
+        type: actionTypes.UPLOAD_BILL_PAYMENT_DETAIL_IMAGE,
+        data: data
+    };
+};
+
+export const uploadBillPaymentDetailImageStart = () => {
+    return {
+        type: actionTypes.UPLOAD_BILL_PAYMENT_DETAIL_IMAGE_START
+    };
+};
+
+export const uploadBillPaymentDetailImageSuccess = (billPaymentDetailImageURL) => {
+    return {
+        type: actionTypes.UPLOAD_BILL_PAYMENT_DETAIL_IMAGE_SUCCESS,
+        billPaymentDetailImageURL: billPaymentDetailImageURL
+    };
+};
+
+export const uploadBillPaymentDetailImageFail = (error) => {
+    return {
+        type: actionTypes.UPLOAD_BILL_PAYMENT_DETAIL_IMAGE_FAIL,
         error: error
     };
 };

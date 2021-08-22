@@ -28,54 +28,54 @@ export const createCharTypeFail = (error) => {
     };
 };
 
-export const fetchCharTypes = () => {
+export const fetchCharTypeList = () => {
     return {
-        type: actionTypes.FETCH_CHAR_TYPES
+        type: actionTypes.FETCH_CHAR_TYPE_LIST
     };
 };
 
-export const fetchCharTypesStart = () => {
+export const fetchCharTypeListStart = () => {
     return {
-        type: actionTypes.FETCH_CHAR_TYPES_START
+        type: actionTypes.FETCH_CHAR_TYPE_LIST_START
     };
 };
 
-export const fetchCharTypesSuccess = (charTypes) => {
+export const fetchCharTypeListSuccess = (charTypeList) => {
     return {
-        type: actionTypes.FETCH_CHAR_TYPES_SUCCESS,
-        charTypes: charTypes
+        type: actionTypes.FETCH_CHAR_TYPE_LIST_SUCCESS,
+        charTypeList: charTypeList
     };
 };
 
-export const fetchCharTypesFail = (error) => {
+export const fetchCharTypeListFail = (error) => {
     return {
-        type: actionTypes.FETCH_CHAR_TYPES_FAIL,
+        type: actionTypes.FETCH_CHAR_TYPE_LIST_FAIL,
         error: error
     };
 };
 
-export const fetchBrands = () => {
+export const fetchBrandList = () => {
     return {
-        type: actionTypes.FETCH_BRANDS
+        type: actionTypes.FETCH_BRAND_LIST
     };
 };
 
-export const fetchBrandsStart = () => {
+export const fetchBrandListStart = () => {
     return {
-        type: actionTypes.FETCH_BRANDS_START
+        type: actionTypes.FETCH_BRAND_LIST_START
     };
 };
 
-export const fetchBrandsSuccess = (brands) => {
+export const fetchBrandListSuccess = (brandList) => {
     return {
-        type: actionTypes.FETCH_BRANDS_SUCCESS,
-        brands: brands
+        type: actionTypes.FETCH_BRAND_LIST_SUCCESS,
+        brandList: brandList
     };
 };
 
-export const fetchBrandsFail = (error) => {
+export const fetchBrandListFail = (error) => {
     return {
-        type: actionTypes.FETCH_BRANDS_FAIL,
+        type: actionTypes.FETCH_BRAND_LIST_FAIL,
         error: error
     };
 };
@@ -191,5 +191,32 @@ export const setProductForBillDetailSupplierSearch = (data) => {
     return {
         type: actionTypes.SET_PRODUCT_FOR_BILL_DETAIL_SUPPLIER_SEARCH,
         data: data
+    };
+};
+
+export const fetchProductCharacteristicListFiltered = (data) => {
+    return {
+        type: actionTypes.FETCH_PRODUCT_CHARACTERISTIC_LIST_FILTERED,
+        data: data
+    };
+};
+
+export const fetchProductCharacteristicListFilteredStart = () => {
+    return {
+        type: actionTypes.FETCH_PRODUCT_CHARACTERISTIC_LIST_FILTERED_START
+    };
+};
+
+export const fetchProductCharacteristicListFilteredSuccess = (productCharacteristicListFiltered) => {
+    return {
+        type: actionTypes.FETCH_PRODUCT_CHARACTERISTIC_LIST_FILTERED_SUCCESS,
+        productCharacteristicListFiltered: productCharacteristicListFiltered
+    };
+};
+
+export const fetchProductCharacteristicListFilteredFail = (error) => {
+    return {
+        type: actionTypes.FETCH_PRODUCT_CHARACTERISTIC_LIST_FILTERED_FAIL,
+        error: error
     };
 };

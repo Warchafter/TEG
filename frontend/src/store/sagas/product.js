@@ -29,8 +29,8 @@ export function* createCharTypeSaga(action) {
     };
 };
 
-export function* fetchCharTypesSaga(action) {
-    yield put(actions.fetchCharTypesStart());
+export function* fetchCharTypeListSaga(action) {
+    yield put(actions.fetchCharTypeListStart());
     const access = yield localStorage.getItem('access');
     const config = {
         headers: {
@@ -42,16 +42,15 @@ export function* fetchCharTypesSaga(action) {
     const url = '/product/characteristic-types/';
     try {
         let response = yield axios.get(url, config);
-        console.log(response.data);
-        yield put(actions.fetchCharTypesSuccess(response.data));
+        yield put(actions.fetchCharTypeListSuccess(response.data));
     } catch (error) {
-        yield put(actions.fetchCharTypesFail(error));
+        yield put(actions.fetchCharTypeListFail(error));
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer los tipos de características', 'error')));
     };
 };
 
-export function* fetchBrandsSaga(action) {
-    yield put(actions.fetchBrandsStart());
+export function* fetchBrandListSaga(action) {
+    yield put(actions.fetchBrandListStart());
     const access = yield localStorage.getItem('access');
     const config = {
         headers: {
@@ -64,9 +63,9 @@ export function* fetchBrandsSaga(action) {
     try {
         let response = yield axios.get(url, config);
         console.log(response.data);
-        yield put(actions.fetchBrandsSuccess(response.data));
+        yield put(actions.fetchBrandListSuccess(response.data));
     } catch (error) {
-        yield put(actions.fetchBrandsFail(error));
+        yield put(actions.fetchBrandListFail(error));
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer las marcas', 'error')));
     };
 };
@@ -152,5 +151,25 @@ export function* fetchProductListFilteredSaga(action) {
     } catch (error) {
         yield put(actions.fetchProductListFilteredFail(error));
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer el listado de productos publicados', 'error')));
+    };
+};
+
+export function* fetchProductCharacteristicListFilteredSaga(action) {
+    yield put(actions.fetchProductCharacteristicListFilteredStart());
+    const access = yield localStorage.getItem('access');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': access ? `JWT ${access}` : null,
+            'Accept': 'application/json'
+        }
+    };
+    const url = `/product/product-characteristics/?product=${action.data}`;
+    try {
+        let response = yield axios.get(url, config);
+        yield put(actions.fetchProductCharacteristicListFilteredSuccess(response.data));
+    } catch (error) {
+        yield put(actions.fetchProductCharacteristicListFilteredFail(error));
+        yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer el listado de características del producto', 'error')));
     };
 };

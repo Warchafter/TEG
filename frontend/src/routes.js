@@ -11,11 +11,19 @@ const Home = React.lazy(() => {
     return import('./containers/Home/Home');
 });
 
+
+// Auth
+
 const Auth = React.lazy(() => { return import('./containers/Auth/Auth'); });
 const Activate = React.lazy(() => { return import('./containers/Auth/Activate/Activate'); });
 const ResetPassword = React.lazy(() => { return import('./containers/Auth/ResetPassword/ResetPassword') });
 const ResetPasswordConfirm = React.lazy(() => { return import('./containers/Auth/ResetPasswordConfirm/ResetPasswordConfirm') });
 const Logout = React.lazy(() => { return import('./containers/Auth/Logout/Logout') });
+
+
+// Product
+
+const Product = React.lazy(() => { return import('./containers/Products/Products'); });
 
 
 // Bills
@@ -26,6 +34,7 @@ const BillClientSubmission = React.lazy(() => { return import('./containers/Bill
 const BillClientSubmissionHistory = React.lazy(() => { return import('./containers/Bill/BillClientSubmission/BillClientSubmissionHistory') });
 const PurchaseBillList = React.lazy(() => { return import('./components/Bill/PurchaseBill/PurchaseBillList') });
 const PurchaseBillModifier = React.lazy(() => {return import('./containers/Bill/PurchaseBill/PurchaseBillModifier')})
+const BillPaymentDetailUpload = React.lazy(() => {return import ('./containers/Bill/BillPaymentDetail/BillPaymentDetailUpload') });
 
 
 // Supplier
@@ -33,6 +42,7 @@ const PurchaseBillModifier = React.lazy(() => {return import('./containers/Bill/
 const Supplier = React.lazy(() => { return import('./containers/Supplier/Supplier') });
 const SupplierTesting = React.lazy(() => { return import('./components/Supplier/Testing/SupplierTesting') });
 const SupplierMain = React.lazy(() => { return import('./containers/Supplier/SupplierMain') });
+const SupplierCreate = React.lazy(() => { return import('./containers/Supplier/SupplierCreate/SupplierCreate') });
 
 
 // user profile
@@ -204,6 +214,13 @@ let routes = [
         isPrivate: true
     },
     {
+        path: '/suppliers-create',
+        layout: DefaultLayout,
+        name: "Crear Proveedor",
+        component: SupplierCreate,
+        isPrivate: true
+    },
+    {
         path: '/vertical-tabs-testing',
         layout: DefaultLayout,
         name: "Vertical Tabs Testing",
@@ -338,6 +355,21 @@ let routes = [
         component: PurchaseBillList,
         isPrivate: true,
         exact: true
+    },
+    {
+        path: '/product-new',
+        layout: DefaultLayout,
+        name: "Agregar Nuevo Producto",
+        component: Product,
+        isPrivate: true,
+        exact: true
+    },
+    {
+        path: '/bill-payment-detail-create',
+        layout: DefaultLayout,
+        name: 'Cargar Pago',
+        component: BillPaymentDetailUpload,
+        isPrivate: true,
     },
     { path: '/dashboard', name: 'Dashboard', component: Dashboard, layout: DefaultLayout, isPrivate: true },
     // { path: '/theme', name: 'Theme', component: Colors, exact: true, layout: DefaultLayout },

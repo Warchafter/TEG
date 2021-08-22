@@ -28,11 +28,12 @@ import {
 import {
     createCharTypeSaga,
     createProductSaga,
-    fetchBrandsSaga,
-    fetchCharTypesSaga,
+    fetchBrandListSaga,
+    fetchCharTypeListSaga,
     fetchProductListFilteredSaga,
     fetchProductListSaga,
-    modifyProductSaga
+    modifyProductSaga,
+    fetchProductCharacteristicListFilteredSaga
 } from './product';
 
 import {
@@ -72,12 +73,14 @@ import {
     deleteBillProductCharacteristicSaga,
     fetchBillProductCharacteristicSaga,
     fetchBillProductCharacteristicListSaga,
+    fetchBillProductCharacteristicListFilteredSaga,
     createBillPaymentDetailSaga,
     modifyBillPaymentDetailSaga,
     deleteBillPaymentDetailSaga,
     fetchBillPaymentDetailSaga,
     fetchBillPaymentDetailListSaga,
-    fetchExchangeRatesSaga
+    fetchExchangeRatesSaga,
+    uploadBillPaymentDetailImageSaga
 } from './bill';
 
 import {
@@ -118,12 +121,13 @@ export function* watchUserProfile() {
 export function* watchProduct() {
     yield all([
         takeLatest(actionTypes.CREATE_CHAR_TYPE, createCharTypeSaga),
-        takeEvery(actionTypes.FETCH_CHAR_TYPES, fetchCharTypesSaga),
-        takeEvery(actionTypes.FETCH_BRANDS, fetchBrandsSaga),
+        takeEvery(actionTypes.FETCH_CHAR_TYPE_LIST, fetchCharTypeListSaga),
+        takeEvery(actionTypes.FETCH_BRAND_LIST, fetchBrandListSaga),
         takeLatest(actionTypes.CREATE_PRODUCT, createProductSaga),
         takeLatest(actionTypes.MODIFY_PRODUCT, modifyProductSaga),
         takeEvery(actionTypes.FETCH_PRODUCT_LIST, fetchProductListSaga),
         takeEvery(actionTypes.FETCH_PRODUCT_LIST_FILTERED, fetchProductListFilteredSaga),
+        takeEvery(actionTypes.FETCH_PRODUCT_CHARACTERISTIC_LIST_FILTERED, fetchProductCharacteristicListFilteredSaga),
     ]);
 };
 
@@ -167,12 +171,14 @@ export function* watchBill() {
         takeLatest(actionTypes.DELETE_BILL_PRODUCT_CHARACTERISTIC, deleteBillProductCharacteristicSaga),
         takeEvery(actionTypes.FETCH_BILL_PRODUCT_CHARACTERISTIC, fetchBillProductCharacteristicSaga),
         takeEvery(actionTypes.FETCH_BILL_PRODUCT_CHARACTERISTIC_LIST, fetchBillProductCharacteristicListSaga),
+        takeEvery(actionTypes.FETCH_BILL_PRODUCT_CHARACTERISTIC_LIST_FILTERED, fetchBillProductCharacteristicListFilteredSaga),
         takeLatest(actionTypes.CREATE_BILL_PAYMENT_DETAIL, createBillPaymentDetailSaga),
         takeEvery(actionTypes.MODIFY_BILL_PAYMENT_DETAIL, modifyBillPaymentDetailSaga),
         takeEvery(actionTypes.DELETE_BILL_PAYMENT_DETAIL, deleteBillPaymentDetailSaga),
         takeEvery(actionTypes.FETCH_BILL_PAYMENT_DETAIL, fetchBillPaymentDetailSaga),
         takeEvery(actionTypes.FETCH_BILL_PAYMENT_DETAIL_LIST, fetchBillPaymentDetailListSaga),
         takeLatest(actionTypes.FETCH_EXCHANGE_RATES, fetchExchangeRatesSaga),
+        takeLatest(actionTypes.UPLOAD_BILL_PAYMENT_DETAIL_IMAGE, uploadBillPaymentDetailImageSaga),
     ]);
 };
 

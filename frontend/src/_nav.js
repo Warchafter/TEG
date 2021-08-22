@@ -77,31 +77,38 @@ export const _nav1 = [
       },
     ],
   },
-  {
-    _component: 'CNavGroup',
-    as: NavLink,
-    anchor: 'Entregas',
-    to: '/to',
-    icon: <CIcon content={freeSet.cilShareBoxed} customClasses="nav-icon"/>,
-    items: [
-      {
-        _component: 'CNavItem',
-        as: NavLink,
-        anchor: 'Histórico Entregas',
-        to: '/demo2',
-      },
-      {
-        _component: 'CNavItem',
-      as: NavLink,
-      anchor: 'Entregas Pendientes',
-      to: '/bill-payments',
-    },
-    ],
-  },
-  {
-    _component: 'CNavTitle',
-    anchor: 'Productos',
-  },
+  // {
+  //   _component: 'CNavGroup',
+  //   as: NavLink,
+  //   anchor: 'Entregas',
+  //   to: '/to',
+  //   icon: <CIcon content={freeSet.cilShareBoxed} customClasses="nav-icon"/>,
+  //   items: [
+  //     {
+  //       _component: 'CNavItem',
+  //       as: NavLink,
+  //       anchor: 'Histórico Entregas',
+  //       to: '/demo2',
+  //     },
+  //     {
+  //       _component: 'CNavItem',
+  //     as: NavLink,
+  //     anchor: 'Entregas Pendientes',
+  //     to: '/bill-payments',
+  //   },
+  //   ],
+  // },
+  // {
+  //   _component: 'CNavTitle',
+  //   anchor: 'Productos',
+  // },
+  // {
+  //   _component: 'CNavItem',
+  //   as: NavLink,
+  //   anchor: 'Agregar Producto',
+  //   to: '/product-new',
+  //   icon: <CIcon content={freeSet.cilInputPower} customClasses="nav-icon"/>,
+  // },
   {
     _component: 'CNavTitle',
     anchor: 'Proveedores',
@@ -112,6 +119,33 @@ export const _nav1 = [
     anchor: 'Proveedores',
     to: '/suppliers',
     icon: <CIcon content={freeSet.cilTruck} customClasses="nav-icon"/>,
+  },
+  {
+    _component: 'CNavGroup',
+    as: NavLink,
+    anchor: 'Proveedores',
+    to: '/to',
+    icon: <CIcon content={freeSet.cilStar} customClasses="nav-icon"/>,
+    items: [
+      {
+        _component: 'CNavItem',
+        as: NavLink,
+        anchor: 'Proveedores',
+        to: '/suppliers',
+      },
+      {
+        _component: 'CNavItem',
+        as: NavLink,
+        anchor: 'Crear Proveedores',
+        to: '/suppliers-create',
+      },
+      {
+        _component: 'CNavItem',
+        as: NavLink,
+        anchor: 'Modificar Proveedores',
+        to: '/suppliers-modify',
+      },
+    ],
   },
   {
     _component: 'CNavItem',
@@ -211,6 +245,13 @@ export const _nav2 = [
     anchor: 'Mis Solicitudes',
     to: '/bill-client-submission-history',
     icon: <CIcon content={freeSet.cilListRich} customClasses="nav-icon"/>,
+  },
+  {
+    _component: 'CNavItem',
+    as: NavLink,
+    anchor: 'Cargar Pago',
+    to: '/bill-payment-detail-create',
+    icon: <CIcon content={freeSet.cilCreditCard} customClasses="nav-icon"/>,
   },
 ];
 

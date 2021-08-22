@@ -273,3 +273,10 @@ export const fetchSupplierProductListFail = (error) => {
         error: error
     };
 };
+
+export const setSupplierRIFSelected = (data) => {
+    return {
+        type: actionTypes.SET_SUPPLIER_RIF_SELECTED,
+        data: data
+    };
+};

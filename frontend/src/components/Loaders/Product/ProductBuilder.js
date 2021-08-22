@@ -39,14 +39,14 @@ const ProductBuilder = () => {
 
     const dispatch = useDispatch();
 
-    const onFetchBrands = useCallback(() => dispatch(actions.fetchBrands()), [dispatch]);
+    const onFetchBrandList = useCallback(() => dispatch(actions.fetchBrandList()), [dispatch]);
     // const onCreateProduct = useCallback((data) => dispatch(actions.createProduct(data)), [dispatch]);
 
 
 
     useEffect(() => {
-        onFetchBrands();
-    }, [onFetchBrands]);
+        onFetchBrandList();
+    }, [onFetchBrandList]);
 
     const brands = useSelector(state => state.product.brands);
     const [brandsChosen, setBrandsChosen] = useState('');

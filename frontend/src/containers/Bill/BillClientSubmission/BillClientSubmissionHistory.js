@@ -12,6 +12,10 @@ import BillClientSubmissionHistoryList from '../../../components/Bill/BillClient
 import BillClientSubmissionDescription from '../../../components/Bill/BillClientSubmission/BillClientSubmissionDescription';
 import BillClientSubmissionDescriptionEmpty from '../../../components/Bill/BillClientSubmission/BillClientSubmissionDescriptionEmpty';
 import PurchaseBillCreatedCard from '../../../components/Bill/PurchaseBill/PurchaseBillCreatedCard';
+import PurchaseBillList from '../../../components/Bill/PurchaseBill/PurchaseBillList';
+import PurchaseBillProductTableSkeleton from '../../../components/Bill/PurchaseBill/PurchaseBillProductTableSkeletonInspect';
+import BillPaymentDetailCreateForm from '../../../components/Bill/BillPaymentDetail/BillPaymentDetailCreateForm';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,8 +32,8 @@ const BillClientSubmissionHistory = () => {
     const isBillClientSubmissionSelected = useSelector(state => state.bill.isBillClientSubmissionSelected);
     const billClientSubmissionSelected = useSelector(state => state.bill.billClientSubmissionSelected);
     const purchaseBillCreated = useSelector(state => state.bill.purchaseBillCreated);
-
-    
+    const purchaseBillToInspect = useSelector(state => state.bill.purchaseBillToInspect);
+    const purchaseBillToModifyPayment = useSelector(state => state.bill.purchaseBillToModifyPayment);
 
     const selectedOption = (selectionData) => {
         if (isBillClientSubmissionSelected) {
@@ -37,18 +41,6 @@ const BillClientSubmissionHistory = () => {
         } else {
             return <BillClientSubmissionDescriptionEmpty />
         }
-    };
-
-    const isPurchaseBillCreated = (purchaseBillCreated) => {
-        if (purchaseBillCreated.length !== 0) {
-            return (
-                <Grid item xs={4}>
-                    <PurchaseBillCreatedCard purchaseBillCreated={purchaseBillCreated}/>
-                </Grid>
-            );
-        } else {
-            return null
-        };
     };
 
     return (
@@ -61,7 +53,29 @@ const BillClientSubmissionHistory = () => {
                     <Grid item xs={8}>
                         {selectedOption(billClientSubmissionSelected)}
                     </Grid>
-                    {isPurchaseBillCreated(purchaseBillCreated)}
+                    {/* {isPurchaseBillCreated(purchaseBillCreated)} */}
+                        {
+                            billClientSubmissionSelected ?
+                                <Grid item xs={12}>
+                                    <PurchaseBillList />
+                                </Grid>
+                            : null
+                        }
+                        {
+                            purchaseBillToInspect ?
+                                <Grid item xs={7}>
+                                    <PurchaseBillProductTableSkeleton />
+                                </Grid>
+                            : null
+                        }
+                        {
+                            purchaseBillToModifyPayment ?
+                                <Grid item xs={5}>
+                                    <BillPaymentDetailCreateForm />
+                                </Grid>
+                            : null
+                        }
+                    <Grid item xs={12}></Grid>
                 </Grid>
         </div>
     );

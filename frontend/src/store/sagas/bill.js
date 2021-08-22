@@ -1,10 +1,12 @@
-import { put } from 'redux-saga/effects';
+import { put, select } from 'redux-saga/effects';
 import axios from '../../axios-db';
 
 import { getSnackbarData } from '../../shared/utility';
 import * as actions from '../actions/index';
 
 export const getUserId = (state) => state.auth.user.id
+export const getBillPaymentDetail = (state) => state.bill.billPaymentDetailSelected
+export const getBillClientSubmissionSelected = (state) => state.bill.billClientSubmissionSelected
 
 export function* fetchBankListSaga(action) {
     yield put(actions.fetchBankListStart());
@@ -152,7 +154,7 @@ export function* fetchBillClientSubmissionDetailSaga(action) {
 
 export function* fetchBillClientSubmissionListSaga(action) {
     yield put(actions.fetchBillClientSubmissionListStart());
-    console.log(action)
+    console.log("userId", action.userId);
     const access = yield localStorage.getItem('access');
     const config = {
         headers: {
@@ -270,6 +272,7 @@ export function* fetchPurchaseBillSaga(action) {
 
 export function* fetchPurchaseBillListSaga(action) {
     yield put(actions.fetchPurchaseBillListStart());
+    let billClientSubmissionSelected = yield select(getBillClientSubmissionSelected);
     const access = yield localStorage.getItem('access');
     const config = {
         headers: {
@@ -278,9 +281,11 @@ export function* fetchPurchaseBillListSaga(action) {
             'Accept': 'application/json'
         }
     };
-    const url = '/bill/purchase-bills/';
+    console.log(action.data)
+    const url1 = '/bill/purchase-bills/';
+    const url2 = `/bill/purchase-bills/?bill_client_submission=${action.data.id}`;
     try {
-        let response = yield axios.get(url, config);
+        let response = yield axios.get(billClientSubmissionSelected ? url2 : url1, config);
         yield put(actions.fetchPurchaseBillListSuccess(response.data));
     } catch (error) {
         yield put(actions.fetchPurchaseBillListFail(error));
@@ -435,13 +440,10 @@ export function* createBillProductCharacteristicSaga(action) {
             'Accept': 'application/json'
         }
     };
-    const body = JSON.stringify({
-        bill_detail: action.data.billProductCharacteristicData.bill_detail,
-        characteristic_sel: action.data.billProductCharacteristicData.characteristic_sel,
-    });
     const url = '/bill/bill-product-characteristics/';
     try {
-        let response = yield axios.post(url, body, config);
+        console.log(action.data);
+        let response = yield axios.post(url, action.data, config);
         yield put(actions.createBillProductCharacteristicSuccess(response.data));
         yield put(actions.enqueueSnackbar(getSnackbarData('El detalle de la factura fue creado exitosamente!', 'success')));
     } catch (error) {
@@ -539,6 +541,26 @@ export function* fetchBillProductCharacteristicListSaga(action) {
         yield put(actions.fetchBillProductCharacteristicListSuccess(response.data));
     } catch (error) {
         yield put(actions.fetchBillProductCharacteristicListFail(error));
+        yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer los detalles de los productos de las facturas', 'error')));
+    };
+};
+
+export function* fetchBillProductCharacteristicListFilteredSaga(action) {
+    yield put(actions.fetchBillProductCharacteristicListFilteredStart());
+    const access = yield localStorage.getItem('access');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': access ? `JWT ${access}` : null,
+            'Accept': 'application/json'
+        }
+    };
+    const url = `/bill/bill-product-characteristics/?bill_detail=${action.data}`;
+    try {
+        let response = yield axios.get(url, config);
+        yield put(actions.fetchBillProductCharacteristicListFilteredSuccess(response.data));
+    } catch (error) {
+        yield put(actions.fetchBillProductCharacteristicListFilteredFail(error));
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer los detalles de los productos de las facturas', 'error')));
     };
 };
@@ -679,5 +701,27 @@ export function* fetchExchangeRatesSaga(action) {
     } catch (error) {
         yield put(actions.fetchExchangeRatesFail(error));
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer las tasas del día', 'error')));
+    };
+};
+
+export function* uploadBillPaymentDetailImageSaga(action) {
+    yield put(action.uploadBillPaymentDetailImageStart());
+    let billPaymentDetail = yield select(getBillPaymentDetail);
+    const access = yield localStorage.getItem('access');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': access ? `JWT ${access}` : null,
+            'Accept': 'application/json'
+        }
+    };
+    const url = `/bill/bill-payment-details/${billPaymentDetail.id}/upload-image/`;
+    try {
+        let response = axios.post(url, action.data, config);
+        yield put(actions.uploadBillPaymentDetailImageSuccess(response.data));
+        yield put(actions.enqueueSnackbar(getSnackbarData('¡Se cargó el pago exitosamente!'), 'success'));
+    } catch (error) {
+        yield put(actions.uploadBillPaymentDetailImageFail(error));
+        yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo cargar el pago', 'error')));
     };
 };

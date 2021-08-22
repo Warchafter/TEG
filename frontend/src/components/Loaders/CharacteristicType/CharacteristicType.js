@@ -16,7 +16,7 @@ const CharacteristicTypeBuilder = () => {
     const charTypes = useSelector(state => state.product.charTypes);
 
     const onCreateCharacteristicType = useCallback((data) => dispatch(actions.createCharType(data)), [dispatch]);
-    const onFetchCharacteristicTypes = useCallback(() => dispatch(actions.fetchCharTypes()), [dispatch]);
+    const onFetchCharacteristicTypes = useCallback(() => dispatch(actions.fetchCharTypeList()), [dispatch]);
 
     useEffect(() => {
         onFetchCharacteristicTypes();

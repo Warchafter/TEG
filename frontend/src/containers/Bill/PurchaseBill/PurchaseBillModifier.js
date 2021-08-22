@@ -54,6 +54,6 @@ const PurchaseBillModifier = () => {
                 </Grid>
         </div>
     );
-};
+}; 
 
 export default PurchaseBillModifier;

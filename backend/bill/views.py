@@ -279,7 +279,7 @@ class PurchaseBillViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(
                 purchase_status_id__in=purchase_status_ids)
         if payment_status:
-            payment_status_ids = self._params_to_ints(payment_method)
+            payment_status_ids = self._params_to_ints(payment_status)
             queryset = queryset.filter(
                 payment_status_id__in=payment_status_ids)
 

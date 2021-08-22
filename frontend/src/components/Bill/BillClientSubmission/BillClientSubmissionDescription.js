@@ -21,18 +21,18 @@ const useStyles = makeStyles((theme) => ({
         color: '#313c54'
     },
     card: {
-        padding: '10px'
+        maxHeight: 394,
     },
     content: {
         color: '#666666',
         whiteSpace: 'pre-wrap',
         paddingLeft: '20px'
     },
-    scrollCardMenu: {
+    scrollMenu: {
         overflow: 'auto',
         whiteSpace: 'nowrap',
-        maxHeight: 577,
         overflowX: 'hidden',
+        maxHeight: 577,
     },
     tableContainer: {
         borderRadius: 15,
@@ -54,7 +54,7 @@ const BillClientSubmissionDescription = (props) => {
 
         return (
         <div className={styles.root}>
-            <Card className={styles.scrollCardMenu}>
+            <Card className={styles.card}>
                 <Grid container spacing={3} className={styles.GridHeader}>
                     <Grid item xs={12}>
                         <TableContainer component={styles.tableContainer}>
@@ -62,7 +62,7 @@ const BillClientSubmissionDescription = (props) => {
                                 <TableHead>
                                     <TableRow>
                                         <TableCell className={styles.tableHeaderCell}>
-                                            <Typography>Histórico de Solicitudes de Facturación</Typography>
+                                            <Typography>Requerimiento</Typography>
                                         </TableCell>
                                     </TableRow>
                                 </TableHead>
@@ -70,9 +70,11 @@ const BillClientSubmissionDescription = (props) => {
                         </TableContainer>
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography className={styles.content}>
-                            {props.selectedOption.product_requirements}
-                        </Typography>
+                        <div className={styles.scrollMenu}>
+                            <Typography className={styles.content}>
+                                {props.selectedOption.product_requirements}
+                            </Typography>
+                        </div>
                     </Grid>
                 </Grid>
             </Card>

@@ -13,7 +13,7 @@ const initialState = {
     billClientSubmissionListPag: [],
     billClientSubmissionList: [],
     billClientSubmissionListFiltered: [],
-    billClientSubmissionSelected: [],
+    billClientSubmissionSelected: null,
     isBillClientSubmissionSelected: false,
     purchaseBillListCount: [],
     purchaseBillListPag: [],
@@ -23,6 +23,8 @@ const initialState = {
     purchaseBillSelected: [],
     purchaseBillModifiedId: null,
     purchaseBillToModify: null,
+    purchaseBillToInspect: null,
+    purchaseBillToModifyPayment: null,
     billDetailData: [],
     billDetailSelected: [],
     billDetailListCount: [],
@@ -41,6 +43,9 @@ const initialState = {
     billProductCharacteristicListCount: [],
     billProductCharacteristicListPag: [],
     billProductCharacteristicList: [],
+    billProductCharacteristicListFilteredCount: [],
+    billProductCharacteristicListFilteredPag: [],
+    billProductCharacteristicListFiltered: [],
     billPaymentDetailData: [],
     billPaymentDetailCreatedId: [],
     billPaymentDetailSelected: [],
@@ -48,6 +53,7 @@ const initialState = {
     billPaymentDetailListCount: [],
     billPaymentDetailListPag: [],
     billPaymentDetailList: [],
+    billPaymentDetailImageURL: null,
     exchangeRatesData: [],
     error: null,
     loading: false,
@@ -293,7 +299,15 @@ const fetchPurchaseBillListFail = (state, action) => {
 
 const setPurchaseBillToModify = (state, action) => {
     return updateObject(state, { purchaseBillToModify: action.data });
-}
+};
+
+const setPurchaseBillToInspect = (state, action) => {
+    return updateObject(state, { purchaseBillToInspect: action.data });
+};
+
+const setPurchaseBillToModifyPayment = (state, action) => {
+    return updateObject(state, { purchaseBillToModifyPayment: action.data });
+};
 
 const createBillDetailStart = (state, action) => {
     return updateObject(state, { error: null, loading: true });
@@ -410,9 +424,8 @@ const createBillProductCharacteristicStart = (state, action) => {
 };
 
 const createBillProductCharacteristicSuccess = (state, action) => {
-    const updatedBillProdCharIds = state.billProductCharacteristicListData.concat(action.billProductCharacteristicData);
     const updatedState = {
-        billProductCharacteristicListData: updatedBillProdCharIds,
+        billProductCharacteristicData: action.billProductCharacteristicData,
         error: null,
         loading: false
     };
@@ -489,6 +502,25 @@ const fetchBillProductCharacteristicListSuccess = (state, action) => {
 };
 
 const fetchBillProductCharacteristicListFail = (state, action) => {
+    return updateObject(state, { error: action.error, loading: false });
+};
+
+const fetchBillProductCharacteristicListFilteredStart = (state, action) => {
+    return updateObject(state, { error: null, loading: true });
+};
+
+const fetchBillProductCharacteristicListFilteredSuccess = (state, action) => {
+    const updatedState = {
+        billProductCharacteristicListFilteredCount: action.billProductCharacteristicListFiltered.count,
+        billProductCharacteristicListFilteredPag: action.billProductCharacteristicListFiltered.links,
+        billProductCharacteristicListFiltered: action.billProductCharacteristicListFiltered.results,
+        error: null,
+        loading: false
+    };
+    return updateObject(state, updatedState);
+};
+
+const fetchBillProductCharacteristicListFilteredFail = (state, action) => {
     return updateObject(state, { error: action.error, loading: false });
 };
 
@@ -603,6 +635,22 @@ const fetchExchangeRatesFail = (state, action) => {
     return updateObject(state, { error: action.error, loadingExRates: false, ExRateDataLoaded: false });
 };
 
+const uploadBillPaymentDetailImageStart = (state, action) => {
+    return updateObject(state, { error: null, loading: true });
+};
+
+const uploadBillPaymentDetailImageSuccess = (state, action) => {
+    const updatedState = {
+        billPaymentDetailImageURL: action.data.url,
+        loading: false
+    };
+    return updateObject(state, updatedState);
+};
+
+const uploadBillPaymentDetailImageFail = (state, action) => {
+    return updateObject(state, { error: action.error, loading: false });
+};
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_BANK_LIST_START: return fetchBankListStart(state, action);
@@ -643,6 +691,8 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_PURCHASE_BILL_LIST_SUCCESS: return fetchPurchaseBillListSuccess(state, action);
         case actionTypes.FETCH_PURCHASE_BILL_LIST_FAIL: return fetchPurchaseBillListFail(state, action);
         case actionTypes.SET_PURCHASE_BILL_TO_MODIFY: return setPurchaseBillToModify(state, action);
+        case actionTypes.SET_PURCHASE_BILL_TO_INSPECT: return setPurchaseBillToInspect(state, action);
+        case actionTypes.SET_PURCHASE_BILL_TO_MODIFY_PAYMENT: return setPurchaseBillToModifyPayment(state, action);
         case actionTypes.CREATE_BILL_DETAIL_START: return createBillDetailStart(state, action);
         case actionTypes.CREATE_BILL_DETAIL_SUCCESS: return createBillDetailSuccess(state, action);
         case actionTypes.CREATE_BILL_DETAIL_FAIL: return createBillDetailFail(state, action);
@@ -676,6 +726,9 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_BILL_PRODUCT_CHARACTERISTIC_LIST_START: return fetchBillProductCharacteristicListStart(state, action);
         case actionTypes.FETCH_BILL_PRODUCT_CHARACTERISTIC_LIST_SUCCESS: return fetchBillProductCharacteristicListSuccess(state, action);
         case actionTypes.FETCH_BILL_PRODUCT_CHARACTERISTIC_LIST_FAIL: return fetchBillProductCharacteristicListFail(state, action);
+        case actionTypes.FETCH_BILL_PRODUCT_CHARACTERISTIC_LIST_FILTERED_START: return fetchBillProductCharacteristicListFilteredStart(state, action);
+        case actionTypes.FETCH_BILL_PRODUCT_CHARACTERISTIC_LIST_FILTERED_SUCCESS: return fetchBillProductCharacteristicListFilteredSuccess(state, action);
+        case actionTypes.FETCH_BILL_PRODUCT_CHARACTERISTIC_LIST_FILTERED_FAIL: return fetchBillProductCharacteristicListFilteredFail(state, action);
         case actionTypes.CREATE_BILL_PAYMENT_DETAIL_START: return createBillPaymentDetailStart(state, action);
         case actionTypes.CREATE_BILL_PAYMENT_DETAIL_SUCCESS: return createBillPaymentDetailSuccess(state, action);
         case actionTypes.CREATE_BILL_PAYMENT_DETAIL_FAIL: return createBillPaymentDetailFail(state, action);
@@ -694,6 +747,9 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_EXCHANGE_RATES_START: return fetchExchangeRatesStart(state, action);
         case actionTypes.FETCH_EXCHANGE_RATES_SUCCESS: return fetchExchangeRatesSuccess(state, action);
         case actionTypes.FETCH_EXCHANGE_RATES_FAIL: return fetchExchangeRatesFail(state, action);
+        case actionTypes.UPLOAD_BILL_PAYMENT_DETAIL_IMAGE_START: return uploadBillPaymentDetailImageStart(state, action);
+        case actionTypes.UPLOAD_BILL_PAYMENT_DETAIL_IMAGE_SUCCESS: return uploadBillPaymentDetailImageSuccess(state, action);
+        case actionTypes.UPLOAD_BILL_PAYMENT_DETAIL_IMAGE_FAIL: return uploadBillPaymentDetailImageFail(state, action);
         default: return state;
     };
 };

@@ -39,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
     },
     contentText: {
         textAlign: 'center'
+    },
+    DescImageCard: {
+        minHeight: '394px'
     }
 }))
 
@@ -48,7 +51,7 @@ const BillClientSubmissionDescriptionEmpty = (props) => {
 
     return (
         <div className={styles.root}>
-            <Card >
+            <Card className={styles.DescImageCard}>
                 <Image
                     src={`${backgroundEmptySelectionImage}`}
                     width={393}

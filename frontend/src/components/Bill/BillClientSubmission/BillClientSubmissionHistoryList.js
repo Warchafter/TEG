@@ -101,17 +101,15 @@ const BillClientSubmissionForm = () => {
     const onCreatePurchaseBill = useCallback((initialValues) => dispatch(actions.createPurchaseBill(initialValues)), [dispatch]);
 
     useEffect(() => {
-        if (userProfileDetail) {
+        if (userProfileDetail.id) {
             if (userProfileDetail.roles === 'user') {
-                console.log("1");
                 onFetchBillClientSubmissionList(userProfileDetail.id);
             } else {
-                console.log(userProfileDetail);
                 onFetchBillClientSubmissionList();
             }
-        }
+        };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [userProfileDetail,]);
 
     const createPurchaseBill = (row) => {
         onSetSelectedBillClientSubmission(row);
@@ -191,7 +189,7 @@ const BillClientSubmissionForm = () => {
                                                 </TableRow>
                                         ))}
                                         {emptyRows > 0 && (
-                                            <TableRow style={{ height: 53 * emptyRows }}>
+                                            <TableRow style={{ height: 61 * emptyRows }}>
                                             <TableCell colSpan={6} />
                                             </TableRow>
                                         )}
