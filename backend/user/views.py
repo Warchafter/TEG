@@ -1,6 +1,7 @@
 from rest_framework import generics, authentication, permissions
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.fields import CurrentUserDefault
+from rest_framework.serializers import Serializer
 from rest_framework.settings import api_settings
 from rest_framework.views import APIView
 
@@ -28,6 +29,18 @@ class IsAdminOrReadOnly(BasePermission):
             return True
 
         # Instance must belong to an admin user
+        return request.user.is_staff
+
+
+class IsAuthenticatedOrReadOnly(BasePermission):
+    """Object-level permission to allow al authenticated users to edit an object"""
+
+    def has_permission(self, request, view):
+        if request.method in SAFE_METHODS:
+            return True
+        elif request.user.roles == 'user':
+            return True
+
         return request.user.is_staff
 
 
@@ -126,7 +139,7 @@ class UserViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.SearchFilter,)
     queryset = User.objects.all()
     authentication_classes = (JWTAuthentication,)
-    permission_classes = (IsAdminOrReadOnly,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     # pagination_class = StandardResultsSetPagination
 
     def _params_to_ints(self, qs):
@@ -146,7 +159,7 @@ class UserViewSet(viewsets.ModelViewSet):
         # business_name = self.request.query_params.get('business_name')
         # business_type = self.request.query_params.get('business_type')
         # specialization = self.request.query_params.get('specialization')
-        rif = self.request.query_params.get('rif')
+        has_rif = self.request.query_params.get('has_rif')
         rif_validated = self.request.query_params.get('rif_validated')
         # is_active = self.request.query_params.get('is_active')
         roles = self.request.query_params.get('roles')
@@ -169,10 +182,10 @@ class UserViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(
                 rif_validated__iexact=rif_validated
             )
-        if rif:
+        if has_rif:  # exclude(alias__isnull=True)
             queryset = queryset.exclude(
                 rif__isnull=True
-            )
+            ).exclude(rif__exact='')
         # if business_name:
         #     queryset = queryset.filter(
         #         business_name__iexact=business_name)
@@ -209,7 +222,10 @@ class UserViewSet(viewsets.ModelViewSet):
         #     return serializers.UserListSerializer
         elif self.action == 'upload_image':
             return serializers.CurrentUserRIFImageSerializer
-
+        elif self.action == 'update_profile':
+            return serializers.CurrentUserPatchSerializer
+        elif self.action == 'validate_rif':
+            return serializers.ValidateUserRifSerializer
         return self.serializer_class
 
     def perform_create(self, serializer):
@@ -227,7 +243,28 @@ class UserViewSet(viewsets.ModelViewSet):
         user = self.get_object()
         serializer = self.get_serializer(
             user,
-            date=request.data
+            data=request.data
+        )
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data,
+                status=status.HTTP_200_OK
+            )
+
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    @action(methods=['PATCH'], detail=True, url_path='update')
+    def update_profile(self, request, pk=None):
+        """Update user profile"""
+        user = self.get_object()
+        serializer = self.get_serializer(
+            user,
+            data=request.data
         )
 
         if serializer.is_valid():
@@ -245,6 +282,27 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(methods=['POST'], detail=True, url_path='upload-image')
     def upload_image(self, request, pk=None):
         """Upload an image to a user"""
+        user = self.get_object()
+        serializer = self.get_serializer(
+            user,
+            data=request.data
+        )
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data,
+                status=status.HTTP_200_OK
+            )
+
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    @action(methods=['PATCH'], detail=True, url_path='validate-rif')
+    def validate_rif(self, request, pk=None):
+        """Validate the user's Rif"""
         user = self.get_object()
         serializer = self.get_serializer(
             user,

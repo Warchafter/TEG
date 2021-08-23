@@ -77,6 +77,24 @@ export const _nav1 = [
       },
     ],
   },
+  {
+    _component: 'CNavTitle',
+    anchor: 'Verificar',
+  },
+  {
+    _component: 'CNavItem',
+    as: NavLink,
+    anchor: 'Usuarios no Verificados',
+    to: '/users-unverified',
+    icon: <CIcon content={freeSet.cilXCircle} customClasses="nav-icon"/>
+  },
+  {
+    _component: 'CNavItem',
+    as: NavLink,
+    anchor: 'Usuarios Verificados',
+    to: '/users-verified',
+    icon: <CIcon content={freeSet.cilCheckCircle} customClasses="nav-icon"/>
+  }
   // {
   //   _component: 'CNavGroup',
   //   as: NavLink,

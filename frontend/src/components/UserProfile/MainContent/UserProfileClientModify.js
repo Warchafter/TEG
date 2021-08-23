@@ -124,6 +124,8 @@ const UserProfileClient = () => {
 
     const formik = useFormik({
         initialValues: {
+            name: userProfileDetail.name,
+            email: userProfileDetail.email,
             business_name: userProfileDetail.business_name,
             business_type: userProfileDetail.business_type,
             specialization: [],

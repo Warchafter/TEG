@@ -78,6 +78,19 @@ class CurrentUserSerializer(serializers.ModelSerializer):
         read_only_fields = ('id,', 'is_active', 'is_staff')
 
 
+class CurrentUserPatchSerializer(serializers.ModelSerializer):
+    """ """
+
+    class Meta:
+        model = User
+        fields = (
+            'id', 'email', 'name', 'business_name', 'business_type',
+            'specialization', 'rif', 'rif_address', 'rif_validated', 'is_active',
+            'is_staff', 'roles'
+        )
+        read_only_fields = ('id,', 'is_active', 'is_staff')
+
+
 class CurrentUserRIFImageSerializer(serializers.ModelSerializer):
     """Serializer for uploading rif images to user"""
 
@@ -87,7 +100,7 @@ class CurrentUserRIFImageSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 
-class VerifyUserRIFImageSerializer(serializers.ModelSerializer):
+class ValidateUserRifSerializer(serializers.ModelSerializer):
     """Serializer for verifying the rif image of a user"""
 
     class Meta:

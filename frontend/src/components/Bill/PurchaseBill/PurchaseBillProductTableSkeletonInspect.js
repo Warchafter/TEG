@@ -3,7 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
-    Card, Grid
+    Card,
+    Grid,
+    Table,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Typography
 } from '@material-ui/core';
 
 import PurchaseBillAddNewProductCard from '../../../components/Bill/PurchaseBill/PurchaseBillAddNewProductCard';
@@ -23,6 +30,17 @@ const useStyles = makeStyles((theme) => ({
     },
     gridProducts: {
         padding: '10px'
+    },
+    tableContainer: {
+        borderRadius: 15,
+        margin: '10px 10px',
+    },
+    tableHeaderCell: {
+        // fontWeight: 'bold',
+        color: theme.palette.getContrastText(theme.palette.primary.dark)
+    },
+    tableHeaderRow: {
+        backgroundColor: '#3c4b64',
     }
 }));
 
@@ -58,6 +76,48 @@ const PurchaseBillProductTableSkeletonInspect = () => {
         <div className={styles.root}>
             <Card className={styles.tableCardSkeleton}>
                 <Grid container spacing={1} className={styles.gridProducts}>
+                    <Grid item xs={12}>
+                        <TableContainer component={styles.tableContainer}>
+                            <Table size="small" aria-label="a dense table">
+                                <TableHead>
+                                    <TableRow  className={styles.tableHeaderRow}>
+                                        <Grid container>
+                                            <Grid item xs={1}>
+                                                <TableCell className={styles.tableHeaderCell}>
+                                                    <Typography>ID</Typography>
+                                                </TableCell>
+                                            </Grid>
+                                            <Grid item xs={2}>
+                                                <TableCell className={styles.tableHeaderCell}>
+                                                    <Typography>Producto</Typography>
+                                                </TableCell>
+                                            </Grid>
+                                            <Grid item xs={2}>
+                                                <TableCell className={styles.tableHeaderCell}>
+                                                    <Typography>Proveedor</Typography>
+                                                </TableCell>
+                                            </Grid>
+                                            <Grid item xs={3}>
+                                                <TableCell className={styles.tableHeaderCell}>
+                                                    <Typography>Tipo</Typography>
+                                                </TableCell>
+                                            </Grid>
+                                            <Grid item xs={2}>
+                                                <TableCell className={styles.tableHeaderCell}>
+                                                    <Typography>Cantidad</Typography>
+                                                </TableCell>
+                                            </Grid>
+                                            <Grid item xs={2}>
+                                                <TableCell className={styles.tableHeaderCell}>
+                                                    <Typography>Precio</Typography>
+                                                </TableCell>
+                                            </Grid>
+                                        </Grid>
+                                    </TableRow>
+                                </TableHead>
+                            </Table>
+                        </TableContainer>
+                    </Grid>
                     {
                         billDetailListFiltered
                         ?

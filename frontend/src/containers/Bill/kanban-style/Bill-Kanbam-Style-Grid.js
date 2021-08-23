@@ -85,10 +85,6 @@ const BillKanbanStyleGrid = () => {
     const styles = useStyles();
     const dispatch = useDispatch();
 
-    // const [paymentBillCounter1, setPaymentBillCounter1] = React.useState(0);
-    // const [paymentBillCounter2, setPaymentBillCounter2] = React.useState(0);
-    // const [paymentBillCounter3, setPaymentBillCounter3] = React.useState(0);
-
     const purchaseBillList = useSelector(state => state.bill.purchaseBillList);
     const isLoading = useSelector(state => state.bill.loading);
     const isLoadingExRate = useSelector(state => state.bill.loadingExRates);
@@ -97,6 +93,7 @@ const BillKanbanStyleGrid = () => {
 
     const onFetchExchangeRates = useCallback(() => dispatch(actions.fetchExchangeRates()), [dispatch]);
     const onFetchPurchaseBillList = useCallback(() => dispatch(actions.fetchPurchaseBillList()), [dispatch]);
+
 
     useEffect(() => {
         onFetchPurchaseBillList();

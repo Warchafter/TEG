@@ -71,16 +71,25 @@ export function* fetchUserProfileListSaga(action) {
 
 export function* modifyUserProfileDetailSaga(action) {
     yield put(actions.modifyUserProfileDetailStart());
-    // const access = yield localStorage.getItem('access');
-    // const config = {
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'Authorization': access ? `JWT ${access}` : null,
-    //         'Accept': 'application/json'
-    //     }
-    // };
-    // const url = ''
-}
+    const access = yield localStorage.getItem('access');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': access ? `JWT ${access}` : null,
+            'Accept': 'application/json'
+        }
+    };
+    let userId = yield select(getUserId);
+    const url = `/user/users/${userId.id}/update/`
+    try {
+        let response = yield axios.patch(url, action.data, config);
+        yield put(actions.modifyUserProfileDetailSuccess(response.data));
+        yield put(actions.enqueueSnackbar(getSnackbarData("El perfil fue actualizado exitosamente!", 'success')));
+    } catch (error) {
+        yield put(actions.modifyUserProfileDetailFail(error));
+        yield put(actions.enqueueSnackbar(getSnackbarData("El perfil no pudo ser actualizado", 'error')));
+    };
+};
 
 export function* uploadUserProfileRifSaga(action) {
     yield put(actions.uploadUserProfileRifStart());
@@ -136,7 +145,7 @@ export function* fetchNonRifValidatedUsersSaga(action) {
             'Accept': 'application/json'
         }
     };
-    const url = '/user/users/?rif_validated=false&roles=user';
+    const url = '/user/users/?roles=user&has_rif=true&rif_validated=false';
     try {
         let response = yield axios.get(url, config);
         console.log(response.data);
@@ -144,5 +153,47 @@ export function* fetchNonRifValidatedUsersSaga(action) {
     } catch (error) {
         yield put(actions.fetchNonRifValidatedUsersFail(error));
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer el listado de clientes', 'error')));
+    };
+};
+
+export function* fetchRifValidatedUsersSaga(action) {
+    yield put(actions.fetchRifValidatedUsersStart());
+    const access = yield localStorage.getItem('access');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': access ? `JWT ${access}` : null,
+            'Accept': 'application/json'
+        }
+    };
+    const url = '/user/users/?rif_validated=true&roles=user';
+    try {
+        let response = yield axios.get(url, config);
+        console.log(response.data);
+        yield put(actions.fetchRifValidatedUsersSuccess(response.data));
+    } catch (error) {
+        yield put(actions.fetchRifValidatedUsersFail(error));
+        yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer el listado de clientes', 'error')));
+    };
+};
+
+export function* validateUserProfileRifSaga(action) {
+    yield put(actions.validateUserProfileRifStart());
+    const access = yield localStorage.getItem('access');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': access ? `JWT ${access}` : null,
+            'Accept': 'application/json'
+        }
+    };
+    const url = `/user/users/${action.id}/validate-rif/`
+    try {
+        let response = yield axios.patch(url, action.data, config);
+        yield put(actions.validateUserProfileRifSuccess(response.data));
+        yield put(actions.enqueueSnackbar(getSnackbarData("El usuario ha sido verificado exitosamente!", 'success')));
+    } catch (error) {
+        yield put(actions.validateUserProfileRifFail(error));
+        yield put(actions.enqueueSnackbar(getSnackbarData("El perfil no pudo ser verificado", 'error')));
     };
 };

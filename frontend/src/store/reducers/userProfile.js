@@ -8,6 +8,10 @@ const initialState = {
     specializationList: [],
     selectedUserProfiledetail: [],
     isVerified: false,
+    nonRifValidatedUserList: [],
+    rifValidatedUserList: [],
+    nonRifValidatedUserToInspect: null,
+    rifValidatedUserToInspect: null,
     error: null,
     loading: false
 };
@@ -156,6 +160,47 @@ const fetchNonRifValidatedUsersFail = (state, action) => {
     return updateObject(state, { error: action.error, loading: false });
 };
 
+const fetchRifValidatedUsersStart = (state, action) => {
+    return updateObject(state, { error: null, loading: true });
+};
+
+const fetchRifValidatedUsersSuccess = (state, action) => {
+    const updatedState = {
+        rifValidatedUserList: action.rifValidatedUserList,
+        error: null,
+        loading: false
+    };
+    return updateObject(state, updatedState);
+};
+
+const fetchRifValidatedUsersFail = (state, action) => {
+    return updateObject(state, { error: action.error, loading: false });
+};
+
+const setNonRifValidatedUserToInspect = (state, action) => {
+    return updateObject(state, { nonRifValidatedUserToInspect: action.data });
+};
+
+const setRifValidatedUserToInspect = (state, action) => {
+    return updateObject(state, { rifValidatedUserToInspect: action.data });
+};
+
+const validateUserProfileRifStart = (state, action) => {
+    return updateObject(state, { error: null, loading: true });
+};
+
+const validateUserProfileRifSuccess = (state, action) => {
+    const updatedState = {
+        userProfileDetail: action.userProfileDetail,
+        error: null,
+        loading: false
+    };
+    return updateObject(state, updatedState);
+};
+
+const validateUserProfileRifFail = (state, action) => {
+    return updateObject(state, { error: action.error, loading: false });
+}
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -183,6 +228,14 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_NON_RIF_VALIDATED_USERS_START: return fetchNonRifValidatedUsersStart(state, action);
         case actionTypes.FETCH_NON_RIF_VALIDATED_USERS_SUCCESS: return fetchNonRifValidatedUsersSuccess(state, action);
         case actionTypes.FETCH_NON_RIF_VALIDATED_USERS_FAIL: return fetchNonRifValidatedUsersFail(state, action);
+        case actionTypes.FETCH_RIF_VALIDATED_USERS_START: return fetchRifValidatedUsersStart(state, action);
+        case actionTypes.FETCH_RIF_VALIDATED_USERS_SUCCESS: return fetchRifValidatedUsersSuccess(state, action);
+        case actionTypes.FETCH_RIF_VALIDATED_USERS_FAIL: return fetchRifValidatedUsersFail(state, action);
+        case actionTypes.SET_NON_RIF_VALIDATED_USER_TO_INSPECT: return setNonRifValidatedUserToInspect(state, action);
+        case actionTypes.SET_RIF_VALIDATED_USER_TO_INSPECT: return setRifValidatedUserToInspect(state, action);
+        case actionTypes.VALIDATE_USER_PROFILE_RIF_START: return validateUserProfileRifStart(state, action);
+        case actionTypes.VALIDATE_USER_PROFILE_RIF_SUCCESS: return validateUserProfileRifSuccess(state, action);
+        case actionTypes.VALIDATE_USER_PROFILE_RIF_FAIL: return validateUserProfileRifFail(state, action);
         default: return state;
     };
 };

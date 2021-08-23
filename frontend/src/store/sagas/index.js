@@ -23,6 +23,9 @@ import {
     uploadUserProfileRifSaga,
     // verifyUserProfileDetailSaga,
     fetchSpecializationsSaga,
+    fetchNonRifValidatedUsersSaga,
+    fetchRifValidatedUsersSaga,
+    validateUserProfileRifSaga
 } from './userProfile';
 
 import {
@@ -116,6 +119,9 @@ export function* watchUserProfile() {
         takeLatest(actionTypes.MODIFY_USER_PROFILE_DETAIL, modifyUserProfileDetailSaga),
         takeLatest(actionTypes.UPLOAD_USER_PROFILE_RIF, uploadUserProfileRifSaga),
         takeEvery(actionTypes.FETCH_SPECIALIZATIONS, fetchSpecializationsSaga),
+        takeEvery(actionTypes.FETCH_NON_RIF_VALIDATED_USERS, fetchNonRifValidatedUsersSaga),
+        takeEvery(actionTypes.FETCH_RIF_VALIDATED_USERS, fetchRifValidatedUsersSaga),
+        takeLatest(actionTypes.VALIDATE_USER_PROFILE_RIF, validateUserProfileRifSaga),
     ]);
 };
 

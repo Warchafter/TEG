@@ -3,7 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
-    Card, Grid
+    Card,
+    Grid,
+    Table,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Typography
 } from '@material-ui/core';
 
 import PurchaseBillAddNewProductCard from '../../../components/Bill/PurchaseBill/PurchaseBillAddNewProductCard';
@@ -23,7 +30,16 @@ const useStyles = makeStyles((theme) => ({
     },
     gridProducts: {
         padding: '10px'
-    }
+    },
+    tableContainer: {
+        borderRadius: 15,
+        margin: '10px 10px',
+    },
+    tableHeaderCell: {
+        fontWeight: 'bold',
+        backgroundColor: '#3c4b64',
+        color: theme.palette.getContrastText(theme.palette.primary.dark)
+    },
 }));
 
 const PurchaseBillProductTableSkeleton = () => {
@@ -48,14 +64,27 @@ const PurchaseBillProductTableSkeleton = () => {
         <div className={styles.root}>
             <Card className={styles.tableCardSkeleton}>
                 <Grid container spacing={1} className={styles.gridProducts}>
+                    <Grid item xs={12}>
+                        <TableContainer component={styles.tableContainer}>
+                            <Table size="small" aria-label="a dense table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell className={styles.tableHeaderCell}>
+                                            <Typography>Requerimiento</Typography>
+                                        </TableCell>
+                                    </TableRow>
+                                </TableHead>
+                            </Table>
+                        </TableContainer>
+                    </Grid>
                     {
                         billDetailListFiltered
                         ?
-                        billDetailListFiltered.map((row, index) => (
-                                <Grid item xs={12}>
-                                    <PurchaseBillProductCard key={row.id} number={index} data={row}/>
-                                </Grid>
-                        ))
+                            billDetailListFiltered.map((row, index) => (
+                                    <Grid item xs={12}>
+                                        <PurchaseBillProductCard key={row.id} number={index} data={row}/>
+                                    </Grid>
+                            ))
                         :
                         null
                     }
@@ -72,7 +101,6 @@ const PurchaseBillProductTableSkeleton = () => {
                         <Grid item xs={12}>
                             <p>X</p>
                         </Grid>
-
                     <Grid item xs={12}>
                         <PurchaseBillAddNewProductCard/>
                     </Grid>

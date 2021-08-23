@@ -6,7 +6,8 @@ import {
     Button,
     Grid,
     TextField,
-    Chip
+    Chip,
+    Card
 } from '@material-ui/core';
 
 import CloudDoneIcon from '@material-ui/icons/CloudDone';
@@ -74,6 +75,20 @@ const UserProfileClient = () => {
         onSelectedOptionHandler(e.target.name, "something");
     };
 
+    console.log(userProfileDetail);
+
+    const specializationChipsHandler = () => {
+        if (userProfileDetail.specialization) {
+            userProfileDetail.specialization.map((index) => {
+                console.log(index.id);
+                console.log(index.name);
+                return <Chip key={index.id} label={index.name} variant="outlined" />
+            })
+        } else {
+            return null
+        }
+    }
+
 
     return (
         <div className={styles.root}>
@@ -89,7 +104,7 @@ const UserProfileClient = () => {
                                 id="standard-read-only-input-name"
                                 // label="Nombre"
                                 className={styles.textField}
-                                defaultValue={userProfileDetail.name}
+                                value={userProfileDetail.name}
                                 InputProps={{
                                     readOnly: true,
                                 }}
@@ -106,7 +121,7 @@ const UserProfileClient = () => {
                                 id="standard-read-only-input-email"
                                 // label="Correo"
                                 className={styles.textField}
-                                defaultValue={userProfileDetail.email}
+                                value={userProfileDetail.email}
                                 InputProps={{
                                     readOnly: true,
                                 }}
@@ -141,7 +156,7 @@ const UserProfileClient = () => {
                                 id="standard-read-only-input-business-type"
                                 // label="Correo"
                                 className={styles.textField}
-                                defaultValue={userProfileDetail.business_type}
+                                value={userProfileDetail.business_type}
                                 InputProps={{
                                     readOnly: true,
                                 }}
@@ -154,13 +169,15 @@ const UserProfileClient = () => {
                             <h5 className={styles.header}>Especializaciones</h5>
                         </Grid>
                         <Grid item xs={8} className={styles.grid}>
-                            {
-                                userProfileDetail.specializationList ?
-                                userProfileDetail.specializationList.map((index) => {
-                                    return <Chip key={index.id} label={index.name} variant="outlined" />
-                                })
-                                : null
-                            }
+                                {
+                                    userProfileDetail.specialization ?
+                                    userProfileDetail.specialization.map((index) => {
+                                        console.log(index.id);
+                                        console.log(index.name);
+                                        return <Chip key={index.id} label={index.name} variant="outlined" />
+                                    })
+                                    : null
+                                }
                         </Grid>
                     </Grid>
                     <Grid item container spacing={6} xs={12}>
@@ -173,7 +190,7 @@ const UserProfileClient = () => {
                                 // label="Correo"
                                 multiline
                                 className={styles.textField}
-                                defaultValue={userProfileDetail.rif_address}
+                                value={userProfileDetail.rif_address}
                                 InputProps={{
                                     readOnly: true,
                                 }}

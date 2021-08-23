@@ -126,7 +126,7 @@ const WidgetsBrand = ({ withCharts }) => {
                     labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio'],
                     datasets: [
                       {
-                        backgroundColor: 'rgba(255,255,255,.1)',
+                        backgroundColor: 'rgba(92, 24, 40,.1)',
                         borderColor: 'rgba(255,255,255,.55)',
                         pointHoverBackgroundColor: '#fff',
                         borderWidth: 2,

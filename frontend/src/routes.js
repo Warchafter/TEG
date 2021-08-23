@@ -49,6 +49,8 @@ const SupplierCreate = React.lazy(() => { return import('./containers/Supplier/S
 // user profile
 
 const UserProfile = React.lazy(() => { return import('./containers/UserProfile/UserProfile') });
+const UserProfileNonValidatedUsers = React.lazy(() => { return import('./containers/UserProfile/UserProfileNonValidatedUsers') });
+const UserProfileValidatedUsers = React.lazy(() => { return import('./containers/UserProfile/UserProfileValidatedUsers') });
 
 
 // extra
@@ -376,6 +378,20 @@ let routes = [
         layout: DefaultLayout,
         name: 'Aprobar Pago',
         component: BillPaymentDetailApproval,
+        isPrivate: true,
+    },
+    {
+        path: '/users-unverified',
+        layout: DefaultLayout,
+        name: 'Usuarios no Verificados',
+        component: UserProfileNonValidatedUsers,
+        isPrivate: true,
+    },
+    {
+        path: '/users-verified',
+        layout: DefaultLayout,
+        name: 'Usuarios Verificados',
+        component: UserProfileValidatedUsers,
         isPrivate: true,
     },
     { path: '/dashboard', name: 'Dashboard', component: Dashboard, layout: DefaultLayout, isPrivate: true },

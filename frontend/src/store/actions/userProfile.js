@@ -212,3 +212,71 @@ export const fetchNonRifValidatedUsersFail = (error) => {
         error: error
     };
 };
+
+export const fetchRifValidatedUsers = () => {
+    return {
+        type: actionTypes.FETCH_RIF_VALIDATED_USERS
+    };
+};
+
+export const fetchRifValidatedUsersStart = () => {
+    return {
+        type: actionTypes.FETCH_RIF_VALIDATED_USERS_START
+    };
+};
+
+export const fetchRifValidatedUsersSuccess = (rifValidatedUserList) => {
+    return {
+        type: actionTypes.FETCH_RIF_VALIDATED_USERS_SUCCESS,
+        rifValidatedUserList: rifValidatedUserList
+    };
+};
+
+export const fetchRifValidatedUsersFail = (error) => {
+    return {
+        type: actionTypes.FETCH_RIF_VALIDATED_USERS_FAIL,
+        error: error
+    };
+};
+
+export const setNonRifValidatedUserToInspect = (data) => {
+    return {
+        type: actionTypes.SET_NON_RIF_VALIDATED_USER_TO_INSPECT,
+        data: data
+    };
+};
+
+export const setRifValidatedUserToInspect = (data) => {
+    return {
+        type: actionTypes.SET_RIF_VALIDATED_USER_TO_INSPECT,
+        data: data
+    };
+};
+
+export const validateUserProfileRif = (id, data) => {
+    return {
+        type: actionTypes.VALIDATE_USER_PROFILE_RIF,
+        id: id,
+        data: data
+    };
+};
+
+export const validateUserProfileRifStart = () => {
+    return {
+        type: actionTypes.VALIDATE_USER_PROFILE_RIF_START
+    };
+};
+
+export const validateUserProfileRifSuccess = (userProfileDetail) => {
+    return {
+        type: actionTypes.VALIDATE_USER_PROFILE_RIF_SUCCESS,
+        userProfileDetail: userProfileDetail
+    };
+};
+
+export const validateUserProfileRifFail = (error) => {
+    return {
+        type: actionTypes.VALIDATE_USER_PROFILE_RIF_FAIL,
+        error: error
+    };
+};

@@ -128,7 +128,7 @@ const NiceHeaderCard = (props) => {
                     <div >
                         <h4 className={styles.cardTitle}>{props.title}</h4>
                             <div>
-                                <p className={styles.cardContentText}>Hay X facturas por pagar</p>
+                                <p className={styles.cardContentText}>Hay {props.count} facturas por pagar</p>
                             </div>
                     </div>
                 </div>

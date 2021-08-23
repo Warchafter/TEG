@@ -48,6 +48,9 @@ const useStyles = makeStyles(({ spacing, palette, theme }) => {
             alignItems: 'center',
             justifyContent: 'center',
         },
+        centerItems: {
+            alignSelf: 'center'
+        }
     }
 });
 
@@ -64,28 +67,26 @@ const BillDetailProductCard = (props) => {
         setOpen(false);
     };
 
-    console.log(props.data)
-
     return (
         <div className={styles.root}>
             <Card className={styles.productCard}>
                 <Grid container spacing={2}>
-                    <Grid item xs={1}>
+                    <Grid item xs={1} className={styles.centerItems}>
                         <p>{props.number + 1}</p>
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={2} className={styles.centerItems}>
                         <p>{props.data.product.product.title}</p>
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={2} className={styles.centerItems}>
                         <p>{props.data.product.supplier.name} - {props.data.product.supplier.rif}</p>
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={3} className={styles.centerItems}>
                         {}
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={2} className={styles.centerItems}>
                         <p>Cantidad: {props.data.quantity}</p>
                     </Grid>
-                    <Grid item xs={1}>
+                    <Grid item xs={2} className={styles.centerItems}>
                         {/* <Item position={'right'} mr={-0.5} onClick={() => onSetPurchaseBillToModifyPayment(row)} >
                             <StyledTooltip title={'Ver Detalle'}>
                                 <IconButton>
@@ -93,8 +94,12 @@ const BillDetailProductCard = (props) => {
                                 </IconButton>
                             </StyledTooltip>
                         </Item> */}
-                        <button type="button" onClick={handleOpen}>
-                            react-transition-group
+                        <button
+                            type="button"
+                            className="btn btn-dark"
+                            name="Agregar tipo de producto"
+                            onClick={handleOpen}>
+                                <AccountTreeIcon />
                         </button>
                         <Modal
                             aria-labelledby="transition-modal-title"

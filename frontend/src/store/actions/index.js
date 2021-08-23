@@ -67,6 +67,16 @@ export {
     fetchNonRifValidatedUsersStart,
     fetchNonRifValidatedUsersSuccess,
     fetchNonRifValidatedUsersFail,
+    fetchRifValidatedUsers,
+    fetchRifValidatedUsersStart,
+    fetchRifValidatedUsersSuccess,
+    fetchRifValidatedUsersFail,
+    setNonRifValidatedUserToInspect,
+    setRifValidatedUserToInspect,
+    validateUserProfileRif,
+    validateUserProfileRifStart,
+    validateUserProfileRifSuccess,
+    validateUserProfileRifFail,
 } from './userProfile';
 
 export {
