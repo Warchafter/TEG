@@ -283,7 +283,7 @@ export function* fetchPurchaseBillListSaga(action) {
     };
     console.log(action.data)
     const url1 = '/bill/purchase-bills/';
-    const url2 = `/bill/purchase-bills/?bill_client_submission=${action.data.id}`;
+    const url2 = `/bill/purchase-bills/?bill_client_submission=${action.data ? action.data.id : null}`;
     try {
         let response = yield axios.get(billClientSubmissionSelected ? url2 : url1, config);
         yield put(actions.fetchPurchaseBillListSuccess(response.data));
@@ -313,6 +313,7 @@ export function* createBillDetailSaga(action) {
         let response = yield axios.post(url, body, config);
         yield put(actions.createBillDetailSuccess(response.data));
         yield put(actions.enqueueSnackbar(getSnackbarData('El detalle de la factura fue creado exitosamente!', 'success')));
+        yield put(actions.setPurchaseBillAddingNewProduct(false));
     } catch (error) {
         yield put(actions.createBillDetailFail(error));
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo crear el detalle de la factura', 'error')));
@@ -575,28 +576,20 @@ export function* createBillPaymentDetailSaga(action) {
             'Accept': 'application/json'
         }
     };
-    let body = JSON.stringify({
-        purchase_bill: action.data.purchase_bill,
-        payment_receipt_number: action.data.payment_receipt_number
-    });
     let url = '/bill/bill-payment-details/';
+    console.log(action.data);
     try {
-        let response = yield axios.post(url, body, config);
+        let response1 = yield axios.post(url, action.data, config);
+        url = `/bill/bill-payment-details/${response1.data.id}/upload-image/`;
         config = {
             headers: {
                 'Authorization': `JWT ${access}`,
                 'Accept': 'application/json'
             }
         };
-        url = `/bill/bill-payment-details/${response.data.id}/upload-image/`;
-        try {
-            yield axios.post(url, action.formData, config);
-        } catch (error) {
-            yield put(actions.createBillPaymentDetailFail(error));
-            yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo cargar la imagen del recibo del pago', 'error')));
-        }
-
-        yield put(actions.createBillPaymentDetailSuccess(response.data));
+        let response2 = yield axios.post(url, action.formData, config);
+        console.log(response2);
+        yield put(actions.createBillPaymentDetailSuccess(response1.data, response2.data.payment_receipt_image));
         yield put(actions.enqueueSnackbar(getSnackbarData('El detalle del pago fue creado exitosamente!', 'success')));
     } catch (error) {
         yield put(actions.createBillPaymentDetailFail(error));
@@ -688,6 +681,26 @@ export function* fetchBillPaymentDetailListSaga(action) {
         yield put(actions.fetchBillPaymentDetailListSuccess(response.data));
     } catch (error) {
         yield put(actions.fetchBillPaymentDetailListFail(error));
+        yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer los detalles de pago de las facturas', 'error')));
+    };
+};
+
+export function* fetchBillPaymentDetailListFilteredSaga(action) {
+    yield put(actions.fetchBillPaymentDetailListFilteredStart());
+    const access = yield localStorage.getItem('access');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': access ? `JWT ${access}` : null,
+            'Accept': 'application/json'
+        }
+    };
+    const url = `/bill/bill-payment-details/?purchase_bill=${action.data}`;
+    try {
+        let response = yield axios.get(url, config);
+        yield put(actions.fetchBillPaymentDetailListFilteredSuccess(response.data));
+    } catch (error) {
+        yield put(actions.fetchBillPaymentDetailListFilteredFail(error));
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer los detalles de pago de las facturas', 'error')));
     };
 };

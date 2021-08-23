@@ -404,6 +404,20 @@ export const setPurchaseBillToModifyPayment = (data) => {
     };
 };
 
+export const setPurchaseBillToApprovePayment = (data) => {
+    return {
+        type: actionTypes.SET_PURCHASE_BILL_TO_APPROVE_PAYMENT,
+        data: data
+    };
+};
+
+export const setPurchaseBillAddingNewProduct = (data) => {
+    return {
+        type: actionTypes.SET_PURCHASE_BILL_ADDING_NEW_PRODUCT,
+        data: data
+    };
+};
+
 export const createBillDetail = (data) => {
     return {
         type: actionTypes.CREATE_BILL_DETAIL,
@@ -721,10 +735,11 @@ export const createBillPaymentDetailStart = () => {
     };
 };
 
-export const createBillPaymentDetailSuccess = (billPaymentDetailCreated) => {
+export const createBillPaymentDetailSuccess = (billPaymentDetailCreated, billPaymentDetailImageURL) => {
     return {
         type: actionTypes.CREATE_BILL_PAYMENT_DETAIL_SUCCESS,
-        billPaymentDetailCreated: billPaymentDetailCreated
+        billPaymentDetailCreated: billPaymentDetailCreated,
+        billPaymentDetailImageURL: billPaymentDetailImageURL
     };
 };
 
@@ -788,17 +803,15 @@ export const deleteBillPaymentDetailFail = () => {
     };
 };
 
-export const fetchBillPaymentDetail = (data) => {
+export const fetchBillPaymentDetail = () => {
     return {
-        type: actionTypes.FETCH_BILL_PAYMENT_DETAIL,
-        data: data
+        type: actionTypes.FETCH_BILL_PAYMENT_DETAIL
     };
 };
 
-export const fetchBillPaymentDetailStart = (billPaymentDetailSelected) => {
+export const fetchBillPaymentDetailStart = () => {
     return {
-        type: actionTypes.FETCH_BILL_PAYMENT_DETAIL_START,
-        billPaymentDetailSelected: billPaymentDetailSelected
+        type: actionTypes.FETCH_BILL_PAYMENT_DETAIL_START
     };
 };
 
@@ -839,6 +852,33 @@ export const fetchBillPaymentDetailListSuccess = (billPaymentDetailList) => {
 export const fetchBillPaymentDetailListFail = (error) => {
     return {
         type: actionTypes.FETCH_BILL_PAYMENT_DETAIL_LIST_FAIL,
+        error: error
+    };
+};
+
+export const fetchBillPaymentDetailListFiltered = (data) => {
+    return {
+        type: actionTypes.FETCH_BILL_PAYMENT_DETAIL_LIST_FILTERED,
+        data: data
+    };
+};
+
+export const fetchBillPaymentDetailListFilteredStart = () => {
+    return {
+        type: actionTypes.FETCH_BILL_PAYMENT_DETAIL_LIST_FILTERED_START
+    };
+};
+
+export const fetchBillPaymentDetailListFilteredSuccess = (billPaymentDetailListFiltered) => {
+    return {
+        type: actionTypes.FETCH_BILL_PAYMENT_DETAIL_LIST_FILTERED_SUCCESS,
+        billPaymentDetailListFiltered: billPaymentDetailListFiltered
+    };
+};
+
+export const fetchBillPaymentDetailListFilteredFail = (error) => {
+    return {
+        type: actionTypes.FETCH_BILL_PAYMENT_DETAIL_LIST_FILTERED_FAIL,
         error: error
     };
 };

@@ -125,3 +125,24 @@ export function* fetchSpecializationsSaga(action) {
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer el listado de Especializaciones', 'error')));
     };
 };
+
+export function* fetchNonRifValidatedUsersSaga(action) {
+    yield put(actions.fetchNonRifValidatedUsersStart());
+    const access = yield localStorage.getItem('access');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': access ? `JWT ${access}` : null,
+            'Accept': 'application/json'
+        }
+    };
+    const url = '/user/users/?rif_validated=false&roles=user';
+    try {
+        let response = yield axios.get(url, config);
+        console.log(response.data);
+        yield put(actions.fetchNonRifValidatedUsersSuccess(response.data));
+    } catch (error) {
+        yield put(actions.fetchNonRifValidatedUsersFail(error));
+        yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer el listado de clientes', 'error')));
+    };
+};

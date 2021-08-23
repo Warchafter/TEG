@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import cx from 'clsx';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -16,10 +18,9 @@ import { Typography } from '@material-ui/core';
 
 import { Item } from '@mui-treasury/components/flex';
 import { useSizedIconButtonStyles } from '@mui-treasury/styles/iconButton/sized';
-
-import { Redirect } from 'react-router-dom';
-
 import { stringLongDateHandler } from '../../../shared/utility';
+
+import * as actions from '../../../store/actions/index';
 
 const StyledTooltip = withStyles({
     tooltip: {
@@ -118,10 +119,16 @@ const useSliderStyles = makeStyles((theme) => ({
     },
 }));
 
-export const KanbanCardDemo = React.memo(function KanbanCard(props) {
+const KanbanCardDemo = (props) => {
+    const dispatch = useDispatch();
     const styles = useStyles();
+    const history = useHistory();
     const iconBtnStyles = useSizedIconButtonStyles({ padding: 8, childSize: 20 });
     const sliderStyles = useSliderStyles();
+
+    console.log("DATA: ", props);
+
+    const onSetPurchaseBillToApprovePayment = useCallback((data) => dispatch(actions.setPurchaseBillToApprovePayment(data)), [dispatch]);
 
     const [sliderState, setSliderState] = useState(0);
 
@@ -141,13 +148,14 @@ export const KanbanCardDemo = React.memo(function KanbanCard(props) {
         };
     };
 
-    useEffect(() => {
-        SliderStateHandler(props.payment_status.id);
-    }, [props,]);
 
-    const SelectedDetailHandler = (index) => {
-        let url = `/purchase-bill/${index}`
-        return <Redirect to={url} />
+    useEffect(() => {
+        SliderStateHandler(props.data.payment_status.id);
+    }, [props.data,]);
+
+    const SelectedDetailHandler = (url) => {
+        onSetPurchaseBillToApprovePayment(props.data);
+        history.push(url)
     }
 
     // const [open, setOpen] = useState(false);
@@ -159,7 +167,6 @@ export const KanbanCardDemo = React.memo(function KanbanCard(props) {
     // const handleClose = () => {
     //     setOpen(false);
     // };
-
 
     return (
         <Card className={cx(styles.card)} elevation={0}>
@@ -174,7 +181,7 @@ export const KanbanCardDemo = React.memo(function KanbanCard(props) {
                         <Tooltip title="Abrir Detalle">
                             <IconButton aria-label="open">
                                 <DescriptionIcon
-                                    onClick={() => { SelectedDetailHandler(props.id) }}
+                                    onClick={(props) => SelectedDetailHandler(props.data.id)}
                                     color="primary"
                                     style={{ fontSize: 30 }}
                                 />
@@ -184,21 +191,21 @@ export const KanbanCardDemo = React.memo(function KanbanCard(props) {
                     <Grid item={1} className={styles.idTag}>
                         <Typography
                             className={styles.status}
-                        >{props.id}</Typography>
+                        >{props.data.id}</Typography>
                     </Grid>
                 </Grid>
             </Box>
             <Box>
                 <h3 className={styles.heading}>John Onella</h3>
-                <p className={styles.subheader}>{props.payment_method.name}</p>
-                <p className={styles.subheader}>Fecha pago:{stringLongDateHandler(props.purchase_payment_date)}</p>
+                <p className={styles.subheader}>{props.data.payment_method.name}</p>
+                <p className={styles.subheader}>Fecha pago:{stringLongDateHandler(props.data.purchase_payment_date)}</p>
                 <Box display={'flex'} alignItems={'center'}>
                     <Slider classes={sliderStyles} defaultValue={0} value={sliderState} />
-                    <span className={styles.value}>{props.payment_status.id}/3</span>
+                    <span className={styles.value}>{props.data.payment_status.id}/3</span>
                 </Box>
             </Box>
-            <Item position={'right'} mr={-0.5} onClick={() => console.log(typeof props.purchase_payment_date)} >
-                <StyledTooltip title={'See details'}>
+            <Item position={'right'} mr={-0.5} onClick={() => SelectedDetailHandler('/bill-payment-detail-approval')} >
+                <StyledTooltip title={'Ver Pago'}>
                     <IconButton classes={iconBtnStyles}>
                         <CallMade />
                     </IconButton>
@@ -206,6 +213,6 @@ export const KanbanCardDemo = React.memo(function KanbanCard(props) {
             </Item>
         </Card>
     );
-});
+};
 
 export default KanbanCardDemo;

@@ -1,4 +1,3 @@
-/* eslint-disable array-callback-return */
 import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -17,6 +16,7 @@ import cx from 'clsx';
 import Card from '@material-ui/core/Card';
 
 import * as actions from '../../../store/actions/index';
+import Notifier from '../../../components/Notifier/Notifier';
 
 
 const useStyles = makeStyles(({ spacing, palette, theme }) => {
@@ -82,8 +82,7 @@ const useStyles = makeStyles(({ spacing, palette, theme }) => {
 });
 
 const BillKanbanStyleGrid = () => {
-
-    const classes = useStyles();
+    const styles = useStyles();
     const dispatch = useDispatch();
 
     // const [paymentBillCounter1, setPaymentBillCounter1] = React.useState(0);
@@ -107,43 +106,44 @@ const BillKanbanStyleGrid = () => {
 
     return (
         <React.Fragment>
+            <Notifier />
             <Grid
                 spacing={3}
                 direction="column"
-                className={classes.root}
+                className={styles.root}
                 container
             >
                 <Grid item xs={12}>
                 <CurrencyValueCard exchangeRates={exchangeRates} loading={isLoadingExRate} ExRateDataLoaded={ExRateDataLoaded} />
                 </Grid>
                 {/* <Grid item xs={12}>
-                    <div className={classes.alertLight}>
-                        <div className={classes.alertTitle}>Test Title
+                    <div className={styles.alertLight}>
+                        <div className={styles.alertTitle}>Test Title
                         </div>
                         " Test description to understand the padding a little bit better. "
                     </div>
                 </Grid> */}
                 <Grid item xs={12}>
-                    <Card className={cx(classes.card)} elevation={0}>
+                    <Card className={cx(styles.card)} elevation={0}>
                         <h2>Estados de Pagos de Cotizaciones Pendientes</h2>
                     </Card>
                 </Grid>
                 {isLoading === false && purchaseBillList !== []
                     ?
-                    <Grid item xs={12} className={classes.scrollMenu}>
-                        <Grid container spacing={8} className={classes.root} >
+                    <Grid item xs={12} className={styles.scrollMenu}>
+                        <Grid container spacing={8} className={styles.root} >
                             <Grid item xs={4} md={4}>
                                 <Grid
                                     spacing={3}
                                     direction="column"
-                                    className={classes.root}
+                                    className={styles.root}
                                     container
                                 >
                                     <NiceHeaderCard title={"Por Pagar"} type={"Por Pagar"}/>
                                     {
                                         purchaseBillList.map(index => {
                                             if (index.payment_status.id === 1) {
-                                                return <Grid item xs={12}><KanbanCardDemo key={index.id} {...index} /></Grid>
+                                                return <Grid item xs={12}><KanbanCardDemo key={index.id} data={index} /></Grid>
                                             }
                                         })
                                     }
@@ -153,14 +153,14 @@ const BillKanbanStyleGrid = () => {
                                 <Grid
                                     spacing={3}
                                     direction="column"
-                                    className={classes.root}
+                                    className={styles.root}
                                     container
                                 >
                                     <NiceHeaderCard title={"Pago Parcial"} type={"Pago Parcial"}/>
                                     {
                                         purchaseBillList.map(index => {
                                             if (index.payment_status.id === 2) {
-                                                return <Grid item xs={12}><KanbanCardDemo key={index.id} {...index} /></Grid>
+                                                return <Grid item xs={12}><KanbanCardDemo key={index.id} data={index} /></Grid>
                                             }
                                         })
                                     }
@@ -170,14 +170,14 @@ const BillKanbanStyleGrid = () => {
                                 <Grid
                                     spacing={3}
                                     direction="column"
-                                    className={classes.root}
+                                    className={styles.root}
                                     container
                                 >
                                     <NiceHeaderCard title={"Pago Completo"} type={"Pago Completo"}/>
                                     {
                                         purchaseBillList.map(index => {
                                         if (index.payment_status.id === 3) {
-                                            return <Grid item xs={12}><KanbanCardDemo key={index.id} {...index} /></Grid>
+                                            return <Grid item xs={12}><KanbanCardDemo key={index.id} data={index} /></Grid>
                                         }
                                         })
                                     }

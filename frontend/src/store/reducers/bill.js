@@ -25,6 +25,8 @@ const initialState = {
     purchaseBillToModify: null,
     purchaseBillToInspect: null,
     purchaseBillToModifyPayment: null,
+    purchaseBillToApprovePayment: null,
+    purchaseBillAddingNewProduct: false,
     billDetailData: [],
     billDetailSelected: [],
     billDetailListCount: [],
@@ -309,6 +311,14 @@ const setPurchaseBillToModifyPayment = (state, action) => {
     return updateObject(state, { purchaseBillToModifyPayment: action.data });
 };
 
+const setPurchaseBillToApprovePayment = (state, action) => {
+    return updateObject(state, { purchaseBillToApprovePayment: action.data });
+};
+
+const setPurchaseBillAddingNewProduct = (state, action) => {
+    return updateObject(state, { purchaseBillAddingNewProduct: action.data });
+};
+
 const createBillDetailStart = (state, action) => {
     return updateObject(state, { error: null, loading: true });
 };
@@ -529,9 +539,9 @@ const createBillPaymentDetailStart = (state, action) => {
 };
 
 const createBillPaymentDetailSuccess = (state, action) => {
-    const updatedBillPaymentDetailList = state.billPaymentDetailList.push(action.billPaymentDetailCreated);
     const updatedState = {
-        billPaymentDetailList: updatedBillPaymentDetailList,
+        billPaymentDetail: action.billPaymentDetailCreated,
+        billPaymentDetailImageURL: action.billPaymentDetailImageURL,
         error: null,
         loading: false
     };
@@ -617,6 +627,25 @@ const fetchBillPaymentDetailListFail = (state, action) => {
     return updateObject(state, { error: action.error, loading: false });
 };
 
+const fetchBillPaymentDetailListFilteredStart = (state, action) => {
+    return updateObject(state, { error: null, loading: true });
+};
+
+const fetchBillPaymentDetailListFilteredSuccess = (state, action) => {
+    const updatedState = {
+        billPaymentDetailListFilteredCount: action.billPaymentDetailListFiltered.count,
+        billPaymentDetailListFilteredPag: action.billPaymentDetailListFiltered.links,
+        billPaymentDetailListFiltered: action.billPaymentDetailListFiltered.results,
+        error: null,
+        loading: false
+    };
+    return updateObject(state, updatedState);
+};
+
+const fetchBillPaymentDetailListFilteredFail = (state, action) => {
+    return updateObject(state, { error: action.error, loading: false });
+};
+
 const fetchExchangeRatesStart = (state, action) => {
     return updateObject(state, { error: null, loadingExRates: true, ExRateDataLoaded: false });
 };
@@ -693,6 +722,8 @@ const reducer = (state = initialState, action) => {
         case actionTypes.SET_PURCHASE_BILL_TO_MODIFY: return setPurchaseBillToModify(state, action);
         case actionTypes.SET_PURCHASE_BILL_TO_INSPECT: return setPurchaseBillToInspect(state, action);
         case actionTypes.SET_PURCHASE_BILL_TO_MODIFY_PAYMENT: return setPurchaseBillToModifyPayment(state, action);
+        case actionTypes.SET_PURCHASE_BILL_TO_APPROVE_PAYMENT: return setPurchaseBillToApprovePayment(state, action);
+        case actionTypes.SET_PURCHASE_BILL_ADDING_NEW_PRODUCT: return setPurchaseBillAddingNewProduct(state, action);
         case actionTypes.CREATE_BILL_DETAIL_START: return createBillDetailStart(state, action);
         case actionTypes.CREATE_BILL_DETAIL_SUCCESS: return createBillDetailSuccess(state, action);
         case actionTypes.CREATE_BILL_DETAIL_FAIL: return createBillDetailFail(state, action);
@@ -744,6 +775,9 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_BILL_PAYMENT_DETAIL_LIST_START: return fetchBillPaymentDetailListStart(state, action);
         case actionTypes.FETCH_BILL_PAYMENT_DETAIL_LIST_SUCCESS: return fetchBillPaymentDetailListSuccess(state, action);
         case actionTypes.FETCH_BILL_PAYMENT_DETAIL_LIST_FAIL: return fetchBillPaymentDetailListFail(state, action);
+        case actionTypes.FETCH_BILL_PAYMENT_DETAIL_LIST_FILTERED_START: return fetchBillPaymentDetailListFilteredStart(state, action);
+        case actionTypes.FETCH_BILL_PAYMENT_DETAIL_LIST_FILTERED_SUCCESS: return fetchBillPaymentDetailListFilteredSuccess(state, action);
+        case actionTypes.FETCH_BILL_PAYMENT_DETAIL_LIST_FILTERED_FAIL: return fetchBillPaymentDetailListFilteredFail(state, action);
         case actionTypes.FETCH_EXCHANGE_RATES_START: return fetchExchangeRatesStart(state, action);
         case actionTypes.FETCH_EXCHANGE_RATES_SUCCESS: return fetchExchangeRatesSuccess(state, action);
         case actionTypes.FETCH_EXCHANGE_RATES_FAIL: return fetchExchangeRatesFail(state, action);

@@ -146,9 +146,10 @@ class UserViewSet(viewsets.ModelViewSet):
         # business_name = self.request.query_params.get('business_name')
         # business_type = self.request.query_params.get('business_type')
         # specialization = self.request.query_params.get('specialization')
-        # rif = self.request.query_params.get('rif')
+        rif = self.request.query_params.get('rif')
+        rif_validated = self.request.query_params.get('rif_validated')
         # is_active = self.request.query_params.get('is_active')
-        # roles = self.request.query_params.get('roles')
+        roles = self.request.query_params.get('roles')
         # order_by = self.request.query_params.get('order_by')
         queryset = self.queryset
         is_staff = self.request.user.is_staff
@@ -159,6 +160,19 @@ class UserViewSet(viewsets.ModelViewSet):
         if name:
             queryset = queryset.filter(
                 name__iexact=name)
+        # if roles and rif_validated:
+        if roles:
+            queryset = queryset.filter(
+                roles__iexact=roles
+            )
+        if rif_validated:
+            queryset = queryset.filter(
+                rif_validated__iexact=rif_validated
+            )
+        if rif:
+            queryset = queryset.exclude(
+                rif__isnull=True
+            )
         # if business_name:
         #     queryset = queryset.filter(
         #         business_name__iexact=business_name)
@@ -191,8 +205,8 @@ class UserViewSet(viewsets.ModelViewSet):
         """Return appropriate serializer class"""
         if self.action == 'retrieve':
             return serializers.CurrentUserSerializer
-        elif self.action == 'list':
-            return serializers.UserListSerializer
+        # elif self.action == 'list':
+        #     return serializers.UserListSerializer
         elif self.action == 'upload_image':
             return serializers.CurrentUserRIFImageSerializer
 

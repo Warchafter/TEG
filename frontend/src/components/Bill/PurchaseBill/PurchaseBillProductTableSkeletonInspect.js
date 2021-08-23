@@ -10,6 +10,7 @@ import PurchaseBillAddNewProductCard from '../../../components/Bill/PurchaseBill
 import PurchaseBillProductCard from '../../../components/Bill/PurchaseBill/PurchaseBillProductCard';
 
 import * as actions from '../../../store/actions/index';
+import PurchaseBillNewProductCard from './PurchaseBillNewProductCard';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,13 +26,14 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const PurchaseBillProductTableSkeleton = () => {
+const PurchaseBillProductTableSkeletonInspect = () => {
     const dispatch = useDispatch()
     const styles = useStyles();
 
     const userProfileDetail = useSelector(state => state.userProfile.userProfileDetail);
     const billDetailListFiltered = useSelector(state => state.bill.billDetailListFiltered);
     const purchaseBillToInspect = useSelector(state => state.bill.purchaseBillToInspect);
+    const purchaseBillAddingNewProduct = useSelector(state => state.bill.purchaseBillAddingNewProduct);
 
     const onFetchBillDetailListFiltered = useCallback((id) => dispatch(actions.fetchBillDetailListFiltered(id)), [dispatch]);
 
@@ -67,6 +69,13 @@ const PurchaseBillProductTableSkeleton = () => {
                         :
                         <h1>No ha sido creado todavía!</h1>
                     }
+                    {
+                        purchaseBillAddingNewProduct ?
+                            <Grid item xs={12}>
+                                <PurchaseBillNewProductCard />
+                            </Grid>
+                        : null
+                    }
                     {canModifyPurchaseBill()}
                 </Grid>
             </Card>
@@ -74,4 +83,4 @@ const PurchaseBillProductTableSkeleton = () => {
     );
 };
 
-export default PurchaseBillProductTableSkeleton;
+export default PurchaseBillProductTableSkeletonInspect;

@@ -64,9 +64,9 @@ const UserProfileClient = () => {
         ), [dispatch]);
 
     useEffect(() => {
-        if (isAuthenticated && userProfileDetail) {
+        // if (isAuthenticated && userProfileDetail) {
             onFetchUserProfileDetail();
-        };
+        // };
     }, []);
 
     const optionSelectedHandler = (e) => {
@@ -74,147 +74,149 @@ const UserProfileClient = () => {
         onSelectedOptionHandler(e.target.name, "something");
     };
 
-    // const specializationChips = (userProfileDetail) => {
-        
-    // };
 
     return (
         <div className={styles.root}>
-            <Grid container spacing={3}>
-                <Grid item container spacing={6} xs={12}>
-                    <Grid item xs={4}>
-                        <h5 className={styles.header}>Usuario</h5>
+            {
+                userProfileDetail ?
+                <Grid container spacing={3}>
+                    <Grid item container spacing={6} xs={12}>
+                        <Grid item xs={4}>
+                            <h5 className={styles.header}>Usuario</h5>
+                        </Grid>
+                        <Grid item xs={8}>
+                            <TextField
+                                id="standard-read-only-input-name"
+                                // label="Nombre"
+                                className={styles.textField}
+                                defaultValue={userProfileDetail.name}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                            />
+                            {/* <h4 className={styles.content}>{userProfileDetail.name}</h4> */}
+                        </Grid>
                     </Grid>
-                    <Grid item xs={8}>
-                        <TextField
-                            id="standard-read-only-input-name"
-                            // label="Nombre"
-                            className={styles.textField}
-                            defaultValue={userProfileDetail.name}
-                            InputProps={{
-                                readOnly: true,
-                            }}
-                        />
-                        {/* <h4 className={styles.content}>{userProfileDetail.name}</h4> */}
+                    <Grid item container spacing={6} xs={12}>
+                        <Grid item xs={4} className={styles.grid}>
+                            <h5 className={styles.header}>Correo</h5>
+                        </Grid>
+                        <Grid item xs={8} className={styles.grid}>
+                            <TextField
+                                id="standard-read-only-input-email"
+                                // label="Correo"
+                                className={styles.textField}
+                                defaultValue={userProfileDetail.email}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                            />
+                            {/* <h4 className={styles.content}>{userProfileDetail.email}</h4> */}
+                        </Grid>
                     </Grid>
-                </Grid>
-                <Grid item container spacing={6} xs={12}>
-                    <Grid item xs={4} className={styles.grid}>
-                        <h5 className={styles.header}>Correo</h5>
+                    <Grid item container spacing={6} xs={12}>
+                        <Grid item xs={4} className={styles.grid}>
+                            <h5 className={styles.header}>Nombre del Negocio</h5>
+                        </Grid>
+                        <Grid item xs={8} className={styles.grid}>
+                            <TextField
+                                id="standard-read-only-input-business-name"
+                                // label="Correo"
+                                multiline
+                                className={styles.textField}
+                                defaultValue={userProfileDetail.business_name}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                            />
+                            {/* <h4 className={styles.content}>{userProfileDetail.business_name}</h4> */}
+                        </Grid>
                     </Grid>
-                    <Grid item xs={8} className={styles.grid}>
-                        <TextField
-                            id="standard-read-only-input-email"
-                            // label="Correo"
-                            className={styles.textField}
-                            defaultValue={userProfileDetail.email}
-                            InputProps={{
-                                readOnly: true,
-                            }}
-                        />
-                        {/* <h4 className={styles.content}>{userProfileDetail.email}</h4> */}
+                    <Grid item container spacing={6} xs={12}>
+                        <Grid item xs={4} className={styles.grid}>
+                            <h5 className={styles.header}>Tipo del Negocio</h5>
+                        </Grid>
+                        <Grid item xs={8} className={styles.grid}>
+                            <TextField
+                                id="standard-read-only-input-business-type"
+                                // label="Correo"
+                                className={styles.textField}
+                                defaultValue={userProfileDetail.business_type}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                            />
+                            {/* <h4 className={styles.content}>{userProfileDetail.business_type}</h4> */}
+                        </Grid>
                     </Grid>
-                </Grid>
-                <Grid item container spacing={6} xs={12}>
-                    <Grid item xs={4} className={styles.grid}>
-                        <h5 className={styles.header}>Nombre del Negocio</h5>
-                    </Grid>
-                    <Grid item xs={8} className={styles.grid}>
-                        <TextField
-                            id="standard-read-only-input-business-name"
-                            // label="Correo"
-                            multiline
-                            className={styles.textField}
-                            defaultValue={userProfileDetail.business_name}
-                            InputProps={{
-                                readOnly: true,
-                            }}
-                        />
-                        {/* <h4 className={styles.content}>{userProfileDetail.business_name}</h4> */}
-                    </Grid>
-                </Grid>
-                <Grid item container spacing={6} xs={12}>
-                    <Grid item xs={4} className={styles.grid}>
-                        <h5 className={styles.header}>Tipo del Negocio</h5>
-                    </Grid>
-                    <Grid item xs={8} className={styles.grid}>
-                        <TextField
-                            id="standard-read-only-input-business-type"
-                            // label="Correo"
-                            className={styles.textField}
-                            defaultValue={userProfileDetail.business_type}
-                            InputProps={{
-                                readOnly: true,
-                            }}
-                        />
-                        {/* <h4 className={styles.content}>{userProfileDetail.business_type}</h4> */}
-                    </Grid>
-                </Grid>
-                <Grid item container spacing={6} xs={12}>
-                    <Grid item xs={4} className={styles.grid}>
-                        <h5 className={styles.header}>Especializaciones</h5>
-                    </Grid>
-                    <Grid item xs={8} className={styles.grid}>
-                        {/* {specializationChips(userProfileDetail)} */}
-                        {
-                            userProfileDetail.specialization.map((index) => {
-                                return <Chip key={index.id} label={index.name} variant="outlined" />
-                            })
-                        }
-                    </Grid>
-                </Grid>
-                <Grid item container spacing={6} xs={12}>
-                    <Grid item xs={4} className={styles.grid}>
-                        <h5 className={styles.header}>Dirección del RIF</h5>
-                    </Grid>
-                    <Grid item xs={8} className={styles.grid}>
-                        <TextField
-                            id="standard-read-only-input-rif-address"
-                            // label="Correo"
-                            multiline
-                            className={styles.textField}
-                            defaultValue={userProfileDetail.rif_address}
-                            InputProps={{
-                                readOnly: true,
-                            }}
-                        />
-                        {/* <h4 className={styles.content}>{userProfileDetail.rif_address}</h4> */}
-                    </Grid>
-                </Grid>
-                <Grid item container spacing={6} xs={12}>
-                    <Grid item xs={4} className={styles.grid}>
-                        <h5 className={styles.header}>¿RIF Validado?</h5>
-                    </Grid>
-                    <Grid item xs={6} className={styles.grid}>
-                        <h4 className={styles.content}>
+                    <Grid item container spacing={6} xs={12}>
+                        <Grid item xs={4} className={styles.grid}>
+                            <h5 className={styles.header}>Especializaciones</h5>
+                        </Grid>
+                        <Grid item xs={8} className={styles.grid}>
                             {
-                            userProfileDetail.rif_validated
-                                ?
-                                    <h5 className={styles.content}>Si.</h5>
-                                :
-                                    <h5 className={styles.content}>No.</h5>
+                                userProfileDetail.specializationList ?
+                                userProfileDetail.specializationList.map((index) => {
+                                    return <Chip key={index.id} label={index.name} variant="outlined" />
+                                })
+                                : null
                             }
-                        </h4>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={2} className={styles.grid}>
-                        {
-                            !userProfileDetail.rif_validated
-                                ?
-                                <button
-                                type="button"
-                                className="btn btn-dark"
-                                name="Upload RIF"
-                                onClick={(e) => optionSelectedHandler(e)}
-                                >
-                                    <CloudDoneIcon />
-                                    Actualizar
-                                </button>
-                                :
-                                    null
-                        }
+                    <Grid item container spacing={6} xs={12}>
+                        <Grid item xs={4} className={styles.grid}>
+                            <h5 className={styles.header}>Dirección del RIF</h5>
+                        </Grid>
+                        <Grid item xs={8} className={styles.grid}>
+                            <TextField
+                                id="standard-read-only-input-rif-address"
+                                // label="Correo"
+                                multiline
+                                className={styles.textField}
+                                defaultValue={userProfileDetail.rif_address}
+                                InputProps={{
+                                    readOnly: true,
+                                }}
+                            />
+                            {/* <h4 className={styles.content}>{userProfileDetail.rif_address}</h4> */}
+                        </Grid>
+                    </Grid>
+                    <Grid item container spacing={6} xs={12}>
+                        <Grid item xs={4} className={styles.grid}>
+                            <h5 className={styles.header}>¿RIF Validado?</h5>
+                        </Grid>
+                        <Grid item xs={6} className={styles.grid}>
+                            <h4 className={styles.content}>
+                                {
+                                userProfileDetail.rif_validated
+                                    ?
+                                        <h5 className={styles.content}>Si.</h5>
+                                    :
+                                        <h5 className={styles.content}>No.</h5>
+                                }
+                            </h4>
+                        </Grid>
+                        <Grid item xs={2} className={styles.grid}>
+                            {
+                                !userProfileDetail.rif_validated
+                                    ?
+                                    <button
+                                    type="button"
+                                    className="btn btn-dark"
+                                    name="Upload RIF"
+                                    onClick={(e) => optionSelectedHandler(e)}
+                                    >
+                                        <CloudDoneIcon />
+                                        Actualizar
+                                    </button>
+                                    :
+                                        null
+                            }
+                        </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
+                : userProfileDetail
+            }
         </div>
     );
 };

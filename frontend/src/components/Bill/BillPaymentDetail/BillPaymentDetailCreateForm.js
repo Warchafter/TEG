@@ -2,62 +2,90 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import Lightbox from 'react-image-lightbox';
 import { makeStyles } from '@material-ui/core/styles';
 import {
     TextField,
     Button,
+    CardActionArea,
+    CardMedia,
     Grid,
-    Container
+    Container,
+    Card
 } from '@material-ui/core';
-import {
-    CFormControl,
-    CFormLabel,
-} from '@coreui/react'
-import Autocomplete from '@material-ui/lab/Autocomplete';
+
 import * as actions from '../../../store/actions/index';
 
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
-    form: {
-        display: "flex",
-        flexDirection: "column",
-        width: "20rem",
-        margin: "0 auto"
+const useStyles = makeStyles(({ spacing, palette }) => {
+    const family =
+        '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
+    return {
+        root: {
+            paddingTop: '10px',
+            flex: 1,
+        },
+        form: {
+            display: "flex",
+            flexDirection: "column",
+            width: "20rem",
+            margin: "0 auto"
+        },
+        header: {
+            color: '#4f5d73',
+            fontFamily: family,
+            textAlign: 'right'
+        },
+        subHeader: {
+            color: '#4f5d73',
+            fontFamily: family
+        },
+        content: {
+            color: '#828894',
+            fontFamily: family
+        },
+        button: {
+            textTransform: 'none',
+            margin: spacing(1),
+            backgroundColor: '#4f5d73'
+        },
+        grid: {
+            alignSelf: 'flex-end'
+        },
+        cardActionArea: {
+            maxWidth: 500,
+            maxHeight: 500,
+        },
+        cardMedia: {
+            height: '500px'
+        },
     }
-}));
+});
 
 const validationSchema = yup.object({
-    purchase_bill: yup.number().required("El Nro de Factura es requerido"),
-    payment_receipt_number: yup.number().required("El Nro de Factura es requerido")
+    payment_receipt_number: yup.number().min(6, "El Nº no puede ser tan pequeño").required("El Nro del recibo de pago es requerido")
 });
 
 const BillPaymentDetailCreateForm = (props) => {
-    const classes = useStyles();
+    const styles = useStyles();
 
     const dispatch = useDispatch();
 
-    const purchaseBillList = useSelector(state => state.bill.purchaseBillList);
-    const onCreateBillPaymentDetail = useCallback((fd, values) => dispatch(actions.createBillPaymentDetail(fd, values)), [dispatch]);
-    const onFetchPurchaseBillList = useCallback(() => dispatch(actions.fetchPurchaseBillList()), [dispatch])
-    const onFetchBillPaymentDetailList = useCallback(() => dispatch(actions.fetchBillPaymentDetailList()), [dispatch]);
+    const purchaseBillToModifyPayment = useSelector(state => state.bill.purchaseBillToModifyPayment);
+    const billPaymentDetailImageURL = useSelector(state => state.bill.billPaymentDetailImageURL);
 
-    // const [purchaseBillListId, setPurchaseBillListId] = useState([]);
-
-    useEffect(() => {
-        onFetchBillPaymentDetailList();
-        onFetchPurchaseBillList();
-        // purchaseBillListIdHandler();
-    }, [onFetchBillPaymentDetailList, onFetchPurchaseBillList]);
-
+    const onCreateBillPaymentDetail = useCallback((values, fd) => dispatch(actions.createBillPaymentDetail(values, fd)), [dispatch]);
 
     const [payment_receipt_image, setPayment_receipt_image] = useState(null);
+    const [imageSet, setImageSet] = useState(true);
+    const [imageList, setImageList] = useState([]);
+    const [photoIndex, setPhotoIndex] = useState(0);
+    const [isOpen, setIsOpen] = useState(false);
+
     const formik = useFormik({
         initialValues: {
-            purchase_bill: null,
-            payment_receipt_number: null
+            purchase_bill: purchaseBillToModifyPayment.id,
+            payment_receipt_number: ""
             // payment_receipt_image: null
         },
         onSubmit: (values) => {
@@ -71,6 +99,8 @@ const BillPaymentDetailCreateForm = (props) => {
                 payment_receipt_image
                 // payment_receipt_image.name,
             );
+            console.log("FD: ",fd);
+            console.log("Values: ",values);
             onCreateBillPaymentDetail(values, fd);
         },
         validationSchema: validationSchema
@@ -80,92 +110,94 @@ const BillPaymentDetailCreateForm = (props) => {
         setPayment_receipt_image(e.target.files[0]);
     };
 
-    // const purchaseBillListIdHandler = () => {
-    //     purchaseBillList.map(index =>
-    //         setPurchaseBillListId(oldArray => [...oldArray, index.id])
-    //     )
-    //     return purchaseBillListId;
-    // };
+    const billPaymentDetailImageHandler = () => {
+        setImageList(prevArray => [billPaymentDetailImageURL]);
+    };
 
-    // {
-    //     "purchase_bill": 68,
-    //     "payment_receipt_number": 654981
-    // }
+    const openHandler = () => {
+        billPaymentDetailImageHandler();
+        setIsOpen(true);
+    };
+
+    useEffect(() => {
+        if (payment_receipt_image) {
+            setImageSet(false);
+        }
+    }, [payment_receipt_image]);
 
     return (
         <React.Fragment>
-            <Grid container>
-                <Grid item xs={12}>
-                    <Container maxWidth="md">
-                        <form className={classes.form} onSubmit={formik.handleSubmit}>
-                            <Autocomplete
-                                id="purchase_bill-combo-box"
-                                options={purchaseBillList}
-                                getOptionLabel={(option) => option.id.toString()}
-                                style={{ width: 300 }}
-                                renderInput={(params) => (
-                                    <TextField
-                                        id='purchase_bill'
-                                        name='purchase_bill'
-                                        label='Nro Factura'
-                                        type='number'
-                                        {...params}
-                                        variant='outlined'
-                                        value={formik.values.purchase_bill}
-                                        onChange={formik.handleChange}
-                                        error={formik.touched.purchase_bill && Boolean(formik.errors.purchase_bill)}
-                                        helperText={formik.touched.purchase_bill && formik.errors.purchase_bill}
-                                        onBlur={formik.handleBlur}
+            <Card>
+                <Grid container>
+                    <Grid item xs={12}>
+                        <Container maxWidth="md">
+                            <h6>Cargar pago de la Factura Nº: # {purchaseBillToModifyPayment.id}</h6>
+                            { billPaymentDetailImageURL
+                                ?
+                                <CardActionArea className={styles.cardActionArea} onClick={openHandler}>
+                                    <CardMedia
+                                        className={styles.cardMedia}
+                                        image={billPaymentDetailImageURL}
+                                        title="RIF del Usuario"
                                     />
-                                )}
-                            />
-                            {/* <TextField
-                                id='purchase_bill'
-                                name='purchase_bill'
-                                label='Nro Factura'
-                                margin='normal'
-                                type='number'
-                                value={formik.values.purchase_bill}
-                                onChange={formik.handleChange}
-                                error={formik.touched.purchase_bill && Boolean(formik.errors.purchase_bill)}
-                                helperText={formik.touched.purchase_bill && formik.errors.purchase_bill}
-                                onBlur={formik.handleBlur}
-                            /> */}
-                            <TextField
-                                id='payment_receipt_number'
-                                name='payment_receipt_number'
-                                label='Nro de recibo de pago'
-                                margin='normal'
-                                type="number"
-                                value={formik.values.payment_receipt_number}
-                                onChange={formik.handleChange}
-                                error={formik.touched.payment_receipt_number && Boolean(formik.errors.payment_receipt_number)}
-                                helperText={formik.touched.payment_receipt_number && formik.errors.payment_receipt_number}
-                                onBlur={formik.handleBlur}
-                            />
-                            <div className="mb-3">
-                                <CFormLabel htmlFor="formFileDisabled">
-                                    Disabled file input example
-                                </CFormLabel>
-                                <CFormControl type="file" id="formFileDisabled" disabled />
-                            </div>
-                            <Button
-                                variant='contained'
-                                component='label'
-                            >
-                                Seleccionar Archivo
-                                <input
-                                    type='file'
-                                    name='payment_receipt_image'
-                                    onChange={(e) => handleFile(e)}
-                                    hidden
+                                </CardActionArea>
+                                :
+                                null
+                            }
+                            <form className={styles.form} onSubmit={formik.handleSubmit}>
+                                <TextField
+                                    id='payment_receipt_number'
+                                    name='payment_receipt_number'
+                                    label='Nº de recibo de pago'
+                                    margin='normal'
+                                    type="number"
+                                    value={formik.values.payment_receipt_number}
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.payment_receipt_number && Boolean(formik.errors.payment_receipt_number)}
+                                    helperText={formik.touched.payment_receipt_number && formik.errors.payment_receipt_number}
+                                    onBlur={formik.handleBlur}
                                 />
-                            </Button>
-                            <Button type='submit' variant='outlined'>Cargar</Button>
-                        </form>
-                    </Container>
+                                {payment_receipt_image ?
+                                    <p>{payment_receipt_image.name}</p>
+                                    :null
+                                }
+                                <Button
+                                    variant='contained'
+                                    component='label'
+                                >
+                                    Seleccionar Archivo
+                                    <input
+                                        type='file'
+                                        name='payment_receipt_image'
+                                        onChange={(e) => handleFile(e)}
+                                        hidden
+                                    />
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    variant='outlined'
+                                    disabled={imageSet}
+                                    className={styles.button}
+                                >Cargar</Button>
+                            </form>
+                        </Container>
+                    </Grid>
                 </Grid>
-            </Grid>
+            </Card>
+            {isOpen && (
+                <Lightbox
+                    mainSrc={imageList[photoIndex]}
+                    nextSrc={imageList[(photoIndex + 1) % imageList.length]}
+                    prevSrc={imageList[(photoIndex + imageList.length - 1) % imageList.length]}
+                    onCloseRequest={() => setIsOpen(false)}
+                    onMovePrevRequest={() =>
+                        setPhotoIndex((photoIndex + imageList.length - 1) % imageList.length,)
+                    }
+                    onMoveNextRequest={() =>
+                        setPhotoIndex((photoIndex + 1) % imageList.length,)
+                    }
+                />
+            )}
         </React.Fragment>
     );
 };

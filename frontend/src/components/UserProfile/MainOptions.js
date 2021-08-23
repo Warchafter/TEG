@@ -64,7 +64,7 @@ const MainOptions = (props) => {
                         onClick={(e) => optionSelectedHandler(e)}
                     >Subir RIF</button>
                 </Grid>
-                { isStaff
+                {/* { !isStaff
                     ?
                     null
                     :
@@ -77,7 +77,7 @@ const MainOptions = (props) => {
                                 onClick={(e) => optionSelectedHandler(e)}
                             >Verificar RIF</button>
                         </Grid>
-                }
+                } */}
             </Grid>
         </div>
     );

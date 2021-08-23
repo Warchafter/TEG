@@ -1,17 +1,11 @@
 import React, { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useFormik } from 'formik';
 import { Formik, Form, Field } from "formik";
 
 
 import { makeStyles } from '@material-ui/styles';
 import {
-    InputLabel,
-    Select,
-    Input,
-    MenuItem,
-    Checkbox,
-    ListItemText
+    Card,
 } from '@material-ui/core';
 
 import * as actions from '../../../store/actions/index';
@@ -37,90 +31,52 @@ const ProductCharacteristicNewForm = (props) => {
         onFetchProductCharacteristicListFiltered(props.data.product.product.id)
     }, [])
 
-    // const formik = useFormik({
-    //     initialValues: {
-    //         bill_detail: props.data.id,
-    //         characteristic_sel: [],
-    //     },
-    //     onChange: (evt) => {
-    //         setFieldValue(
-    //             "names",
-    //             [].slice
-    //                 .call(evt.target.selectedOptions)
-    //                 .map(option => option.value)
-    //         );
-    //     }},
-    //     onSubmit: (values) => {
-    //         onCreateBillProductCharacteristic(values);
-    //     }
-    // });
-
-
     return (
         <div className={styles.root}>
-            <Formik
-                initialValues={{
-                    bill_detail: props.data.id,
-                    characteristic_sel: []
-                }}
-                onSubmit={(values, actions) => {
-                    console.log("Values", values);
-                    console.log("Actions", actions);
-                    onCreateBillProductCharacteristic(values);
-                }}
-                render={(
-                    // we need to use setFieldValue from Formik
-                    { values, setFieldValue }
-                ) => (
-                    <Form>
-                    <Field
-                        component="select"
-                        name="characteristic_sel"
-                        // You need to set the new field value
-                        onChange={evt =>
-                        setFieldValue(
-                            "characteristic_sel",
-                            [].slice
-                            .call(evt.target.selectedOptions)
-                            .map(option => {
-                                console.log(option)
-                                return parseInt(option.value)})
-                        )
-                        }
-                        multiple={true}
-                    >
-                        {productCharacteristicListFiltered.map(s => (
-                        <option key={s.name + s.value} value={s.id}>
-                            {s.name + " - " + s.value}
-                        </option>
-                        ))}
-                    </Field>
-
-                    {/* just printing out the values */}
-                    <hr />
-                    <strong>{JSON.stringify(values)}</strong>
-                    <button type="submit" >submit</button>
-                    </Form>
-                )}
-            />
-            {/* <InputLabel id="demo-mutiple-checkbox-label">Tag</InputLabel>
-            <Select
-                labelId="characteristic_sel"
-                id="characteristic_sel"
-                name="characteristic_sel"
-                multiple
-                value={productCharacteristicListFiltered.map((i) => (i.name))}
-                onChange={formik.handleChange}
-                input={<Input />}
-                renderValue={(selected) => selected.join(', ')}
-            >
-            {productCharacteristicListFiltered.map((index) => (
-                <MenuItem key={index.name} value={index.name}>
-                    <Checkbox checked={productCharacteristicListFiltered.indexOf(index) > -1} />
-                    <ListItemText primary={index.name} />
-                </MenuItem>
-            ))}
-            </Select> */}
+            <Card>
+                <Formik
+                    initialValues={{
+                        bill_detail: props.data.id,
+                        characteristic_sel: []
+                    }}
+                    onSubmit={(values, actions) => {
+                        onCreateBillProductCharacteristic(values);
+                    }}
+                    render={(
+                        // we need to use setFieldValue from Formik
+                        { values, setFieldValue }
+                    ) => (
+                        <Form>
+                            <Field
+                                component="select"
+                                name="characteristic_sel"
+                                // You need to set the new field value
+                                onChange={evt =>
+                                setFieldValue(
+                                    "characteristic_sel",
+                                    [].slice
+                                    .call(evt.target.selectedOptions)
+                                    .map(option => {
+                                        console.log(option)
+                                        return parseInt(option.value)})
+                                )
+                                }
+                                multiple={true}
+                            >
+                                {productCharacteristicListFiltered.map(s => (
+                                <option key={s.name + s.value} value={s.id}>
+                                    {s.name + " - " + s.value}
+                                </option>
+                                ))}
+                            </Field>
+                            {/* just printing out the values */}
+                            <hr />
+                            <strong>{JSON.stringify(values)}</strong>
+                            <button type="submit" >submit</button>
+                        </Form>
+                    )}
+                />
+            </Card>
         </div>
     );
 };

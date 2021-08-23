@@ -79,10 +79,10 @@ export const fetchUserProfileListFail = (error) => {
     };
 };
 
-export const modifyUserProfileDetail = (modifiedUserProfileData) => {
+export const modifyUserProfileDetail = (data) => {
     return {
         type: actionTypes.MODIFY_USER_PROFILE_DETAIL,
-        modifiedUserProfileData: modifiedUserProfileData
+        data: data
     };
 };
 
@@ -182,6 +182,33 @@ export const fetchSpecializationsSuccess = (specializationList) => {
 export const fetchSpecializationsFail = (error) => {
     return {
         type: actionTypes.FETCH_SPECIALIZATIONS_FAIL,
+        error: error
+    };
+};
+
+
+export const fetchNonRifValidatedUsers = () => {
+    return {
+        type: actionTypes.FETCH_NON_RIF_VALIDATED_USERS
+    };
+};
+
+export const fetchNonRifValidatedUsersStart = () => {
+    return {
+        type: actionTypes.FETCH_NON_RIF_VALIDATED_USERS_START
+    };
+};
+
+export const fetchNonRifValidatedUsersSuccess = (nonRifValidatedUserList) => {
+    return {
+        type: actionTypes.FETCH_NON_RIF_VALIDATED_USERS_SUCCESS,
+        nonRifValidatedUserList: nonRifValidatedUserList
+    };
+};
+
+export const fetchNonRifValidatedUsersFail = (error) => {
+    return {
+        type: actionTypes.FETCH_NON_RIF_VALIDATED_USERS_FAIL,
         error: error
     };
 };

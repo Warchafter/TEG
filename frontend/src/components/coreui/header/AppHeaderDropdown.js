@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
   CBadge,
@@ -47,8 +48,11 @@ const AppHeaderDropdown = () => {
   const classes = useStyles();
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const user = useSelector(state => state.auth.user);
+  const history = useHistory();
 
-
+  const redirectMe = (url) => {
+    history.push(url);
+  };
 
   return (
     <CDropdown variant="nav-item">
@@ -62,7 +66,7 @@ const AppHeaderDropdown = () => {
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
         <CDropdownHeader className="bg-light fw-semibold py-2">Account</CDropdownHeader>
-        <CDropdownItem href="/billtesting">
+        <CDropdownItem onClick = {() => redirectMe('/billtesting')}>
           <NotificationsIcon />
           Pagos
           <CBadge color="info" className="ms-2">
@@ -77,29 +81,29 @@ const AppHeaderDropdown = () => {
           </CBadge>
         </CDropdownItem>
         <CDropdownHeader className="bg-light fw-semibold py-2">Settings</CDropdownHeader>
-        <CDropdownItem href="/user-profile" >
+        <CDropdownItem onClick = {() => redirectMe('/user-profile')}>
           <CIcon name="cil-user" className="me-2" />
-          Profile
+          Perfil
         </CDropdownItem>
         <CDropdownItem href="#">
           <CIcon name="cil-settings" className="me-2" />
-          Settings
+          Opciones
         </CDropdownItem>
         {isAuthenticated
           ?
           <React.Fragment>
             <CDropdownDivider />
-            <CDropdownItem href="/logout">
+            <CDropdownItem onClick = {() => redirectMe('/logout')}>
               <CIcon name="cil-lock-locked" className="me-2" />
-              Log Out
+              Cerrar Sesión
             </CDropdownItem>
           </React.Fragment>
           :
           <React.Fragment>
             <CDropdownDivider />
-            <CDropdownItem href="/auth">
+            <CDropdownItem onClick = {() => redirectMe('/auth')}>
               <CIcon name="cil-lock-locked" className="me-2" />
-              Log In
+              Iniciar Sesión
             </CDropdownItem>
           </React.Fragment>
         }

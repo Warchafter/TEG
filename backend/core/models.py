@@ -95,16 +95,6 @@ class UserManager(BaseUserManager):
         return user
 
 
-# SPECIALIZATION_CHOICES = (
-#     ('Alergología', 'Alergología'),
-#     ('Anestesiología', 'Anestesiología'),
-#     ('Cardiología', 'Cardiología'),
-#     ('Endocrinología', 'Endocrinología'),
-#     ('Gastroenterología', 'Gastroenterología'),
-#     ('Medicina', 'Medicina')
-# )
-
-
 class Specialization(models.Model):
     """ """
     name = models.CharField(max_length=255)
@@ -258,42 +248,6 @@ class ProductCharacteristics(models.Model):
         return str(self.product) + ' - ' + str(self.characteristic_type) + ' - ' + str(self.name) + ' ' + str(self.value)
 
 
-# class Deparment(models.Model):
-#     """Department object"""
-#     name = models.CharField(max_length=255)
-#     user = models.ForeignKey(
-#         settings.AUTH_USER_MODEL,
-#         on_delete=models.DO_NOTHING,
-#     )
-
-#     def __str__(self):
-#         return self.name
-
-
-# class CompanyPhones(models.Model):
-#     """ """
-#     phone_number = models.CharField(max_length=15)
-#     description = models.CharField(max_length=255)
-#     department = models.ForeignKey(Deparment,
-#                                    verbose_name="ID Departamento",
-#                                    on_delete=models.DO_NOTHING
-#                                    )
-#     is_Main = models.BooleanField(verbose_name="Flag de Telefono Principal")
-
-#     def __str__(self):
-#         return self.phone_number
-
-
-# class CompanyEmails(models.Model):
-#     """ """
-#     email = models.CharField(max_length=255)
-#     description = models.CharField(max_length=255)
-#     is_Main = models.BooleanField(verbose_name="Flag de Correo Pricipal")
-
-#     def __str__(self):
-#         return self.email
-
-
 class Bank(models.Model):
     """ """
     name = models.CharField(max_length=255)
@@ -304,34 +258,6 @@ class Bank(models.Model):
 
     def __str__(self):
         return self.name
-
-
-# class CompanyBankAccounts(models.Model):
-#     """ """
-#     account_number = models.CharField(max_length=50)
-#     bank_type = models.ForeignKey(
-#         Bank,
-#         verbose_name="ID Banco",
-#         on_delete=models.DO_NOTHING
-#     )
-#     description = models.CharField(max_length=255)
-
-#     def __str__(self):
-#         return self.account_number
-
-
-# class SupplierBankAccounts(models.Model):
-#     """ """
-#     account_number = models.CharField(max_length=50)
-#     bank_type = models.ForeignKey(
-#         Bank,
-#         verbose_name="ID Banco",
-#         on_delete=models.DO_NOTHING
-#     )
-#     description = models.CharField(max_length=255)
-
-#     def __str__(self):
-#         return self.account_number
 
 
 class Supplier(models.Model):
@@ -391,28 +317,6 @@ class SupplierProducts(models.Model):
 
     def __str__(self):
         return str(self.supplier) + ' - ' + str(self.product)
-
-
-# class SupplierEmployees(models.Model):
-#     """ """
-#     first_name = models.CharField(max_length=30)
-#     last_name = models.CharField(max_length=30)
-#     rif = models.CharField(max_length=20)
-#     supplier = models.ForeignKey(Supplier, on_delete=models.DO_NOTHING)
-
-#     def __str__(self):
-#         return self.first_name + ' ' + self.last_name
-
-
-# class SupplierPhones(models.Model):
-#     """ """
-#     phone_number = models.CharField(max_length=13)
-#     description = models.CharField(max_length=255)
-#     is_Main = models.BooleanField(
-#         verbose_name="Flag de Telefono Pricipal del Proveedor")
-
-#     def __str__(self):
-#         return self.phone_number
 
 
 class ExchangeRate(models.Model):

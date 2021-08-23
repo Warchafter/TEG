@@ -30,50 +30,46 @@ const MainContent = (props) => {
     const styles = useStyles();
 
     const isStaff = useSelector(state => state.userProfile.userProfileDetail.is_staff)
-
-    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
     const userProfileSelectedOption = useSelector(state => state.interface.userProfileSelectedOption);
-    const userProfileDetail = useSelector(state => state.userProfile.userProfileDetail);
 
     const onFetchUserProfileDetail = useCallback((user) => dispatch(actions.fetchUserProfileDetail(user)), [dispatch]);
 
     useEffect(() => {
-        if (isAuthenticated && userProfileDetail) {
             onFetchUserProfileDetail();
-        };
     }, []);
 
     const dynamicMainContent = (userProfileSelectedOption) => {
         switch (userProfileSelectedOption) {
             case "Perfil de Usuario":
-                if (isStaff) {
+                if (!isStaff) {
                     return (<UserProfileClient />)
                 } else {
                     return (<UserProfileStaff />)
                 }
             case "Modificar Perfil":
-                // if (isStaff)
-                return(<UserProfileClientModify />)
+                    return(<UserProfileClientModify />)
             case "Subir RIF":
                 // if(isStaff)
                 return(<UserProfileUploadRIF />)
-            case "Verificar RIF":
-                // if (isStaff)
-                return(<p>Something 2</p>)
-            default: return <p>Something 3</p>
+            default:
+                if (!isStaff) {
+                    return (<UserProfileClient />)
+                } else {
+                    return (<UserProfileStaff />)
+                }
         };
     }
 
     return (
         <div>
             <Grid container spacing={1} >
-                <Grid item xs={12}>
-                    <h1 className={styles.title}>{userProfileSelectedOption}</h1>
-                </Grid>
-                <Grid item xs={12}>
-                    {dynamicMainContent(userProfileSelectedOption)}
-                    {/* <UserProfileClient /> */}
-                </Grid>
+                    <Grid item xs={12}>
+                        <h1 className={styles.title}>{userProfileSelectedOption}</h1>
+                    </Grid>
+                    <Grid item xs={12}>
+                        {dynamicMainContent(userProfileSelectedOption)}
+                        {/* <UserProfileClient /> */}
+                    </Grid>
             </Grid>
         </div>
     );

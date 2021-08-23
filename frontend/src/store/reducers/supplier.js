@@ -12,6 +12,9 @@ const initialState = {
     supplierProductCreatedId: null,
     supplierProductSelected: null,
     supplierProductModifiedId: null,
+    supplierProductListCount: [],
+    supplierProductListPag: [],
+    supplierProductList: [],
     supplierRIFSelected: null,
     error: null,
     loading: false
@@ -175,7 +178,9 @@ const fetchSupplierProductListStart = (state, action) => {
 
 const fetchSupplierProductListSuccess = (state, action) => {
     const updatedState = {
-        supplierProductData: action.supplierProductData,
+        supplierProductListCount: action.supplierProductData.count,
+        supplierProductListPag: action.supplierProductData.links,
+        supplierProductList: action.supplierProductData.results,
         error: null,
         loading: false
     };

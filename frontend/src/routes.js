@@ -35,7 +35,8 @@ const BillClientSubmissionHistory = React.lazy(() => { return import('./containe
 const PurchaseBillList = React.lazy(() => { return import('./components/Bill/PurchaseBill/PurchaseBillList') });
 const PurchaseBillModifier = React.lazy(() => {return import('./containers/Bill/PurchaseBill/PurchaseBillModifier')})
 const BillPaymentDetailUpload = React.lazy(() => {return import ('./containers/Bill/BillPaymentDetail/BillPaymentDetailUpload') });
-
+const BillKanbanStyleGrid = React.lazy(() => { return import('./containers/Bill/kanban-style/Bill-Kanbam-Style-Grid') });
+const BillPaymentDetailApproval = React.lazy(() => { return import('./containers/Bill/BillPaymentDetail/BillPaymentDetailApproval') });
 
 // Supplier
 
@@ -63,7 +64,6 @@ const PurchaseStatusL = React.lazy(() => { return import('./containers/Extra/Loa
 // demo
 
 const ElevatedHeaderCardDemo = React.lazy(() => { return import('./components/MUI-Components/miui-card') });
-const BillKanbanStyleGrid = React.lazy(() => { return import('./containers/Bill/kanban-style/Bill-Kanbam-Style-Grid') });
 const BillFirebaseStyleGrid = React.lazy(() => { return import('./containers/Bill/FirebaseStyle') });
 const VerticalTabs = React.lazy(() => { return import('./components/MUI-Components/vertical-tabs') });
 const NestedList = React.lazy(() => { return import('./components/MUI-Components/nested-list') });
@@ -369,6 +369,13 @@ let routes = [
         layout: DefaultLayout,
         name: 'Cargar Pago',
         component: BillPaymentDetailUpload,
+        isPrivate: true,
+    },
+    {
+        path: '/bill-payment-detail-approval',
+        layout: DefaultLayout,
+        name: 'Aprobar Pago',
+        component: BillPaymentDetailApproval,
         isPrivate: true,
     },
     { path: '/dashboard', name: 'Dashboard', component: Dashboard, layout: DefaultLayout, isPrivate: true },

@@ -8,7 +8,7 @@ const initialState = {
     navItems: getSidebarNavItems(),
     sidebarUnfoldable: false,
     sidebarShow: false,
-    userProfileSelectedOption: 'title',
+    userProfileSelectedOption: 'Perfil de Usuario',
     userProfileContentComponent: null,
     supplierSelectedOption: 'title',
 };

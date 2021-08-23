@@ -62,7 +62,11 @@ export {
     fetchSpecializations,
     fetchSpecializationsStart,
     fetchSpecializationsSuccess,
-    fetchSpecializationsFail
+    fetchSpecializationsFail,
+    fetchNonRifValidatedUsers,
+    fetchNonRifValidatedUsersStart,
+    fetchNonRifValidatedUsersSuccess,
+    fetchNonRifValidatedUsersFail,
 } from './userProfile';
 
 export {
@@ -226,6 +230,8 @@ export {
     setPurchaseBillToModify,
     setPurchaseBillToInspect,
     setPurchaseBillToModifyPayment,
+    setPurchaseBillToApprovePayment,
+    setPurchaseBillAddingNewProduct,
     createBillProductCharacteristic,
     createBillProductCharacteristicStart,
     createBillProductCharacteristicSuccess,
@@ -270,6 +276,10 @@ export {
     fetchBillPaymentDetailListStart,
     fetchBillPaymentDetailListSuccess,
     fetchBillPaymentDetailListFail,
+    fetchBillPaymentDetailListFiltered,
+    fetchBillPaymentDetailListFilteredStart,
+    fetchBillPaymentDetailListFilteredSuccess,
+    fetchBillPaymentDetailListFilteredFail,
     fetchExchangeRates,
     fetchExchangeRatesStart,
     fetchExchangeRatesSuccess,
