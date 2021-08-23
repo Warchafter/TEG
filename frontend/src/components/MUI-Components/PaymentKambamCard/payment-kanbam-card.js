@@ -126,8 +126,6 @@ const KanbanCardDemo = (props) => {
     const iconBtnStyles = useSizedIconButtonStyles({ padding: 8, childSize: 20 });
     const sliderStyles = useSliderStyles();
 
-    console.log("DATA: ", props);
-
     const onSetPurchaseBillToApprovePayment = useCallback((data) => dispatch(actions.setPurchaseBillToApprovePayment(data)), [dispatch]);
 
     const [sliderState, setSliderState] = useState(0);
@@ -147,6 +145,8 @@ const KanbanCardDemo = (props) => {
                 break;
         };
     };
+
+    console.log("DATA: ",props.data);
 
 
     useEffect(() => {
@@ -196,7 +196,7 @@ const KanbanCardDemo = (props) => {
                 </Grid>
             </Box>
             <Box>
-                <h3 className={styles.heading}>John Onella</h3>
+                <h3 className={styles.heading}>{props.data.employee_in_charge.name}</h3>
                 <p className={styles.subheader}>{props.data.payment_method.name}</p>
                 <p className={styles.subheader}>Fecha pago:{stringLongDateHandler(props.data.purchase_payment_date)}</p>
                 <Box display={'flex'} alignItems={'center'}>

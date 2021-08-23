@@ -680,6 +680,10 @@ const uploadBillPaymentDetailImageFail = (state, action) => {
     return updateObject(state, { error: action.error, loading: false });
 };
 
+const setBillDetailToInspect = (state, action) => {
+    return updateObject(state, { billDetailToInspect: action.billDetailToInspect });
+};
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_BANK_LIST_START: return fetchBankListStart(state, action);

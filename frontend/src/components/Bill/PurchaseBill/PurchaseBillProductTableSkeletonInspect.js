@@ -36,8 +36,9 @@ const useStyles = makeStyles((theme) => ({
         margin: '10px 10px',
     },
     tableHeaderCell: {
-        // fontWeight: 'bold',
-        color: theme.palette.getContrastText(theme.palette.primary.dark)
+        fontWeight: 'bold',
+        color: theme.palette.getContrastText(theme.palette.primary.dark),
+        borderBottom: 0
     },
     tableHeaderRow: {
         backgroundColor: '#3c4b64',

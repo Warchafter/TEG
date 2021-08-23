@@ -298,6 +298,7 @@ export {
     uploadBillPaymentDetailImageStart,
     uploadBillPaymentDetailImageSuccess,
     uploadBillPaymentDetailImageFail,
+    setBillDetailToInspect,
 } from './bill';
 
 export {

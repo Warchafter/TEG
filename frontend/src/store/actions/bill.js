@@ -936,3 +936,10 @@ export const uploadBillPaymentDetailImageFail = (error) => {
         error: error
     };
 };
+
+export const setBillDetailToInspect = (data) => {
+    return {
+        type: actionTypes.SET_BILL_DETAIL_TO_INSPECT,
+        data: data
+    };
+};

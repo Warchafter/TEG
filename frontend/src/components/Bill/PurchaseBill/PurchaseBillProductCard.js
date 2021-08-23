@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import {
@@ -7,13 +8,16 @@ import {
     Fade,
     Grid,
     IconButton,
-    Item,
     Modal,
     Tooltip
 } from '@material-ui/core';
+import { useSizedIconButtonStyles } from '@mui-treasury/styles/iconButton/sized';
+import { Item } from '@mui-treasury/components/flex';
 import AccountTreeIcon from '@material-ui/icons/AccountTree';
+import AddCommentIcon from '@material-ui/icons/AddComment';
 import ProductCharacteristicNewForm from '../ProductCharacteristic/ProductCharacteristicNewForm';
 
+import * as actions from '../../../store/actions/index';
 
 const StyledTooltip = withStyles({
     tooltip: {
@@ -50,14 +54,23 @@ const useStyles = makeStyles(({ spacing, palette, theme }) => {
         },
         centerItems: {
             alignSelf: 'center'
+        },
+        optionButtons: {
+            textAlign: 'end'
         }
     }
 });
 
 const BillDetailProductCard = (props) => {
+    const dispatch = useDispatch();
     const styles = useStyles();
 
     const [open, setOpen] = React.useState(false);
+    const iconBtnStyles = useSizedIconButtonStyles({ padding: 8, childSize: 20 });
+
+    const userProfileDetail = useSelector(state => state.userProfile.userProfileDetail);
+
+    const onSetBillDetailToInspect = useCallback((data) => dispatch(actions.setBillDetailToInspect(data)), [dispatch]);
 
     const handleOpen = () => {
         setOpen(true);
@@ -66,6 +79,22 @@ const BillDetailProductCard = (props) => {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const canModifyBillDetail = () => {
+        if (userProfileDetail.roles === 'user') {
+            return null;
+        } else {
+            return (
+                <Item position={'right'} mr={-0.5} onClick={handleOpen} >
+                    <StyledTooltip title={'Agregar tipo de producto'}>
+                        <IconButton classes={iconBtnStyles}>
+                            <AddCommentIcon />
+                        </IconButton>
+                    </StyledTooltip>
+                </Item>
+            )
+        }
+    }
 
     return (
         <div className={styles.root}>
@@ -86,21 +115,15 @@ const BillDetailProductCard = (props) => {
                     <Grid item xs={2} className={styles.centerItems}>
                         <p>Cantidad: {props.data.quantity}</p>
                     </Grid>
-                    <Grid item xs={2} className={styles.centerItems}>
-                        {/* <Item position={'right'} mr={-0.5} onClick={() => onSetPurchaseBillToModifyPayment(row)} >
-                            <StyledTooltip title={'Ver Detalle'}>
-                                <IconButton>
-                                    <AccountTreeIcon fontSize="large" />
+                    <Grid item xs={2} className={styles.optionButtons}>
+                        <Item position={'right'} mr={-0.5} onClick={() => onSetBillDetailToInspect(props.data)} >
+                            <StyledTooltip title={'Ver detalle del producto'}>
+                                <IconButton classes={iconBtnStyles}>
+                                    <AccountTreeIcon />
                                 </IconButton>
                             </StyledTooltip>
-                        </Item> */}
-                        <button
-                            type="button"
-                            className="btn btn-dark"
-                            name="Agregar tipo de producto"
-                            onClick={handleOpen}>
-                                <AccountTreeIcon />
-                        </button>
+                        </Item>
+                        {canModifyBillDetail()}
                         <Modal
                             aria-labelledby="transition-modal-title"
                             aria-describedby="transition-modal-description"

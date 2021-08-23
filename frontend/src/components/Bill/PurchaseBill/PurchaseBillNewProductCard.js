@@ -100,16 +100,14 @@ const PurchaseBillNewProductCard = () => {
                                     labelId="product-supplier-select"
                                     id="product-select"
                                     name="product"
-                                    value={formik.product}
+                                    value={formik.values.product}
                                     onChange={formik.handleChange}
                                     >
-                                        {
-                                            supplierProductList.map(index => (
-                                                <MenuItem key={index.name} value={index.id}>
-                                                    {index.name}
+                                        {supplierProductList.map(index => (
+                                                <MenuItem key={index.product.title} value={index.id}>
+                                                    {index.product.title}
                                                 </MenuItem>
-                                                ))
-                                        }
+                                        ))}
                                 </Select>
                             </Grid>
                             <Grid item xs={3}>

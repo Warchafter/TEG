@@ -17,6 +17,7 @@ import Card from '@material-ui/core/Card';
 
 import * as actions from '../../../store/actions/index';
 import Notifier from '../../../components/Notifier/Notifier';
+import { cibOpenCollective } from '@coreui/icons';
 
 
 const useStyles = makeStyles(({ spacing, palette, theme }) => {
