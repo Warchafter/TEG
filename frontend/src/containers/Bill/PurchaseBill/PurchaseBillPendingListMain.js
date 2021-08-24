@@ -23,12 +23,21 @@ const PurchaseBillPendingListMain = () => {
     return (
         <div className={styles.root}>
             <Notifier />
-            <PurchaseBillPendingListTable />
-            {
-                purchaseBillToModify ?
-                <PurchaseBillModify />
-                : null
-            }
+            <Grid container spacing={3}>
+                <Grid item xs={12}>
+                    <PurchaseBillPendingListTable />
+                </Grid>
+                {
+                    purchaseBillToModify ?
+                    <Grid item xs={5}>
+                        <PurchaseBillModify />
+                    </Grid>
+                    : null
+                }
+                <Grid item xs={12}>
+                &nbsp;
+                </Grid>
+            </Grid>
         </div>
     );
 };

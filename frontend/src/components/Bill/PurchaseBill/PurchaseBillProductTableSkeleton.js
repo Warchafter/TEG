@@ -93,14 +93,8 @@ const PurchaseBillProductTableSkeleton = () => {
                         <Grid item xs={12}>
                             <PurchaseBillNewProductCard />
                         </Grid>
-                        :
-                        <Grid item xs={12}>
-                            <p>X</p>
-                        </Grid>
+                        : null
                     }
-                        <Grid item xs={12}>
-                            <p>X</p>
-                        </Grid>
                     <Grid item xs={12}>
                         <PurchaseBillAddNewProductCard/>
                     </Grid>

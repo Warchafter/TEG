@@ -214,20 +214,20 @@ const PurchaseBillPendingListTable = () => {
                                                                     </IconButton>
                                                                 </StyledTooltip>
                                                             </Item>
-                                                            <Item position={'right'} mr={-0.5} onClick={() => onSetPurchaseBillToInspect(row)} >
+                                                            {/* <Item position={'right'} mr={-0.5} onClick={() => onSetPurchaseBillToInspect(row)} >
                                                                 <StyledTooltip title={'Ver Detalle'}>
                                                                     <IconButton>
                                                                         <PageviewIcon fontSize="large" />
                                                                     </IconButton>
                                                                 </StyledTooltip>
-                                                            </Item>
-                                                            <Item position={'right'} mr={-0.5} onClick={() => onSetPurchaseBillToModifyPayment(row)} >
+                                                            </Item> */}
+                                                            {/* <Item position={'right'} mr={-0.5} onClick={() => onSetPurchaseBillToModifyPayment(row)} >
                                                                 <StyledTooltip title={'Cargar Pago'}>
                                                                     <IconButton>
                                                                         <PaymentIcon fontSize="large" />
                                                                     </IconButton>
                                                                 </StyledTooltip>
-                                                            </Item>
+                                                            </Item> */}
                                                         </TableCell>
                                                     </TableRow>
                                             ))}

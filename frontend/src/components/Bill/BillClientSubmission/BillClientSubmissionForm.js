@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
     },
     gridPadding: {
         padding: '20px'
+    },
+    alignButton: {
+        textAlign: 'center'
     }
 }))
 
@@ -50,46 +53,46 @@ const BillClientSubmissionForm = () => {
             <Grid container spacing={4} className={styles.gridPadding}>
                 <Grid item xs={3}>
                 </Grid>
-                <Grid item container spacing={5} xs={6} column>
-                    <form onSubmit={formik.handleSubmit}>
-                        <Grid item xs={12}>
-                            <TextField
-                                id='bill_name_receiver'
-                                name='bill_name_receiver'
-                                label='Nombre a quien se hará la factura'
-                                type='text'
-                                variant="filled"
-                                className={styles.textField}
-                                value={formik.values.bill_name_receiver}
-                                onChange={formik.handleChange}
-                                error={formik.touched.bill_name_receiver && Boolean(formik.errors.bill_name_receiver)}
-                                helperText={formik.touched.bill_name_receiver && formik.errors.bill_name_receiver}
-                                onBlur={formik.handleBlur}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                id='product_requirements'
-                                name='product_requirements'
-                                label='Requerimiento'
-                                type='text'
-                                multiline
-                                variant="filled"
-                                className={styles.textField}
-                                value={formik.values.product_requirements}
-                                onChange={formik.handleChange}
-                                error={formik.touched.product_requirements && Boolean(formik.errors.product_requirements)}
-                                helperText={formik.touched.product_requirements && formik.errors.product_requirements}
-                                onBlur={formik.handleBlur}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <button
-                                type="submit"
-                                className="btn btn-ghost-dark"
-                            >Enviar</button>
-                        </Grid>
-                    </form>
+                <Grid item xs={6}>
+                    <Grid container spacing={5} xs={6} column>
+                        <form onSubmit={formik.handleSubmit}>
+                            <Grid item xs={12}>
+                                <TextField
+                                    id='bill_name_receiver'
+                                    name='bill_name_receiver'
+                                    label='Nombre a quien se hará la factura'
+                                    type='text'
+                                    className={styles.textField}
+                                    value={formik.values.bill_name_receiver}
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.bill_name_receiver && Boolean(formik.errors.bill_name_receiver)}
+                                    helperText={formik.touched.bill_name_receiver && formik.errors.bill_name_receiver}
+                                    onBlur={formik.handleBlur}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    id='product_requirements'
+                                    name='product_requirements'
+                                    label='Requerimiento'
+                                    type='text'
+                                    multiline
+                                    className={styles.textField}
+                                    value={formik.values.product_requirements}
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.product_requirements && Boolean(formik.errors.product_requirements)}
+                                    helperText={formik.touched.product_requirements && formik.errors.product_requirements}
+                                    onBlur={formik.handleBlur}
+                                />
+                            </Grid>
+                            <Grid item xs={12} className={styles.alignButton}>
+                                <button
+                                    type="submit"
+                                    className="btn btn-ghost-dark"
+                                >Enviar</button>
+                            </Grid>
+                        </form>
+                    </Grid>
                 </Grid>
                 <Grid item xs={3}>
                 </Grid>

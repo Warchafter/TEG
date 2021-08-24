@@ -10,7 +10,14 @@ import {
     ButtonGroup,
     CardMedia,
     Select,
-    MenuItem
+    MenuItem,
+    Table,
+    TableContainer,
+    TableHead,
+    TableRow,
+    TableCell,
+    Typography,
+    Card,
 } from '@material-ui/core';
 
 import * as actions from '../../../store/actions/index';
@@ -20,7 +27,7 @@ const useStyles = makeStyles(({ spacing, palette }) => {
         '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
     return {
         root: {
-            paddingTop: '10px',
+            // paddingTop: '10px',
             flex: 1,
         },
         form: {
@@ -84,7 +91,19 @@ const useStyles = makeStyles(({ spacing, palette }) => {
         },
         gridPaymentMedia: {
             textAlign: '-webkit-center'
-        }
+        },
+        paymentOptions: {
+            width: 200
+        },
+        tableContainer: {
+            borderRadius: 15,
+            margin: '10px 10px',
+        },
+        tableHeaderCell: {
+            fontWeight: 'bold',
+            backgroundColor: '#3c4b64',
+            color: palette.getContrastText(palette.primary.dark)
+        },
     };
 });
 
@@ -127,15 +146,29 @@ const BillPaymentDetailApprovalMedia = () => {
         },
     });
 
-
     return (
         <div className={styles.root}>
             {
                 purchaseBillToApprovePayment ?
                     <Grid container spacing={3}>
+                        <Grid item xs={12}>
+                            <TableContainer component={styles.tableContainer}>
+                                <Table size="small" aria-label="a dense table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell className={styles.tableHeaderCell}>
+                                                <Typography >
+                                                        Evidencias de Pago de la Factura # {purchaseBillToApprovePayment.id}
+                                                </Typography>
+                                            </TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                </Table>
+                            </TableContainer>
+                        </Grid>
                         <Grid item xs={12} className={styles.gridPaymentMedia}>
-                                { billPaymentDetailListFiltered
-                                    ?
+                                {
+                                    billPaymentDetailListFiltered ?
                                     billPaymentDetailListFiltered.map(index => {
                                         return (
                                             <CardActionArea key={index.id} className={styles.cardActionArea}>
@@ -148,32 +181,39 @@ const BillPaymentDetailApprovalMedia = () => {
                                             </CardActionArea>
                                         )
                                     })
-                                    :
-                                    <h4>¡No hay Pagos Cargados todavía!</h4>
+                                    : <h4>¡No hay Pagos Cargados todavía!</h4>
                                 }
                         </Grid>
-                        <form onSubmit={formik.handleSubmit}>
-                            <Grid item xs={12}>
-                                <Select
-                                    labelId="payment-status-supplier-select"
-                                    id="payment-status-select"
-                                    name="payment_status"
-                                    value={formik.values.payment_status}
-                                    onChange={formik.handleChange}
-                                    >
-                                        {paymentStatusList.map(index => (
-                                                <MenuItem key={index.name} value={index.id}>
-                                                    {index.name}
-                                                </MenuItem>
-                                        ))}
-                                </Select>
+                        <Grid item xs={12} className={styles.buttonGroupGrid}>
+                            <form onSubmit={formik.handleSubmit}>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12}>
+                                    <Select
+                                        labelId="payment-status-supplier-select"
+                                        id="payment-status-select"
+                                        name="payment_status"
+                                        className={styles.paymentOptions}
+                                        value={formik.values.payment_status}
+                                        onChange={formik.handleChange}
+                                        >
+                                            {paymentStatusList.map(index => (
+                                                    <MenuItem key={index.name} value={index.id}>
+                                                        {index.name}
+                                                    </MenuItem>
+                                            ))}
+                                    </Select>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Button type='submit'>Actualizar</Button>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12} className={styles.buttonGroupGrid}>
-                                <Button type='submit'>Actualizar</Button>
-                            </Grid>
-                        </form>
+                            </form>
+                        </Grid>
                     </Grid>
-                : null
+                :
+                <Card >
+                    <h1>No hay ningún pago Cargado</h1>
+                </Card>
             }
         </div>
     );
