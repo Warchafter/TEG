@@ -12,6 +12,7 @@ const initialState = {
     rifValidatedUserList: [],
     nonRifValidatedUserToInspect: null,
     rifValidatedUserToInspect: null,
+    userList: [],
     error: null,
     loading: false
 };
@@ -202,6 +203,23 @@ const validateUserProfileRifFail = (state, action) => {
     return updateObject(state, { error: action.error, loading: false });
 }
 
+const fetchUserListStart = (state, action) => {
+    return updateObject(state, { error: null, loading: true });
+};
+
+const fetchUserListSuccess = (state, action) => {
+    const updatedState = {
+        userList: action.userList,
+        error: null,
+        loading: false
+    };
+    return updateObject(state, updatedState);
+};
+
+const fetchUserListFail = (state, action) => {
+    return updateObject(state, { error: action.error, loading: false });
+};
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_USER_PROFILE_DETAIL_START: return fetchUserProfileDetailStart(state, action);
@@ -236,6 +254,9 @@ const reducer = (state = initialState, action) => {
         case actionTypes.VALIDATE_USER_PROFILE_RIF_START: return validateUserProfileRifStart(state, action);
         case actionTypes.VALIDATE_USER_PROFILE_RIF_SUCCESS: return validateUserProfileRifSuccess(state, action);
         case actionTypes.VALIDATE_USER_PROFILE_RIF_FAIL: return validateUserProfileRifFail(state, action);
+        case actionTypes.FETCH_USER_LIST_START: return fetchUserListStart(state, action);
+        case actionTypes.FETCH_USER_LIST_SUCCESS: return fetchUserListSuccess(state, action);
+        case actionTypes.FETCH_USER_LIST_FAIL: return fetchUserListFail(state, action);
         default: return state;
     };
 };

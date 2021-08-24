@@ -138,29 +138,6 @@ const UserProfileClient = () => {
         validationSchema: validationSchema
     });
 
-    const test = () => {
-        // let testArray = {
-        //     id: 14,
-        //     name: "Laboratorio"
-        // };
-        // specializationList.map((index) => {
-        //     console.log(index);
-        //     let test = newSpecializationList.some(item => item === index);
-        //     console.log(test);
-        //     })
-
-        console.log("Primer Arreglo", specializationList);
-        console.log("Segundo Arreglo", newSpecializationList);
-        // let data = [{name: 'Comoros', code: 'KM'}, {name: 'Congo', code: 'CG'}, {name: 'Congo, The Democratic Republic of the', code: 'CD'}, {name: 'Cook Islands', code: 'CK'}, {name: 'Costa Rica', code: 'CR'}, {name: 'Cote D\'Ivoire', code: 'CI'}, {name: 'Croatia', code: 'HR'}, {name: 'Cuba', code: 'CU'}, {name: 'Cyprus', code: 'CY'}]
-
-        // let search = 'KM';
-        // let filterData = data.filter(item => item.code.includes(search));
-        // console.log(filterData);
-        // console.log(specializationList);
-        // console.log(newSpecializationList);
-        // console.log(data);
-    };
-
     return (
         <div className={styles.root}>
             <form onSubmit={formik.handleSubmit}>
@@ -193,13 +170,13 @@ const UserProfileClient = () => {
                             inputProps={{
                                 id: 'select-multiple-native',
                             }}
-                            >
+                        >
                                 {specializationList.map((index) => (
                                     <option key={index.name} value={index.id}>
                                         {index.name}
                                     </option>
                                 ))}
-                            </Select>
+                        </Select>
                         </Grid>
                     </Grid>
                     <Grid item container spacing={6} xs={12}>

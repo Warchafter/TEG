@@ -22,6 +22,7 @@ import {
 import PageviewIcon from '@material-ui/icons/Pageview';
 import EditIcon from '@material-ui/icons/Edit';
 import PaymentIcon from '@material-ui/icons/Payment';
+import AddBoxIcon from '@material-ui/icons/AddBox';
 import { Item } from '@mui-treasury/components/flex';
 import { useSizedIconButtonStyles } from '@mui-treasury/styles/iconButton/sized';
 
@@ -102,6 +103,7 @@ const PurchaseBillList = () => {
 
     const onFetchPurchaseBillList = useCallback((data) => dispatch(actions.fetchPurchaseBillList(data)), [dispatch]);
     const onSetPurchaseBillToModify = useCallback((data) => dispatch(actions.setPurchaseBillToModify(data)), [dispatch]);
+    const onSetPurchaseBillToModifyData = useCallback((data) => dispatch(actions.setPurchaseBillToModifyData(data)), [dispatch]);
     const onSetPurchaseBillToInspect = useCallback((data) => dispatch(actions.setPurchaseBillToInspect(data)), [dispatch]);
     const onSetPurchaseBillToModifyPayment = useCallback((data) => dispatch(actions.setPurchaseBillToModifyPayment(data)), [dispatch]);
 
@@ -136,6 +138,7 @@ const PurchaseBillList = () => {
 
     const canModifyPurchaseBillHandler = (row) => {
         if (userProfileDetail.roles === 'empleado') {
+            console.log("ES EMPLEADO")
             return (
                 <Item position={'right'} mr={-0.5} onClick={() => onSetPurchaseBillToModify(row)} >
                     <StyledTooltip title={'Ver Detalle'}>
@@ -231,6 +234,13 @@ const PurchaseBillList = () => {
                                                             {
                                                                 canModifyPurchaseBillHandler(row)
                                                             }
+                                                            <Item position={'right'} mr={-0.5} onClick={() => onSetPurchaseBillToModifyData(row)} >
+                                                                <StyledTooltip title={'Modificar'}>
+                                                                    <IconButton>
+                                                                        <AddBoxIcon fontSize="large" />
+                                                                    </IconButton>
+                                                                </StyledTooltip>
+                                                            </Item>
                                                             <Item position={'right'} mr={-0.5} onClick={() => onSetPurchaseBillToInspect(row)} >
                                                                 <StyledTooltip title={'Ver Detalle'}>
                                                                     <IconButton>

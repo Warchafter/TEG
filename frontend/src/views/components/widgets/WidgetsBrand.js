@@ -1,11 +1,16 @@
-import React from 'react'
+import React, {useState, useCallback, useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types'
 import { CWidgetBrand, CRow, CCol } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { CChart } from '@coreui/react-chartjs'
 import { brandSet, freeSet } from '@coreui/icons'
 
+import * as actions from '../../../store/actions/index';
+
 const WidgetsBrand = ({ withCharts }) => {
+  const dispatch = useDispatch();
+
   const chartOptions = {
     elements: {
       line: {
@@ -150,7 +155,7 @@ const WidgetsBrand = ({ withCharts }) => {
         />
       </CCol>
 
-      <CCol sm="6" lg="3">
+      {/* <CCol sm="6" lg="3">
         <CWidgetBrand
           className="mb-4"
           color="warning"
@@ -184,7 +189,7 @@ const WidgetsBrand = ({ withCharts }) => {
             ['4', 'meetings'],
           ]}
         />
-      </CCol>
+      </CCol> */}
     </CRow>
   )
 }

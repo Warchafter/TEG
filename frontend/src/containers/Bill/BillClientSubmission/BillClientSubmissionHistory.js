@@ -15,6 +15,7 @@ import PurchaseBillCreatedCard from '../../../components/Bill/PurchaseBill/Purch
 import PurchaseBillList from '../../../components/Bill/PurchaseBill/PurchaseBillList';
 import PurchaseBillProductTableSkeleton from '../../../components/Bill/PurchaseBill/PurchaseBillProductTableSkeletonInspect';
 import BillPaymentDetailCreateForm from '../../../components/Bill/BillPaymentDetail/BillPaymentDetailCreateForm';
+import PurchaseBillModifyData from '../../../components/Bill/PurchaseBill/PurchaseBillModifyData';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -34,6 +35,7 @@ const BillClientSubmissionHistory = () => {
     const purchaseBillCreated = useSelector(state => state.bill.purchaseBillCreated);
     const purchaseBillToInspect = useSelector(state => state.bill.purchaseBillToInspect);
     const purchaseBillToModifyPayment = useSelector(state => state.bill.purchaseBillToModifyPayment);
+    const purchaseBillToModifyData = useSelector(state => state.bill.purchaseBillToModifyData);
 
     const selectedOption = (selectionData) => {
         if (isBillClientSubmissionSelected) {
@@ -65,6 +67,13 @@ const BillClientSubmissionHistory = () => {
                             purchaseBillToInspect ?
                                 <Grid item xs={7}>
                                     <PurchaseBillProductTableSkeleton />
+                                </Grid>
+                            : null
+                        }
+                        {
+                            purchaseBillToModifyData ?
+                                <Grid item xs={5}>
+                                    <PurchaseBillModifyData />
                                 </Grid>
                             : null
                         }

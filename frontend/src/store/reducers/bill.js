@@ -24,9 +24,13 @@ const initialState = {
     purchaseBillModifiedId: null,
     purchaseBillToModify: null,
     purchaseBillToInspect: null,
+    purchaseBillToModifyData: null,
     purchaseBillToModifyPayment: null,
     purchaseBillToApprovePayment: null,
     purchaseBillAddingNewProduct: false,
+    purchaseBillPendingListCount: [],
+    purchaseBillPendingListPag: [],
+    purchaseBillPendingList: [],
     billDetailData: [],
     billDetailSelected: [],
     billDetailListCount: [],
@@ -217,7 +221,6 @@ const fetchBillClientSubmissionListFail = (state, action) => {
 // };
 
 const setSelectedBillClientSubmission = (state, action) => {
-    console.log(action)
     return updateObject(state, {
         billClientSubmissionSelected: action.data,
         isBillClientSubmissionSelected: true
@@ -684,6 +687,41 @@ const setBillDetailToInspect = (state, action) => {
     return updateObject(state, { billDetailToInspect: action.billDetailToInspect });
 };
 
+const fetchPurchaseBillPendingListStart = (state, action) => {
+    return updateObject(state, { error: null, loading: true });
+};
+
+const fetchPurchaseBillPendingListSuccess = (state, action) => {
+    console.log("RESPONSE", action.purchaseBillPendingList)
+    const updatedState = {
+        purchaseBillPendingListCount: action.purchaseBillPendingList.count,
+        purchaseBillPendingListPag: action.purchaseBillPendingList.links,
+        purchaseBillPendingList: action.purchaseBillPendingList.results,
+        error: null,
+        loading: false
+    };
+    return updateObject(state, updatedState);
+};
+
+const fetchPurchaseBillPendingListFail = (state, action) => {
+    return updateObject(state, { error: action.error, loading: false });
+};
+
+const setPurchaseBillToModifyData = (state, action) => {
+    return updateObject(state, { purchaseBillToModifyData: action.data });
+};
+
+const resetBillClientSubmission = (state, action) => {
+    return updateObject(state, {
+        purchaseBillToModifyData: null,
+        purchaseBillToModify: null,
+        purchaseBillToInspect: null,
+        purchaseBillToModifyPayment: null,
+        billClientSubmissionSelected: null,
+        isBillClientSubmissionSelected: false,
+    });
+};
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_BANK_LIST_START: return fetchBankListStart(state, action);
@@ -724,6 +762,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_PURCHASE_BILL_LIST_SUCCESS: return fetchPurchaseBillListSuccess(state, action);
         case actionTypes.FETCH_PURCHASE_BILL_LIST_FAIL: return fetchPurchaseBillListFail(state, action);
         case actionTypes.SET_PURCHASE_BILL_TO_MODIFY: return setPurchaseBillToModify(state, action);
+        case actionTypes.SET_PURCHASE_BILL_TO_MODIFY_DATA: return setPurchaseBillToModifyData(state, action);
         case actionTypes.SET_PURCHASE_BILL_TO_INSPECT: return setPurchaseBillToInspect(state, action);
         case actionTypes.SET_PURCHASE_BILL_TO_MODIFY_PAYMENT: return setPurchaseBillToModifyPayment(state, action);
         case actionTypes.SET_PURCHASE_BILL_TO_APPROVE_PAYMENT: return setPurchaseBillToApprovePayment(state, action);
@@ -788,6 +827,11 @@ const reducer = (state = initialState, action) => {
         case actionTypes.UPLOAD_BILL_PAYMENT_DETAIL_IMAGE_START: return uploadBillPaymentDetailImageStart(state, action);
         case actionTypes.UPLOAD_BILL_PAYMENT_DETAIL_IMAGE_SUCCESS: return uploadBillPaymentDetailImageSuccess(state, action);
         case actionTypes.UPLOAD_BILL_PAYMENT_DETAIL_IMAGE_FAIL: return uploadBillPaymentDetailImageFail(state, action);
+        case actionTypes.SET_BILL_DETAIL_TO_INSPECT: return setBillDetailToInspect(state, action);
+        case actionTypes.FETCH_PURCHASE_BILL_PENDING_LIST_START: return fetchPurchaseBillPendingListStart(state, action);
+        case actionTypes.FETCH_PURCHASE_BILL_PENDING_LIST_SUCCESS: return fetchPurchaseBillPendingListSuccess(state, action);
+        case actionTypes.FETCH_PURCHASE_BILL_PENDING_LIST_FAIL: return fetchPurchaseBillPendingListFail(state, action);
+        case actionTypes.RESET_CLIENT_BILL_SUBMISSION: return resetBillClientSubmission(state, action);
         default: return state;
     };
 };

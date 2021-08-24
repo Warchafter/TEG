@@ -197,3 +197,23 @@ export function* validateUserProfileRifSaga(action) {
         yield put(actions.enqueueSnackbar(getSnackbarData("El perfil no pudo ser verificado", 'error')));
     };
 };
+
+export function* fetchUserListSaga(action) {
+    yield put(actions.fetchUserListStart());
+    const access = yield localStorage.getItem('access');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': access ? `JWT ${access}` : null,
+            'Accept': 'application/json'
+        }
+    };
+    const url = '/user/users/';
+    try {
+        let response = yield axios.get(url, config);
+        yield put(actions.fetchUserListSuccess(response.data));
+    } catch (error) {
+        yield put(actions.fetchUserListFail(error));
+        yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer el listado de clientes', 'error')));
+    };
+}

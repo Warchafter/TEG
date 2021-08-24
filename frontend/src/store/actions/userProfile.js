@@ -280,3 +280,29 @@ export const validateUserProfileRifFail = (error) => {
         error: error
     };
 };
+
+export const fetchUserList = () => {
+    return {
+        type: actionTypes.FETCH_USER_LIST
+    };
+};
+
+export const fetchUserListStart = () => {
+    return {
+        type: actionTypes.FETCH_USER_LIST_START
+    };
+};
+
+export const fetchUserListSuccess = (userList) => {
+    return {
+        type: actionTypes.FETCH_USER_LIST_SUCCESS,
+        userList: userList
+    };
+};
+
+export const fetchUserListFail = (error) => {
+    return {
+        type: actionTypes.FETCH_USER_LIST_FAIL,
+        error: error
+    };
+};

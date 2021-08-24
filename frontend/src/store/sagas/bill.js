@@ -21,7 +21,6 @@ export function* fetchBankListSaga(action) {
     const url = '/bill/banks/';
     try {
         let response = yield axios.get(url, config);
-
         yield put(actions.fetchBankListSuccess(response.data));
     } catch (error) {
         yield put(actions.fetchBankListFail(error));
@@ -218,8 +217,6 @@ export function* createPurchaseBillSaga(action) {
 };
 
 export function* modifyPurchaseBillSaga(action) {
-    // The payload must contain all the fields of the product that is being
-    // modified + the id of said product from the supplier list.
     yield put(actions.modifyPurchaseBillStart());
     const access = yield localStorage.getItem('access');
     const config = {
@@ -229,20 +226,11 @@ export function* modifyPurchaseBillSaga(action) {
             'Accept': 'application/json'
         }
     };
-    const body = JSON.stringify({
-        purchase_order_date: action.data.purchaseBillData.purchase_order_date,
-        purchase_payment_date: action.data.purchaseBillData.purchase_payment_date,
-        payment_method: action.data.purchaseBillData.payment_method,
-        currency: action.data.purchaseBillData.currency,
-        bank: action.data.purchaseBillData.bank,
-        purchase_status: action.data.purchaseBillData.purchase_status,
-        payment_status: action.data.purchaseBillData.payment_status
-    });
-    const url = `/bill/purchase-bills/${action.data}`;
+    const url = `/bill/purchase-bills/${action.id}/`;
     try {
-        let response = yield axios.put(url, body, config);
+        let response = yield axios.patch(url, action.data, config);
         yield put(actions.modifyPurchaseBillSuccess(response.data));
-        yield put(actions.enqueueSnackbar(getSnackbarData(`Modificada la factura ${action.data}`)));
+        yield put(actions.enqueueSnackbar(getSnackbarData(`Modificada la factura # ${action.id}`, 'success')));
     } catch (error) {
         yield put(actions.modifyPurchaseBillFail(error));
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo modificar la factura', 'error')));
@@ -339,7 +327,7 @@ export function* modifyBillDetailSaga(action) {
     });
     const url = `/bill/bill-details/${action.data.billDetailSelected}`;
     try {
-        let response = yield axios.put(url, body, config);
+        let response = yield axios.patch(url, body, config);
         yield put(actions.modifyBillDetailSuccess(response.data));
         yield put(actions.enqueueSnackbar(getSnackbarData(`Modificado el detalle de la factura: ${action.data.billDetailSelected}`, 'success')));
     } catch (error) {
@@ -736,5 +724,24 @@ export function* uploadBillPaymentDetailImageSaga(action) {
     } catch (error) {
         yield put(actions.uploadBillPaymentDetailImageFail(error));
         yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo cargar el pago', 'error')));
+    };
+};
+
+
+export function* fetchPurchaseBillPendingListSaga(action) {
+    yield put(actions.fetchPurchaseBillPendingListStart());
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    };
+    const url = '/bill/purchase-bills/?purchase_status=1';
+    try {
+        let response = yield axios.get(url, config);
+        yield put(actions.fetchPurchaseBillPendingListSuccess(response.data));
+    } catch (error) {
+        yield put(actions.fetchPurchaseBillPendingListFail(error));
+        yield put(actions.enqueueSnackbar(getSnackbarData('No se pudo traer los detalles de pago de las facturas', 'error')));
     };
 };

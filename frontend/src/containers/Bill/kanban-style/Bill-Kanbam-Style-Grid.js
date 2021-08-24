@@ -17,7 +17,6 @@ import Card from '@material-ui/core/Card';
 
 import * as actions from '../../../store/actions/index';
 import Notifier from '../../../components/Notifier/Notifier';
-import { cibOpenCollective } from '@coreui/icons';
 
 
 const useStyles = makeStyles(({ spacing, palette, theme }) => {
@@ -92,11 +91,17 @@ const BillKanbanStyleGrid = () => {
     const ExRateDataLoaded = useSelector(state => state.bill.ExRateDataLoaded);
     const exchangeRates = useSelector(state => state.bill.exchangeRatesData);
 
+    const onResetBillClientSubmission = useCallback(() => dispatch(actions.resetBillClientSubmission()), [dispatch,]);
     const onFetchExchangeRates = useCallback(() => dispatch(actions.fetchExchangeRates()), [dispatch]);
     const onFetchPurchaseBillList = useCallback(() => dispatch(actions.fetchPurchaseBillList()), [dispatch]);
-
+    // const onSetSelectedBillClientSubmission = useCallback(() => dispatch(actions.setSelectedBillClientSubmission()), [dispatch,])
 
     useEffect(() => {
+        onResetBillClientSubmission();
+    }, [])
+
+    useEffect(() => {
+        // onSetSelectedBillClientSubmission();
         onFetchPurchaseBillList();
         onFetchExchangeRates();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -141,7 +146,7 @@ const BillKanbanStyleGrid = () => {
                                     {
                                         purchaseBillList.map(index => {
                                             if (index.payment_status.id === 1) {
-                                                return <Grid item xs={12}><KanbanCardDemo key={index.id} data={index} /></Grid>
+                                                return <Grid item key={index.id +1} xs={12}><KanbanCardDemo key={index.id} data={index} /></Grid>
                                             }
                                         })
                                     }
@@ -158,7 +163,7 @@ const BillKanbanStyleGrid = () => {
                                     {
                                         purchaseBillList.map(index => {
                                             if (index.payment_status.id === 2) {
-                                                return <Grid item xs={12}><KanbanCardDemo key={index.id} data={index} /></Grid>
+                                                return <Grid item xs={12}><KanbanCardDemo key={index.id +1} data={index} /></Grid>
                                             }
                                         })
                                     }
@@ -175,7 +180,7 @@ const BillKanbanStyleGrid = () => {
                                     {
                                         purchaseBillList.map(index => {
                                         if (index.payment_status.id === 3) {
-                                            return <Grid item xs={12}><KanbanCardDemo key={index.id} data={index} /></Grid>
+                                            return <Grid item xs={12}><KanbanCardDemo key={index.id +1} data={index} /></Grid>
                                         }
                                         })
                                     }

@@ -111,12 +111,6 @@ const useSliderStyles = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    modalPaper: {
-        backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-    },
 }));
 
 const KanbanCardDemo = (props) => {
@@ -145,9 +139,6 @@ const KanbanCardDemo = (props) => {
                 break;
         };
     };
-
-    console.log("DATA: ",props.data);
-
 
     useEffect(() => {
         SliderStateHandler(props.data.payment_status.id);

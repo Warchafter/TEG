@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useCallback, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import {
   CRow,
   CCol,
@@ -12,14 +13,51 @@ import { getStyle } from '@coreui/utils'
 import { CChartBar, CChartLine } from '@coreui/react-chartjs'
 import CIcon from '@coreui/icons-react'
 
+import * as actions from '../../../store/actions/index';
+
 const WidgetsDropdown = () => {
+  const dispatch = useDispatch();
+
+  const accumulated = [];
+  const [accum, setAccum] = useState(0);
+  const [isAccumSet, setIsAccumSet] = useState(false);
+
+  const userList = useSelector(state => state.userProfile.userList);
+  const billClientSubmissionList = useSelector(state => state.bill.billClientSubmissionList);
+  const billDetailList = useSelector(state => state.bill.billDetailList);
+
+  const onFetchUserList = useCallback(() => dispatch(actions.fetchUserList()), [dispatch,]);
+  const onFetchBillClientSubmissionList = useCallback(() => dispatch(actions.fetchBillClientSubmissionList()), [dispatch,])
+  const onFetchBillDetailList = useCallback(() => dispatch(actions.fetchBillDetailList()), [dispatch,]);
+
+  useEffect(() => {
+    onFetchUserList();
+    onFetchBillClientSubmissionList();
+    onFetchBillDetailList();
+  }, []);
+
+  const calculateTotalUsers = () => {
+    return userList.length;
+  };
+
+  const calculateTotalBillClientSubmissions = () => {
+    return billClientSubmissionList.length;
+  }
+
+  const calculateTotalBillDetailTransactionedAmount = () => {
+    billDetailList.map(index => {
+      accumulated.push(index.price)
+    });
+    return accumulated.reduce((a, b) => a + b, 0)
+  };
+
   return (
     <CRow>
       <CCol sm="6" lg="3">
         <CWidgetDropdown
           className="mb-4"
           color="primary"
-          value="9.823"
+          value={calculateTotalUsers()}
           title="Nuevos Clientes"
           action={
             <CDropdown alignment="end">
@@ -39,14 +77,14 @@ const WidgetsDropdown = () => {
               className="mt-3 mx-3"
               style={{ height: '70px' }}
               data={{
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                labels: ['Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto'],
                 datasets: [
                   {
-                    label: 'My First dataset',
+                    label: 'Clientes Nuevos',
                     backgroundColor: 'transparent',
                     borderColor: 'rgba(255,255,255,.55)',
                     pointBackgroundColor: getStyle('--cui-primary'),
-                    data: [65, 59, 84, 84, 51, 55, 40],
+                    data: [1, 1, 1, 1, 1, 1, calculateTotalUsers()],
                   },
                 ],
               }}
@@ -68,8 +106,8 @@ const WidgetsDropdown = () => {
                     },
                   },
                   y: {
-                    min: 30,
-                    max: 89,
+                    min: 0,
+                    max: 25,
                     display: false,
                     grid: {
                       display: false,
@@ -99,7 +137,7 @@ const WidgetsDropdown = () => {
         <CWidgetDropdown
           className="mb-4"
           color="info"
-          value="9.823"
+          value={calculateTotalBillClientSubmissions()}
           title="Solicitudes de Cotización"
           action={
             <CDropdown alignment="end">
@@ -119,14 +157,14 @@ const WidgetsDropdown = () => {
               className="mt-3 mx-3"
               style={{ height: '70px' }}
               data={{
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                labels: ['Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto'],
                 datasets: [
                   {
-                    label: 'My First dataset',
+                    label: 'Solicitudes de Cotización',
                     backgroundColor: 'transparent',
                     borderColor: 'rgba(255,255,255,.55)',
                     pointBackgroundColor: getStyle('--cui-info'),
-                    data: [1, 18, 9, 17, 34, 22, 11],
+                    data: [0, 0, 0, 0, 0, 4, calculateTotalBillClientSubmissions() - 4],
                   },
                 ],
               }}
@@ -178,7 +216,7 @@ const WidgetsDropdown = () => {
         <CWidgetDropdown
           className="mb-4"
           color="warning"
-          value="9.823"
+          value={calculateTotalBillDetailTransactionedAmount()}
           title="Montos Transados"
           action={
             <CDropdown alignment="end">
@@ -198,13 +236,13 @@ const WidgetsDropdown = () => {
               className="mt-3"
               style={{ height: '70px' }}
               data={{
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                labels: ['Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto'],
                 datasets: [
                   {
-                    label: 'My First dataset',
+                    label: 'Montos Transados',
                     backgroundColor: 'rgba(255,255,255,.2)',
                     borderColor: 'rgba(255,255,255,.55)',
-                    data: [78, 81, 80, 45, 34, 12, 40],
+                    data: [0, 0, 0, 0, 0, 0, calculateTotalBillDetailTransactionedAmount()],
                     fill: true,
                   },
                 ],
@@ -265,22 +303,22 @@ const WidgetsDropdown = () => {
               style={{ height: '70px' }}
               data={{
                 labels: [
-                  'January',
-                  'February',
-                  'March',
-                  'April',
-                  'May',
-                  'June',
-                  'July',
-                  'August',
-                  'September',
-                  'October',
-                  'November',
-                  'December',
-                  'January',
-                  'February',
-                  'March',
-                  'April',
+                  'Mayo',
+                  'Junio',
+                  'Julio',
+                  'Agosto',
+                  'Septiembre',
+                  'Octubre',
+                  'Noviembre',
+                  'Diciembre',
+                  'Enero',
+                  'Febrero',
+                  'Marzo',
+                  'Abril',
+                  'Mayo',
+                  'Junio',
+                  'Julio',
+                  'Agosto',
                 ],
                 datasets: [
                   {

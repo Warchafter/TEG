@@ -224,7 +224,7 @@ class PurchaseBillViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.SearchFilter,)
     queryset = PurchaseBill.objects.all()
     authentication_classes = (JWTAuthentication,)
-    permission_classes = (IsAdminOrReadOnly,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     pagination_class = StandardResultsSetPagination
 
     def _params_to_ints(self, qs):

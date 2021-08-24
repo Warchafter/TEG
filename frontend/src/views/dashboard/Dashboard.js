@@ -1,4 +1,7 @@
 import React, { lazy } from 'react'
+import {useState, useCallback, useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import * as actions from '../../store/actions/index';
 
 import {
   // CAvatar,
@@ -25,10 +28,45 @@ import { getStyle, hexToRgba } from '@coreui/utils'
 const WidgetsDropdown = lazy(() => import('../components/widgets/WidgetsDropdown.js'))
 const WidgetsBrand = lazy(() => import('../components/widgets/WidgetsBrand.js'))
 
+
 const Dashboard = () => {
+  const dispatch = useDispatch();
   const random = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min)
   }
+
+  const accumulated = [];
+  const [accum, setAccum] = useState(0);
+  const [isAccumSet, setIsAccumSet] = useState(false);
+
+  const userList = useSelector(state => state.userProfile.userList);
+  const billClientSubmissionList = useSelector(state => state.bill.billClientSubmissionList);
+  const billDetailList = useSelector(state => state.bill.billDetailList);
+
+  const onFetchUserList = useCallback(() => dispatch(actions.fetchUserList()), [dispatch,]);
+  const onFetchBillClientSubmissionList = useCallback(() => dispatch(actions.fetchBillClientSubmissionList()), [dispatch,])
+  const onFetchBillDetailList = useCallback(() => dispatch(actions.fetchBillDetailList()), [dispatch,]);
+
+  useEffect(() => {
+    onFetchUserList();
+    onFetchBillClientSubmissionList();
+    onFetchBillDetailList();
+  }, []);
+
+  const calculateTotalUsers = () => {
+    return userList.length;
+  };
+
+  const calculateTotalBillClientSubmissions = () => {
+    return billClientSubmissionList.length;
+  }
+
+  const calculateTotalBillDetailTransactionedAmount = () => {
+    billDetailList.map(index => {
+      accumulated.push(index.price)
+    });
+    return accumulated.reduce((a, b) => a + b, 0)
+  };
 
   return (
     <>
@@ -48,7 +86,7 @@ const Dashboard = () => {
           <CChartLine
             style={{ height: '300px', marginTop: '40px' }}
             data={{
-              labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio'],
+              labels: ['Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto'],
               datasets: [
                 {
                   label: 'My First dataset',
@@ -57,13 +95,13 @@ const Dashboard = () => {
                   pointHoverBackgroundColor: getStyle('--cui-info'),
                   borderWidth: 2,
                   data: [
-                    random(50, 200),
-                    random(50, 200),
-                    random(50, 200),
-                    random(50, 200),
-                    random(50, 200),
-                    random(50, 200),
-                    random(50, 200),
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    2,
+                    10,
                   ],
                   fill: true,
                 },
@@ -74,13 +112,13 @@ const Dashboard = () => {
                   pointHoverBackgroundColor: getStyle('--cui-success'),
                   borderWidth: 2,
                   data: [
-                    random(50, 200),
-                    random(50, 200),
-                    random(50, 200),
-                    random(50, 200),
-                    random(50, 200),
-                    random(50, 200),
-                    random(50, 200),
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    15,
+                    calculateTotalBillDetailTransactionedAmount(),
                   ],
                 },
                 {
@@ -90,7 +128,7 @@ const Dashboard = () => {
                   pointHoverBackgroundColor: getStyle('--cui-danger'),
                   borderWidth: 1,
                   borderDash: [8, 5],
-                  data: [65, 65, 65, 65, 65, 65, 65],
+                  data: [5, 5, 5, 5, 5, 5, 5],
                 },
               ],
             }}
@@ -111,8 +149,8 @@ const Dashboard = () => {
                   ticks: {
                     beginAtZero: true,
                     maxTicksLimit: 5,
-                    stepSize: Math.ceil(250 / 5),
-                    max: 250,
+                    stepSize: Math.ceil(50 / 5),
+                    max: 50,
                   },
                 },
               },
@@ -132,24 +170,24 @@ const Dashboard = () => {
         </CCardBody>
         <CCardFooter>
           <CRow className="text-center">
-            <CCol md sm="12" className="mb-sm-2 mb-0">
+            {/* <CCol md sm="12" className="mb-sm-2 mb-0">
               <div className="text-medium-emphasis">Visitas</div>
-              <strong>29.703 Usuarios (40%)</strong>
+              <strong>{calculateTotalUsers()} Usuarios</strong>
               <CProgress thin className="mt-2" precision={1} color="success" value={40} />
-            </CCol>
+            </CCol> */}
             <CCol md sm="12" className="mb-sm-2 mb-0">
               <div className="text-medium-emphasis">Únicas</div>
-              <strong>24.093 Usuarios (20%)</strong>
+              <strong>{calculateTotalUsers()} Usuarios</strong>
               <CProgress thin className="mt-2" precision={1} color="info" value={20} />
             </CCol>
             <CCol md sm="12" className="mb-sm-2 mb-0">
               <div className="text-medium-emphasis">Cotizaciones</div>
-              <strong>78.706 Cotizaciones (60%)</strong>
+              <strong>{calculateTotalBillClientSubmissions()} Cotizaciones</strong>
               <CProgress thin className="mt-2" precision={1} color="warning" value={60} />
             </CCol>
             <CCol md sm="12" className="mb-sm-2 mb-0">
               <div className="text-medium-emphasis">Nuevos Usuarios</div>
-              <strong>22.123 Usuarios (80%)</strong>
+              <strong>{calculateTotalUsers() - 5} (80%)</strong>
               <CProgress thin className="mt-2" precision={1} color="danger" value={80} />
             </CCol>
             <CCol md sm="12" className="mb-sm-2 mb-0">

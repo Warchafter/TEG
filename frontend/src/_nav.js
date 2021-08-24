@@ -69,12 +69,12 @@ export const _nav1 = [
       anchor: 'Pagos Facturas',
       to: '/bill-payments',
       },
-      {
-        _component: 'CNavItem',
-        as: NavLink,
-        anchor: 'Pagos Por Procesar',
-        to: '/demo2',
-      },
+      // {
+      //   _component: 'CNavItem',
+      //   as: NavLink,
+      //   anchor: 'Pagos Por Procesar',
+      //   to: '/demo2',
+      // },
     ],
   },
   {
@@ -231,17 +231,17 @@ export const _nav1 = [
 ];
 
 export const _nav2 = [
-  {
-    _component: 'CNavItem',
-    as: NavLink,
-    anchor: 'Dashboard',
-    to: '/dashboard',
-    icon: <CIcon content={freeSet.cilHome} customClasses="nav-icon"/>,
-    badge: {
-      color: 'info',
-      text: 'NEW',
-    },
-  },
+  // {
+  //   _component: 'CNavItem',
+  //   as: NavLink,
+  //   anchor: 'Dashboard',
+  //   to: '/dashboard',
+  //   icon: <CIcon content={freeSet.cilHome} customClasses="nav-icon"/>,
+  //   badge: {
+  //     color: 'info',
+  //     text: 'NEW',
+  //   },
+  // },
   {
     _component: 'CNavTitle',
     anchor: 'Facturas',

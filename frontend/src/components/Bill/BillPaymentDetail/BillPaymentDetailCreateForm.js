@@ -11,7 +11,13 @@ import {
     CardMedia,
     Grid,
     Container,
-    Card
+    Card,
+    Typography,
+    Table,
+    TableContainer,
+    TableHead,
+    TableRow,
+    TableCell,
 } from '@material-ui/core';
 
 import * as actions from '../../../store/actions/index';
@@ -59,6 +65,20 @@ const useStyles = makeStyles(({ spacing, palette }) => {
         cardMedia: {
             height: '500px'
         },
+        titlePayment: {
+            width: '100%',
+            padding: '0 1.5em',
+            transition: '3s',
+            textAlign: 'center',
+        },
+        tableHeaderCell: {
+            fontWeight: 'bold',
+            backgroundColor: '#3c4b64',
+            color: palette.getContrastText(palette.primary.dark)
+        },
+        grinContainerPayment: {
+            padding: '15px'
+        }
     }
 });
 
@@ -128,10 +148,22 @@ const BillPaymentDetailCreateForm = (props) => {
     return (
         <React.Fragment>
             <Card>
-                <Grid container>
+                <Grid container className={styles.grinContainerPayment}>
                     <Grid item xs={12}>
                         <Container maxWidth="md">
-                            <h6>Cargar pago de la Factura Nº: # {purchaseBillToModifyPayment.id}</h6>
+                            <Grid item xs={12}>
+                                <TableContainer component={styles.tableContainer}>
+                                    <Table size="small" aria-label="a dense table">
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell className={styles.tableHeaderCell}>
+                                                    <Typography>Cargar pago de la Factura Nº: # {purchaseBillToModifyPayment.id}</Typography>
+                                                </TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                    </Table>
+                                </TableContainer>
+                            </Grid>
                             { billPaymentDetailImageURL
                                 ?
                                 <CardActionArea className={styles.cardActionArea} onClick={openHandler}>

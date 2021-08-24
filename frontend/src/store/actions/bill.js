@@ -273,10 +273,11 @@ export const createPurchaseBillFail = (error) => {
     };
 };
 
-export const modifyPurchaseBill = (data) => {
+export const modifyPurchaseBill = (data, id) => {
     return {
         type: actionTypes.MODIFY_PURCHASE_BILL,
-        data: data
+        data: data,
+        id: id
     };
 };
 
@@ -941,5 +942,44 @@ export const setBillDetailToInspect = (data) => {
     return {
         type: actionTypes.SET_BILL_DETAIL_TO_INSPECT,
         data: data
+    };
+};
+
+export const fetchPurchasebillPendingList = () => {
+    return {
+        type: actionTypes.FETCH_PURCHASE_BILL_PENDING_LIST
+    };
+};
+
+export const fetchPurchaseBillPendingListStart = () => {
+    return {
+        type: actionTypes.FETCH_PURCHASE_BILL_PENDING_LIST_START
+    };
+};
+
+export const fetchPurchaseBillPendingListSuccess = (purchaseBillPendingList) => {
+    return {
+        type: actionTypes.FETCH_PURCHASE_BILL_PENDING_LIST_SUCCESS,
+        purchaseBillPendingList: purchaseBillPendingList
+    };
+};
+
+export const fetchPurchaseBillPendingListFail = (error) => {
+    return {
+        type: actionTypes.FETCH_PURCHASE_BILL_PENDING_LIST_FAIL,
+        error: error
+    };
+};
+
+export const setPurchaseBillToModifyData = (data) => {
+    return {
+        type: actionTypes.SET_PURCHASE_BILL_TO_MODIFY_DATA,
+        data: data
+    };
+};
+
+export const resetBillClientSubmission = () => {
+    return {
+        type: actionTypes.RESET_CLIENT_BILL_SUBMISSION
     };
 };

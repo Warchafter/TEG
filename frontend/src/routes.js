@@ -33,7 +33,8 @@ const Bill = React.lazy(() => { return import('./containers/Bill/Bill') });
 const BillClientSubmission = React.lazy(() => { return import('./containers/Bill/BillClientSubmission/BillClientSubmission') });
 const BillClientSubmissionHistory = React.lazy(() => { return import('./containers/Bill/BillClientSubmission/BillClientSubmissionHistory') });
 const PurchaseBillList = React.lazy(() => { return import('./components/Bill/PurchaseBill/PurchaseBillList') });
-const PurchaseBillModifier = React.lazy(() => {return import('./containers/Bill/PurchaseBill/PurchaseBillModifier')})
+const PurchaseBillPendingListMain = React.lazy(() => { return import('./containers/Bill/PurchaseBill/PurchaseBillPendingListMain') });
+const PurchaseBillModifier = React.lazy(() => {return import('./containers/Bill/PurchaseBill/PurchaseBillModifier')});
 const BillPaymentDetailUpload = React.lazy(() => {return import ('./containers/Bill/BillPaymentDetail/BillPaymentDetailUpload') });
 const BillKanbanStyleGrid = React.lazy(() => { return import('./containers/Bill/kanban-style/Bill-Kanbam-Style-Grid') });
 const BillPaymentDetailApproval = React.lazy(() => { return import('./containers/Bill/BillPaymentDetail/BillPaymentDetailApproval') });
@@ -354,7 +355,7 @@ let routes = [
         path: '/purchase-bill-pending',
         layout: DefaultLayout,
         name: "Facturas por Procesar",
-        component: PurchaseBillList,
+        component: PurchaseBillPendingListMain,
         isPrivate: true,
         exact: true
     },

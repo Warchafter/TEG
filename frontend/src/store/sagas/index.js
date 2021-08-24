@@ -25,7 +25,8 @@ import {
     fetchSpecializationsSaga,
     fetchNonRifValidatedUsersSaga,
     fetchRifValidatedUsersSaga,
-    validateUserProfileRifSaga
+    validateUserProfileRifSaga,
+    fetchUserListSaga
 } from './userProfile';
 
 import {
@@ -84,7 +85,8 @@ import {
     fetchBillPaymentDetailListSaga,
     fetchBillPaymentDetailListFilteredSaga,
     fetchExchangeRatesSaga,
-    uploadBillPaymentDetailImageSaga
+    uploadBillPaymentDetailImageSaga,
+    fetchPurchaseBillPendingListSaga
 } from './bill';
 
 import {
@@ -122,6 +124,7 @@ export function* watchUserProfile() {
         takeEvery(actionTypes.FETCH_NON_RIF_VALIDATED_USERS, fetchNonRifValidatedUsersSaga),
         takeEvery(actionTypes.FETCH_RIF_VALIDATED_USERS, fetchRifValidatedUsersSaga),
         takeLatest(actionTypes.VALIDATE_USER_PROFILE_RIF, validateUserProfileRifSaga),
+        takeEvery(actionTypes.FETCH_USER_LIST, fetchUserListSaga),
     ]);
 };
 
@@ -164,7 +167,7 @@ export function* watchBill() {
         takeEvery(actionTypes.FETCH_BILL_CLIENT_SUBMISSION_DETAIL, fetchBillClientSubmissionDetailSaga),
         takeEvery(actionTypes.FETCH_BILL_CLIENT_SUBMISSION_LIST, fetchBillClientSubmissionListSaga),
         takeLatest(actionTypes.CREATE_PURCHASE_BILL, createPurchaseBillSaga),
-        takeEvery(actionTypes.MODIFY_PURCHASE_BILL, modifyPurchaseBillSaga),
+        takeLatest(actionTypes.MODIFY_PURCHASE_BILL, modifyPurchaseBillSaga),
         takeEvery(actionTypes.FETCH_PURCHASE_BILL, fetchPurchaseBillSaga),
         takeEvery(actionTypes.FETCH_PURCHASE_BILL_LIST, fetchPurchaseBillListSaga),
         takeLatest(actionTypes.CREATE_BILL_DETAIL, createBillDetailSaga),
@@ -187,6 +190,7 @@ export function* watchBill() {
         takeEvery(actionTypes.FETCH_BILL_PAYMENT_DETAIL_LIST_FILTERED, fetchBillPaymentDetailListFilteredSaga),
         takeLatest(actionTypes.FETCH_EXCHANGE_RATES, fetchExchangeRatesSaga),
         takeLatest(actionTypes.UPLOAD_BILL_PAYMENT_DETAIL_IMAGE, uploadBillPaymentDetailImageSaga),
+        takeEvery(actionTypes.FETCH_PURCHASE_BILL_PENDING_LIST, fetchPurchaseBillPendingListSaga),
     ]);
 };
 
