@@ -69,7 +69,6 @@ const PurchaseBillModifyData = () => {
         },
     });
 
-
     return (
         <div className={styles.root}>
             <Card >

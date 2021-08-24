@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const validationSchema = yup.object({
-    bill_name_receiver: yup.string().required("El nombre de quien será realizada la factura es requerido"),
+    bill_name_receiver: yup.string().min(6,"Muy Corto").max(30, "Muy largo").required("El nombre de quien será realizada la factura es requerido"),
     product_requirements: yup.string().required("El requerimiento de la solicitud es requerido")
 });
 
@@ -36,8 +36,8 @@ const BillClientSubmissionForm = () => {
 
     const formik = useFormik({
         initialValues: {
-            bill_name_receiver: null,
-            product_requirements: null
+            bill_name_receiver: "",
+            product_requirements: ""
         },
         onSubmit: (values) => {
             onCreateBillClientSubmission(values);

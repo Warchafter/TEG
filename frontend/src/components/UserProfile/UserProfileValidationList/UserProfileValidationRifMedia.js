@@ -5,10 +5,16 @@ import Lightbox from 'react-image-lightbox';
 import {makeStyles} from '@material-ui/core/styles';
 import {
     Button,
+    Card,
     CardActionArea,
     CardMedia,
     Grid,
     Typography,
+    Table,
+    TableContainer,
+    TableHead,
+    TableRow,
+    TableCell,
 } from '@material-ui/core';
 import CloudDoneIcon from '@material-ui/icons/CloudDone';
 
@@ -49,6 +55,29 @@ const useStyles = makeStyles(({ spacing, palette }) => {
         cardMedia: {
             height: '500px'
         },
+        tableContainer: {
+            borderRadius: 15,
+            margin: '10px 10px',
+        },
+        tableHeaderCell: {
+            fontWeight: 'bold',
+            backgroundColor: '#3c4b64',
+            color: palette.getContrastText(palette.primary.dark)
+        },
+        GridHeader: {
+            maxWidth: 'none',
+        },
+        divAlignWrapper: {
+            textAlign: '-webkit-center',
+        },
+        mainContentMedia: {
+            padding: '10px',
+        },
+        rifTitle: {
+            paddingLeft: 15,
+            paddingRight: 15,
+            paddingBottom: 15
+        }
     }
 });
 
@@ -87,23 +116,40 @@ const UserProfileValidationRifMedia = () => {
         <div>
             {
                 nonRifValidatedUserToInspect ?
-                <div>
-                    <Grid container spacing={3}>
+                <Card className={styles.card}>
+                    <Grid container spacing={3} className={styles.GridHeader}>
+                        <Grid item xs={12}>
+                            <TableContainer component={styles.tableContainer}>
+                                <Table size="small" aria-label="a dense table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell className={styles.tableHeaderCell}>
+                                                <Typography>Requerimiento</Typography>
+                                            </TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                </Table>
+                            </TableContainer>
+                        </Grid>
+                    </Grid>
+                    <Grid container spacing={3} className={styles.mainContentMedia}>
                         <Grid item xs={12}>
                             {
                                 nonRifValidatedUserToInspect.rif_address ?
-                                <Typography >{nonRifValidatedUserToInspect.rif_address}</Typography>
+                                <Typography className={styles.rifTitle}><strong>Dirección del RIF: </strong>{nonRifValidatedUserToInspect.rif_address}</Typography>
                                 : null
                             }
                             { nonRifValidatedUserToInspect.rif
                                 ?
-                                <CardActionArea className={styles.cardActionArea} onClick={openHandler}>
-                                    <CardMedia
-                                        className={styles.cardMedia}
-                                        image={nonRifValidatedUserToInspect.rif}
-                                        title="RIF del Usuario"
-                                    />
-                                </CardActionArea>
+                                <div className={styles.divAlignWrapper}>
+                                    <CardActionArea className={styles.cardActionArea} onClick={openHandler}>
+                                        <CardMedia
+                                            className={styles.cardMedia}
+                                            image={nonRifValidatedUserToInspect.rif}
+                                            title="RIF del Usuario"
+                                        />
+                                    </CardActionArea>
+                                </div>
                                 :
                                 null
                             }
@@ -111,7 +157,7 @@ const UserProfileValidationRifMedia = () => {
                                 rifImage ? rifImage.name : null
                             }
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={12}  className={styles.divAlignWrapper}>
                             <Button
                                 variant="contained"
                                 color="primary"
@@ -138,7 +184,7 @@ const UserProfileValidationRifMedia = () => {
                             }
                         />
                     )}
-                </div>
+                </Card>
                 : null
             }
         </div>

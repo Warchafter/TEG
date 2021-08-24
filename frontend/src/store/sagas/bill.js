@@ -291,14 +291,9 @@ export function* createBillDetailSaga(action) {
             'Accept': 'application/json'
         }
     };
-    const body = JSON.stringify({
-        purchase_bill: action.data.billDetailData.purchase_bill,
-        product: action.data.billDetailData.product,
-        quantity: action.data.billDetailData.quantity
-    });
     const url = '/bill/bill-details/';
     try {
-        let response = yield axios.post(url, body, config);
+        let response = yield axios.post(url, action.data, config);
         yield put(actions.createBillDetailSuccess(response.data));
         yield put(actions.enqueueSnackbar(getSnackbarData('El detalle de la factura fue creado exitosamente!', 'success')));
         yield put(actions.setPurchaseBillAddingNewProduct(false));

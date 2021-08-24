@@ -42,6 +42,14 @@ const useStyles = makeStyles((theme) => ({
     },
     tableHeaderRow: {
         backgroundColor: '#3c4b64',
+    },
+    tableHeaderCellPrice: {
+        fontWeight: 'bold',
+        color: theme.palette.getContrastText(theme.palette.primary.dark),
+        borderBottom: 0
+    },
+    priceCell: {
+        textAlign: '-webkit-center',
     }
 }));
 
@@ -88,30 +96,28 @@ const PurchaseBillProductTableSkeletonInspect = () => {
                                                     <Typography>ID</Typography>
                                                 </TableCell>
                                             </Grid>
-                                            <Grid item xs={2}>
+                                            <Grid item xs={3}>
                                                 <TableCell className={styles.tableHeaderCell}>
                                                     <Typography>Producto</Typography>
                                                 </TableCell>
                                             </Grid>
-                                            <Grid item xs={2}>
+                                            <Grid item xs={3}>
                                                 <TableCell className={styles.tableHeaderCell}>
                                                     <Typography>Proveedor</Typography>
                                                 </TableCell>
                                             </Grid>
-                                            <Grid item xs={3}>
-                                                <TableCell className={styles.tableHeaderCell}>
-                                                    <Typography>Tipo</Typography>
-                                                </TableCell>
-                                            </Grid>
-                                            <Grid item xs={2}>
+                                            <Grid item xs={1}>
                                                 <TableCell className={styles.tableHeaderCell}>
                                                     <Typography>Cantidad</Typography>
                                                 </TableCell>
                                             </Grid>
-                                            <Grid item xs={2}>
-                                                <TableCell className={styles.tableHeaderCell}>
+                                            <Grid item xs={3} className={styles.priceCell}>
+                                                <TableCell className={styles.tableHeaderCellPrice}>
                                                     <Typography>Precio</Typography>
                                                 </TableCell>
+                                            </Grid>
+                                            <Grid item xs={1}>
+                                                <TableCell className={styles.tableHeaderCell}></TableCell>
                                             </Grid>
                                         </Grid>
                                     </TableRow>

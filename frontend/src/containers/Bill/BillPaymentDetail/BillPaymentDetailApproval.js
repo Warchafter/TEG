@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/styles';
 import { Card } from '@material-ui/core';
 
 import BillPaymentDetailApprovalMedia from '../../../components/Bill/BillPaymentDetail/BillPaymentDetailApprovalMedia';
+import Notifier from '../../../components/Notifier/Notifier';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,6 +17,7 @@ const BillPaymentDetailApproval = () => {
 
     return (
         <div className={styles.root}>
+            <Notifier />
             <Card >
                 <BillPaymentDetailApprovalMedia />
             </Card>

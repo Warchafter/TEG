@@ -1,20 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useFormik } from 'formik';
 
 import { makeStyles } from '@material-ui/styles';
 import {
-    Card,
     Button,
     Grid,
-    Typography,
-    Table,
-    TableContainer,
-    TableHead,
-    TableRow,
-    TableCell,
     CardActionArea,
     ButtonGroup,
-    CardMedia
+    CardMedia,
+    Select,
+    MenuItem
 } from '@material-ui/core';
 
 import * as actions from '../../../store/actions/index';
@@ -96,12 +92,15 @@ const BillPaymentDetailApprovalMedia = () => {
     const dispatch = useDispatch();
     const styles = useStyles();
 
+    const paymentStatusList = useSelector(state => state.bill.paymentStatusList);
     const purchaseBillToApprovePayment = useSelector(state => state.bill.purchaseBillToApprovePayment);
     const billPaymentDetailListFiltered = useSelector(state => state.bill.billPaymentDetailListFiltered);
 
+    const onFetchPaymentStatusList = useCallback(() => dispatch(actions.fetchPaymentStatusList()), [dispatch,]);
     const onFetchBillPaymentDetailListFiltered = useCallback((id) => dispatch(actions.fetchBillPaymentDetailListFiltered(id)), [dispatch]);
     const onModifyPurchaseBill = useCallback((payment_status, id) => dispatch(actions.modifyPurchaseBill(payment_status, id)), [dispatch,]);
     const onResetBillClientSubmission = useCallback(() => dispatch(actions.resetBillClientSubmission()), [dispatch,]);
+
     const onPaymentApprovedHandler = (status) => {
         const payment_status = status;
         onModifyPurchaseBill(payment_status, purchaseBillToApprovePayment.id);
@@ -109,6 +108,7 @@ const BillPaymentDetailApprovalMedia = () => {
 
     useEffect(() => {
         onResetBillClientSubmission();
+        onFetchPaymentStatusList();
     }, [])
 
     useEffect(() => {
@@ -116,6 +116,17 @@ const BillPaymentDetailApprovalMedia = () => {
             onFetchBillPaymentDetailListFiltered(purchaseBillToApprovePayment.id)
         }
     }, [purchaseBillToApprovePayment,])
+
+    const formik = useFormik({
+        initialValues: {
+            payment_status: "",
+        },
+        onSubmit: (values) => {
+            console.log(values);
+            onModifyPurchaseBill(values, purchaseBillToApprovePayment.id);
+        },
+    });
+
 
     return (
         <div className={styles.root}>
@@ -141,13 +152,26 @@ const BillPaymentDetailApprovalMedia = () => {
                                     <h4>¡No hay Pagos Cargados todavía!</h4>
                                 }
                         </Grid>
-                        <Grid item xs={12} className={styles.buttonGroupGrid}>
-                            <ButtonGroup color="primary" aria-label="outlined primary button group">
-                                <Button onClick={() => onPaymentApprovedHandler(1)}>Rechazar</Button>
-                                <Button onClick={() => onPaymentApprovedHandler(2)}>Pago Parcial</Button>
-                                <Button onClick={() => onPaymentApprovedHandler(3)}>Pago Completo</Button>
-                            </ButtonGroup>
-                        </Grid>
+                        <form onSubmit={formik.handleSubmit}>
+                            <Grid item xs={12}>
+                                <Select
+                                    labelId="payment-status-supplier-select"
+                                    id="payment-status-select"
+                                    name="payment_status"
+                                    value={formik.values.payment_status}
+                                    onChange={formik.handleChange}
+                                    >
+                                        {paymentStatusList.map(index => (
+                                                <MenuItem key={index.name} value={index.id}>
+                                                    {index.name}
+                                                </MenuItem>
+                                        ))}
+                                </Select>
+                            </Grid>
+                            <Grid item xs={12} className={styles.buttonGroupGrid}>
+                                <Button type='submit'>Actualizar</Button>
+                            </Grid>
+                        </form>
                     </Grid>
                 : null
             }

@@ -327,9 +327,8 @@ const createBillDetailStart = (state, action) => {
 };
 
 const createBillDetailSuccess = (state, action) => {
-    const updatedBill = state.billDetailData.concat(action.billDetailCreatedId);
     const updatedState = {
-        billDetailData: updatedBill,
+        billDetailData: action.billDetailData,
         error: null,
         loading: false
     };
@@ -722,6 +721,12 @@ const resetBillClientSubmission = (state, action) => {
     });
 };
 
+const setBillDetailToInspectProductCharacteristics = (state, action) => {
+    return updateObject(state, {
+        billDetailToInspectProductCharacteristics: action.data
+    })
+}
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_BANK_LIST_START: return fetchBankListStart(state, action);
@@ -832,6 +837,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.FETCH_PURCHASE_BILL_PENDING_LIST_SUCCESS: return fetchPurchaseBillPendingListSuccess(state, action);
         case actionTypes.FETCH_PURCHASE_BILL_PENDING_LIST_FAIL: return fetchPurchaseBillPendingListFail(state, action);
         case actionTypes.RESET_CLIENT_BILL_SUBMISSION: return resetBillClientSubmission(state, action);
+        case actionTypes.SET_BILL_DETAIL_TO_INSPECT_PRODUCT_CHARACTERISTICS: return setBillDetailToInspectProductCharacteristics(state, action);
         default: return state;
     };
 };

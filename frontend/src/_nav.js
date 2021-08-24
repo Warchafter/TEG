@@ -260,13 +260,13 @@ export const _nav2 = [
     to: '/bill-client-submission-history',
     icon: <CIcon content={freeSet.cilListRich} customClasses="nav-icon"/>,
   },
-  {
-    _component: 'CNavItem',
-    as: NavLink,
-    anchor: 'Cargar Pago',
-    to: '/bill-payment-detail-create',
-    icon: <CIcon content={freeSet.cilCreditCard} customClasses="nav-icon"/>,
-  },
+  // {
+  //   _component: 'CNavItem',
+  //   as: NavLink,
+  //   anchor: 'Cargar Pago',
+  //   to: '/bill-payment-detail-create',
+  //   icon: <CIcon content={freeSet.cilCreditCard} customClasses="nav-icon"/>,
+  // },
 ];
 
 

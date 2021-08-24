@@ -9,7 +9,13 @@ import {
     Grid,
     IconButton,
     Modal,
-    Tooltip
+    Tooltip,
+    Table,
+    TableContainer,
+    TableHead,
+    TableRow,
+    TableCell,
+    Typography,
 } from '@material-ui/core';
 import { useSizedIconButtonStyles } from '@mui-treasury/styles/iconButton/sized';
 import { Item } from '@mui-treasury/components/flex';
@@ -28,7 +34,7 @@ const StyledTooltip = withStyles({
 })(Tooltip);
 
 
-const useStyles = makeStyles(({ spacing, palette, theme }) => {
+const useStyles = makeStyles(({ spacing, palette }) => {
     const family =
         '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
     return {
@@ -57,7 +63,19 @@ const useStyles = makeStyles(({ spacing, palette, theme }) => {
         },
         optionButtons: {
             textAlign: 'end'
-        }
+        },
+        tableContainer: {
+            borderRadius: 15,
+            margin: '10px 10px',
+        },
+        tableHeaderCell: {
+            fontWeight: 'bold',
+            backgroundColor: '#3c4b64',
+            color: palette.getContrastText(palette.primary.dark)
+        },
+        formAlign: {
+            textAlign: 'center'
+        },
     }
 });
 
@@ -70,7 +88,7 @@ const BillDetailProductCard = (props) => {
 
     const userProfileDetail = useSelector(state => state.userProfile.userProfileDetail);
 
-    const onSetBillDetailToInspect = useCallback((data) => dispatch(actions.setBillDetailToInspect(data)), [dispatch]);
+    const onSetBillDetailToInspectProductCharacteristics = useCallback((data) => dispatch(actions.setBillDetailToInspectProductCharacteristics(data)), [dispatch]);
 
     const handleOpen = () => {
         setOpen(true);
@@ -103,26 +121,26 @@ const BillDetailProductCard = (props) => {
                     <Grid item xs={1} className={styles.centerItems}>
                         <p>{props.number + 1}</p>
                     </Grid>
-                    <Grid item xs={2} className={styles.centerItems}>
+                    <Grid item xs={3} className={styles.centerItems}>
                         <p>{props.data.product.product.title}</p>
                     </Grid>
-                    <Grid item xs={2} className={styles.centerItems}>
+                    <Grid item xs={3} className={styles.centerItems}>
                         <p>{props.data.product.supplier.name} - {props.data.product.supplier.rif}</p>
                     </Grid>
+                    <Grid item xs={1} className={styles.centerItems}>
+                        <p>{props.data.quantity}</p>
+                    </Grid>
                     <Grid item xs={3} className={styles.centerItems}>
-                        {}
+                        <p>{props.data.price}</p>
                     </Grid>
-                    <Grid item xs={2} className={styles.centerItems}>
-                        <p>Cantidad: {props.data.quantity}</p>
-                    </Grid>
-                    <Grid item xs={2} className={styles.optionButtons}>
-                        <Item position={'right'} mr={-0.5} onClick={() => onSetBillDetailToInspect(props.data)} >
+                    <Grid item xs={1} className={styles.optionButtons}>
+                        {/* <Item position={'right'} mr={-0.5} onClick={() => onSetBillDetailToInspectProductCharacteristics(props.data)} >
                             <StyledTooltip title={'Ver detalle del producto'}>
                                 <IconButton classes={iconBtnStyles}>
                                     <AccountTreeIcon />
                                 </IconButton>
                             </StyledTooltip>
-                        </Item>
+                        </Item> */}
                         {canModifyBillDetail()}
                         <Modal
                             aria-labelledby="transition-modal-title"
@@ -138,7 +156,26 @@ const BillDetailProductCard = (props) => {
                         >
                             <Fade in={open}>
                                 <Card>
-                                    <ProductCharacteristicNewForm data={props.data}/>
+                                    <Grid container spacing={2}>
+                                    <Grid item xs={12}>
+                                        <TableContainer component={styles.tableContainer}>
+                                            <Table size="small" aria-label="a dense table">
+                                                <TableHead>
+                                                    <TableRow>
+                                                        <TableCell className={styles.tableHeaderCell}>
+                                                            <Typography >
+                                                                Características del Producto
+                                                            </Typography>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                </TableHead>
+                                            </Table>
+                                        </TableContainer>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <ProductCharacteristicNewForm data={props.data}/>
+                                    </Grid>
+                                    </Grid>
                                 </Card>
                             </Fade>
                         </Modal>

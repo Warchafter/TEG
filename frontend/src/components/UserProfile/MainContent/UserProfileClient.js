@@ -218,10 +218,10 @@ const UserProfileClient = () => {
                                 !userProfileDetail.rif_validated
                                     ?
                                     <button
-                                    type="button"
-                                    className="btn btn-dark"
-                                    name="Upload RIF"
-                                    onClick={(e) => optionSelectedHandler(e)}
+                                        type="button"
+                                        className="btn btn-dark"
+                                        name="Subir RIF"
+                                        onClick={(e) => optionSelectedHandler(e)}
                                     >
                                         <CloudDoneIcon />
                                         Actualizar

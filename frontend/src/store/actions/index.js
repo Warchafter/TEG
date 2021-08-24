@@ -309,6 +309,7 @@ export {
     uploadBillPaymentDetailImageFail,
     setBillDetailToInspect,
     resetBillClientSubmission,
+    setBillDetailToInspectProductCharacteristics,
 } from './bill';
 
 export {

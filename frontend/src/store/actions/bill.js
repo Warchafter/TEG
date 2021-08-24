@@ -426,10 +426,9 @@ export const createBillDetail = (data) => {
     };
 };
 
-export const createBillDetailStart = (billDetailData) => {
+export const createBillDetailStart = () => {
     return {
-        type: actionTypes.CREATE_BILL_DETAIL_START,
-        billDetailData: billDetailData
+        type: actionTypes.CREATE_BILL_DETAIL_START
     };
 };
 
@@ -981,5 +980,12 @@ export const setPurchaseBillToModifyData = (data) => {
 export const resetBillClientSubmission = () => {
     return {
         type: actionTypes.RESET_CLIENT_BILL_SUBMISSION
+    };
+};
+
+export const setBillDetailToInspectProductCharacteristics = (data) => {
+    return {
+        type: actionTypes.SET_BILL_DETAIL_TO_INSPECT_PRODUCT_CHARACTERISTICS,
+        data: data
     };
 };

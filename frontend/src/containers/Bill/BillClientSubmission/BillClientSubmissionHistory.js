@@ -16,6 +16,7 @@ import PurchaseBillList from '../../../components/Bill/PurchaseBill/PurchaseBill
 import PurchaseBillProductTableSkeleton from '../../../components/Bill/PurchaseBill/PurchaseBillProductTableSkeletonInspect';
 import BillPaymentDetailCreateForm from '../../../components/Bill/BillPaymentDetail/BillPaymentDetailCreateForm';
 import PurchaseBillModifyData from '../../../components/Bill/PurchaseBill/PurchaseBillModifyData';
+import PurchaseBillDetailProductCharacteristicsInspect from '../../../components/Bill/PurchaseBill/PurchaseBillDetailProductCharacteristicsInspect';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,6 +37,8 @@ const BillClientSubmissionHistory = () => {
     const purchaseBillToInspect = useSelector(state => state.bill.purchaseBillToInspect);
     const purchaseBillToModifyPayment = useSelector(state => state.bill.purchaseBillToModifyPayment);
     const purchaseBillToModifyData = useSelector(state => state.bill.purchaseBillToModifyData);
+    const billDetailToInspectProductCharacteristics = useSelector(state => state.bill.billDetailToInspectProductCharacteristics);
+
 
     const selectedOption = (selectionData) => {
         if (isBillClientSubmissionSelected) {
@@ -68,6 +71,13 @@ const BillClientSubmissionHistory = () => {
                                 <Grid item xs={7}>
                                     <PurchaseBillProductTableSkeleton />
                                 </Grid>
+                            : null
+                        }
+                        {
+                            billDetailToInspectProductCharacteristics ?
+                            <Grid item xs={5}>
+                                <PurchaseBillDetailProductCharacteristicsInspect />
+                            </Grid>
                             : null
                         }
                         {

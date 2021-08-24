@@ -38,6 +38,15 @@ const useStyles = makeStyles((theme) => ({
     },
     gridContainer: {
         width: '100%'
+    },
+    firstInputGrid: {
+        alignSelf: 'center',
+    },
+    firstInput: {
+        minWidth: '200px'
+    },
+    secondInput: {
+        marginTop: '8px'
     }
 }));
 
@@ -48,7 +57,9 @@ const loading = (
 )
 
 const validationSchema = yup.object({
-    payment_receipt_number: yup.number().min(6, "El Nº no puede ser tan pequeño").required("El Nro del recibo de pago es requerido")
+    product: yup.number().required("El Producto es requerido"),
+    quantity: yup.number().required("La Cantidad es requerida"),
+    price: yup.number().required("El Nro del recibo de pago es requerido"),
 });
 
 const PurchaseBillNewProductCard = () => {
@@ -93,60 +104,63 @@ const PurchaseBillNewProductCard = () => {
             {
                 supplierProductList ?
                 <Card className={styles.productCard}>
-                        <form className={styles.form} onSubmit={formik.handleSubmit}>
-                    <Grid container spacing={3} className={styles.gridContainer}>
-                            <Grid item xs={3}>
-                                <Select
-                                    labelId="product-supplier-select"
-                                    id="product-select"
-                                    name="product"
-                                    value={formik.values.product}
-                                    onChange={formik.handleChange}
-                                    >
-                                        {supplierProductList.map(index => (
-                                                <MenuItem key={index.product.title} value={index.id}>
-                                                    {index.product.title}
-                                                </MenuItem>
-                                        ))}
-                                </Select>
-                            </Grid>
-                            <Grid item xs={3}>
-                                <TextField
-                                    id='cantidad'
-                                    name='quantity'
-                                    label='Cantidad'
-                                    margin='normal'
-                                    type="number"
-                                    value={formik.values.quantity}
-                                    onChange={formik.handleChange}
-                                    error={formik.touched.quantity && Boolean(formik.errors.quantity)}
-                                    helperText={formik.touched.quantity && formik.errors.quantity}
-                                    onBlur={formik.handleBlur}
-                                />
-                            </Grid>
-                            <Grid item xs={3}>
-                                <TextField
-                                    id='price'
-                                    name='price'
-                                    label='Precio'
-                                    margin='normal'
-                                    type="number"
-                                    value={formik.values.price}
-                                    onChange={formik.handleChange}
-                                    error={formik.touched.price && Boolean(formik.errors.price)}
-                                    helperText={formik.touched.price && formik.errors.price}
-                                    onBlur={formik.handleBlur}
-                                />
-                            </Grid>
-                            <Grid item xs={2}>
-                                <Button
-                                    type="submit"
-                                    variant='outlined'
-                                    className={styles.button}
-                                >Cargar</Button>
-                            </Grid>
-                    </Grid>
-                        </form>
+                    <form className={styles.form} onSubmit={formik.handleSubmit}>
+                        <Grid container spacing={3} className={styles.gridContainer}>
+                                <Grid item xs={5} className={styles.firstInputGrid}>
+                                    <Select
+                                        labelId="product-supplier-select"
+                                        id="product-select"
+                                        name="product"
+                                        className={styles.firstInput}
+                                        value={formik.values.product}
+                                        onChange={formik.handleChange}
+                                        >
+                                            {supplierProductList.map(index => (
+                                                    <MenuItem key={index.product.title} value={index.id}>
+                                                        {index.product.title} - {index.supplier.name} - {index.price}
+                                                    </MenuItem>
+                                            ))}
+                                    </Select>
+                                </Grid>
+                                <Grid item xs={2}>
+                                    <TextField
+                                        id='cantidad'
+                                        name='quantity'
+                                        label='Cantidad'
+                                        margin='normal'
+                                        type="number"
+                                        className={styles.secondInput}
+                                        value={formik.values.quantity}
+                                        onChange={formik.handleChange}
+                                        error={formik.touched.quantity && Boolean(formik.errors.quantity)}
+                                        helperText={formik.touched.quantity && formik.errors.quantity}
+                                        onBlur={formik.handleBlur}
+                                    />
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <TextField
+                                        id='price'
+                                        name='price'
+                                        label='Precio'
+                                        margin='normal'
+                                        type="number"
+                                        className={styles.secondInput}
+                                        value={formik.values.price}
+                                        onChange={formik.handleChange}
+                                        error={formik.touched.price && Boolean(formik.errors.price)}
+                                        helperText={formik.touched.price && formik.errors.price}
+                                        onBlur={formik.handleBlur}
+                                    />
+                                </Grid>
+                                <Grid item xs={2}>
+                                    <Button
+                                        type="submit"
+                                        variant='outlined'
+                                        className={styles.button}
+                                    >Cargar</Button>
+                                </Grid>
+                        </Grid>
+                    </form>
                 </Card>
                 : loading
             }

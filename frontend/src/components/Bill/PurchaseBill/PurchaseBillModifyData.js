@@ -10,7 +10,11 @@ import {
     MenuItem,
     Select,
     Typography,
-    TextField
+    Table,
+    TableContainer,
+    TableHead,
+    TableRow,
+    TableCell,
 } from '@material-ui/core';
 
 import * as actions from '../../../store/actions/index';
@@ -19,6 +23,35 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flex: 1
     },
+    card: {
+        maxHeight: 394,
+    },
+    content: {
+        color: '#666666',
+        whiteSpace: 'pre-wrap',
+        paddingLeft: '20px'
+    },
+    scrollMenu: {
+        overflow: 'auto',
+        whiteSpace: 'nowrap',
+        overflowX: 'hidden',
+        maxHeight: 577,
+    },
+    tableContainer: {
+        borderRadius: 15,
+        margin: '10px 10px',
+    },
+    tableHeaderCell: {
+        fontWeight: 'bold',
+        backgroundColor: '#3c4b64',
+        color: theme.palette.getContrastText(theme.palette.primary.dark)
+    },
+    formAlign: {
+        textAlign: 'center'
+    },
+    selectItem: {
+        minWidth: 250
+    }
 }));
 
 
@@ -67,62 +100,80 @@ const PurchaseBillModifyData = () => {
             <Card >
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <Typography >
-                            Detalle de la factura {purchaseBillToModifyData.id}
-                        </Typography>
-                        <form onSubmit={formik.handleSubmit}>
-                            <Grid item xs={12}>
-                                <Select
-                                    labelId="bank-supplier-select"
-                                    id="bank-select"
-                                    name="bank"
-                                    value={formik.values.bank}
-                                    onChange={formik.handleChange}
-                                    >
-                                        {bankList.map(index => (
-                                                <MenuItem key={index.name} value={index.id}>
-                                                    {index.name}
-                                                </MenuItem>
-                                        ))}
-                                </Select>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Select
-                                    labelId="currency-supplier-select"
-                                    id="currency-select"
-                                    name="currency"
-                                    value={formik.values.currency}
-                                    onChange={formik.handleChange}
-                                    >
-                                        {currencyList.map(index => (
-                                                <MenuItem key={index.name} value={index.id}>
-                                                    {index.name}
-                                                </MenuItem>
-                                        ))}
-                                </Select>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Select
-                                    labelId="payment-method-supplier-select"
-                                    id="payment-method-select"
-                                    name="payment_method"
-                                    value={formik.values.payment_method}
-                                    onChange={formik.handleChange}
-                                    >
-                                        {paymentMethodList.map(index => (
-                                                <MenuItem key={index.name} value={index.id}>
-                                                    {index.name}
-                                                </MenuItem>
-                                        ))}
-                                </Select>
-                            </Grid>
-                            <Grid item xs={12}>
-                            </Grid>
-                            <button
-                                type="submit"
-                                className="btn btn-ghost-dark"
-                            >Actualizar</button>
-                        </form>
+                        <TableContainer component={styles.tableContainer}>
+                            <Table size="small" aria-label="a dense table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell className={styles.tableHeaderCell}>
+                                            <Typography >
+                                                Detalle de la factura {purchaseBillToModifyData.id}
+                                            </Typography>
+                                        </TableCell>
+                                    </TableRow>
+                                </TableHead>
+                            </Table>
+                        </TableContainer>
+                    </Grid>
+                    <Grid item xs={12}>
+                            <form onSubmit={formik.handleSubmit} className={styles.formAlign}>
+                        <Grid container spacing={4}>
+                                <Grid item xs={12}>
+                                    <Select
+                                        labelId="bank-supplier-select"
+                                        id="bank-select"
+                                        name="bank"
+                                        className={styles.selectItem}
+                                        value={formik.values.bank}
+                                        onChange={formik.handleChange}
+                                        >
+                                            {bankList.map(index => (
+                                                    <MenuItem key={index.name} value={index.id}>
+                                                        {index.name}
+                                                    </MenuItem>
+                                            ))}
+                                    </Select>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Select
+                                        labelId="currency-supplier-select"
+                                        id="currency-select"
+                                        name="currency"
+                                        className={styles.selectItem}
+                                        value={formik.values.currency}
+                                        onChange={formik.handleChange}
+                                        >
+                                            {currencyList.map(index => (
+                                                    <MenuItem key={index.name} value={index.id}>
+                                                        {index.name}
+                                                    </MenuItem>
+                                            ))}
+                                    </Select>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Select
+                                        labelId="payment-method-supplier-select"
+                                        id="payment-method-select"
+                                        name="payment_method"
+                                        className={styles.selectItem}
+                                        value={formik.values.payment_method}
+                                        onChange={formik.handleChange}
+                                        >
+                                            {paymentMethodList.map(index => (
+                                                    <MenuItem key={index.name} value={index.id}>
+                                                        {index.name}
+                                                    </MenuItem>
+                                            ))}
+                                    </Select>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <button
+                                        type="submit"
+                                        className="btn btn-ghost-dark"
+                                    >Actualizar</button>
+                                </Grid>
+
+                        </Grid>
+                            </form>
                     </Grid>
                 </Grid>
             </Card>
